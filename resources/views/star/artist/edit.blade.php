@@ -60,10 +60,10 @@
                 <div class="item company">
                     <label>소속사</label>
                     <input class="option" name="company_name"
-                           placeholder="소속사" {{ $errors->has('company_name')?'has-error':'' }}>
+                           placeholder="소속사" value="{{$artist->company_name}}" {{ $errors->has('company_name')?'has-error':'' }}>
                     {!! $errors->first('company_name', ':message') !!}
                     <input class="option" name="company_email"
-                           placeholder="소속사 이메일" {{ $errors->has('company_email')?'has-error':'' }}>
+                           placeholder="소속사 이메일" value="{{$artist->company_email}}"{{ $errors->has('company_email')?'has-error':'' }}>
                     {!! $errors->first('company_email', ':message') !!}
                 </div>
                 <div class="item memo">

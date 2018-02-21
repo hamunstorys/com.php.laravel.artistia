@@ -65,7 +65,7 @@ class ArtistController extends Controller
 
     public function edit($id)
     {
-        $artist = Star_Artist::find($id);
+        $artist = Star_Artist::findOrFail($id);
         return view('star.artist.edit', compact('artist'));
     }
 
