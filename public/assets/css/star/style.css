@@ -4,300 +4,347 @@
 @import url(https://use.fontawesome.com/releases/v5.0.6/css/all.css);
 
 * {
-  -webkit-box-sizing: border-box;
-     -moz-box-sizing: border-box;
-          box-sizing: border-box;
-          outline: none;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+    outline: none;
 }
 
 html,
 body {
-  height: 100%;
-  margin: 0;
-  padding: 0;
-  font-family: 'Roboto', 'Noto Sans KR', sans-serif;
-  color:#494949;
-  line-height: 1.8;
+    height: 100%;
+    margin: 0;
+    padding: 0;
+    font-family: 'Roboto', 'Noto Sans KR', sans-serif;
+    color: #494949;
+    line-height: 1.8;
 }
+
 a {
-	color: inherit;
+    color: inherit;
     text-decoration: none;
     cursor: pointer;
 }
 
-ul,ol,li {
-	list-style-type: none;
-	margin: 0;
-	padding: 0;
+ul, ol, li {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
 }
 
+input {
+    autocomplete: off;
+}
 
 /***** HEADER *****/
 header .logo {
-	font-size: 14px;
-	font-weight: 100;
+    font-size: 14px;
+    font-weight: 100;
 }
+
 header .logo span {
-	font-weight: 700;
+    font-weight: 700;
 }
-header .logo img{
-	height: 60px;
-	vertical-align: middle;
+
+header .logo img {
+    height: 60px;
+    vertical-align: middle;
 }
+
 header .top {
-	width: 100%;
-	max-width: 800px;
-	margin: 0 auto;
-	padding-top: 10px;
+    width: 100%;
+    max-width: 800px;
+    margin: 0 auto;
+    padding-top: 10px;
 }
+
 header .logo {
-	float: left;
+    float: left;
 }
+
 header .logout {
-	float: right;
-	margin-top: 20px;
+    float: right;
+    margin-top: 20px;
 }
+
 .clearfix {
-	clear: both;
+    clear: both;
 }
+
 /***** BODY *****/
 .container {
 
 }
+
 section {
-	
+
 }
+
 /***** BUTTON STYLE *****/
 button {
-	display: inline-block;
-	background-color: #0093F7;
-	color:#fff;
-	text-align: center;
-	padding: 5px 10px;
-	border: none;
-	vertical-align: baseline;
-	cursor: pointer;
-	opacity: 0.9;
-	transition: all .3s;
+    display: inline-block;
+    background-color: #0093F7;
+    color: #fff;
+    text-align: center;
+    padding: 5px 10px;
+    border: none;
+    vertical-align: baseline;
+    cursor: pointer;
+    opacity: 0.9;
+    transition: all .3s;
 }
+
 button:hover {
-	opacity: 1;
+    opacity: 1;
 }
 
 /***** SEARCH PAGE *****/
 .search_header {
-	width: 100%;
-	text-align: center;
-	padding: 30px 0 20px 0;
-	background-color: #000;
-	color: #fff;
-	font-size: 2em;
+    width: 100%;
+    text-align: center;
+    padding: 30px 0 20px 0;
+    background-color: #000;
+    color: #fff;
+    font-size: 2em;
 }
+
 .search_wrap {
-	max-width: 800px;
-	margin: 0 auto;
+    max-width: 800px;
+    margin: 0 auto;
 }
+
 .search_wrap:after {
-	content:"";
-	display: block;
-	clear: both;
+    content: "";
+    display: block;
+    clear: both;
 }
+
 .form-search {
-	float: left;
-	width: 700px;
-	border: none;
-	display: inline-block;
-	color: #fff;
-	background-color: transparent;
-	font-size: 36px;
+    float: left;
+    width: 700px;
+    border: none;
+    display: inline-block;
+    color: #fff;
+    background-color: transparent;
+    font-size: 36px;
 }
+
 .btn_add {
-	font-size: 18px;
-	padding: 10px 20px;
-	margin: 10px auto;
+    font-size: 18px;
+    padding: 10px 20px;
+    margin: 10px auto;
 }
+
 .btn_logout {
-	
+
 }
+
 .btn_wrap {
-	text-align: center;
+    text-align: center;
 }
+
 .btn_search {
-	float: right;
-	display: inline-block;
-	width: 40px;
-	height: 40px;
-	background: url('../../img/star/search.png') no-repeat center center;
-	background-size: 30px;
+    float: right;
+    display: inline-block;
+    width: 40px;
+    height: 40px;
+    background: url('../../img/star/search.png') no-repeat center center;
+    background-size: 30px;
 }
+
 .result_wrap {
-	max-width: 800px;
-	margin: 20px auto;
-	border: 1px solid #dedede;
-	padding: 20px;
-	overflow: hidden;
-	text-align: left;
+    max-width: 800px;
+    margin: 20px auto;
+    border: 1px solid #dedede;
+    padding: 20px;
+    overflow: hidden;
+    text-align: left;
 }
+
 .result_wrap .photo {
-	float: left;
-	margin-right: 40px;
-	width: 300px;
-	height: 300px;
-	border: 1px solid #dedede;
-	background-color: #f2f2f2;
-	background-repeat: no-repeat;
-	background-position: center center;
-	background-size: 200px;
+    float: left;
+    margin-right: 40px;
+    width: 300px;
+    height: 300px;
+    border: 1px solid #dedede;
+    background-color: #f2f2f2;
+    background-repeat: no-repeat;
+    background-position: center center;
+    background-size: 200px;
 }
+
 .result_wrap .info {
-	font-size: 14px;
-	overflow: hidden;
+    font-size: 14px;
+    overflow: hidden;
 }
+
 .result_wrap .info label {
-	display: inline-block;
-	width: 80px;
-	color: #828282;
-	float: left;
+    display: inline-block;
+    width: 80px;
+    color: #828282;
+    float: left;
 }
+
 .result_wrap .info .item {
-	margin-bottom: 10px;
+    margin-bottom: 10px;
 }
+
 .result_wrap .info .item span {
-	display: block;
-	overflow: hidden;
+    display: block;
+    overflow: hidden;
 }
+
 .result_wrap .info .name {
-	font-size: 24px;
-	font-weight: 100;
+    font-size: 24px;
+    font-weight: 100;
 }
 
 .result_wrap .info li label {
-	font-weight: 100;
+    font-weight: 100;
 }
+
 .result_wrap .info .pay .type {
-	
+
 }
+
 .result_wrap .info .manager {
-	
+
 }
+
 .result_wrap .info .company {
-	
+
 }
+
 .result_wrap .info .memo {
-	
+
 }
+
 .result_wrap .info input {
-  font-size:18px;
-  font-weight: 500;
-  padding:10px 10px 10px 5px;
-  display:block;
-  width: 400px;
-  border:none;
-  border-bottom:1px solid #757575;
-  margin-bottom: 20px;
+    font-size: 18px;
+    font-weight: 500;
+    padding: 10px 10px 10px 5px;
+    display: block;
+    width: 400px;
+    border: none;
+    border-bottom: 1px solid #757575;
+    margin-bottom: 20px;
 }
+
 .result_wrap .info input.price {
-	width: 140px;
-	font-size: 14px;
-	font-weight: 100;
-	border: 1px solid #dedede;
-	margin-bottom: 5px;
-	padding: 5px 10px;
+    width: 140px;
+    font-size: 14px;
+    font-weight: 100;
+    border: 1px solid #dedede;
+    margin-bottom: 5px;
+    padding: 5px 10px;
 }
+
 .result_wrap .info input.option {
-	width: 150px;
-	display: inline-block;
-	font-size: 14px;
-	font-weight: 100;
-	border: 1px solid #dedede;
-	margin-right: 10px;
-	padding: 5px 10px;
+    width: 150px;
+    display: inline-block;
+    font-size: 14px;
+    font-weight: 100;
+    border: 1px solid #dedede;
+    margin-right: 10px;
+    padding: 5px 10px;
 }
+
 .result_wrap .info input.option:last-child {
-	margin-right: 0;
+    margin-right: 0;
 }
+
 .result_wrap .info textarea {
-	width: 300px;
-	font-size: 14px;
-	font-weight: 100;
-	border: 1px solid #dedede;
-	margin-bottom: 5px;
-	padding: 5px 10px;
+    width: 300px;
+    font-size: 14px;
+    font-weight: 100;
+    border: 1px solid #dedede;
+    margin-bottom: 5px;
+    padding: 5px 10px;
 }
+
 .result_wrap .info input.price:after {
-	content: "원";
-	display: block;
+    content: "원";
+    display: block;
 }
+
 .contents {
-	width: 800px;
-	margin: 40px auto;
-	text-align: center;
-	
+    width: 800px;
+    margin: 40px auto;
+    text-align: center;
+
 }
 
 /***** FOOTER *****/
 footer {
-	width: 100%;
-	text-align: center;
-	color: #828282;
-	font-size: 12px;
-	font-weight: 300;
-	padding: 40px;
+    width: 100%;
+    text-align: center;
+    color: #828282;
+    font-size: 12px;
+    font-weight: 300;
+    padding: 40px;
 }
 
 /***** LOGIN *****/
 .login_container {
-	height: 100%;
-	display: -webkit-flex;
-	display: flex;
-	-webkit-justify-content: center;
-	justify-content: center;
-	-webkit-align-items: center;
-	align-items: center; 
+    height: 100%;
+    display: -webkit-flex;
+    display: flex;
+    -webkit-justify-content: center;
+    justify-content: center;
+    -webkit-align-items: center;
+    align-items: center;
 }
+
 .login_wrap {
-	width: 400px;
-	margin:0 auto;
-	text-align: center;
+    width: 400px;
+    margin: 0 auto;
+    text-align: center;
 }
-.login_wrap>img {
-	height: 100px;
-	margin-bottom: 20px;
+
+.login_wrap > img {
+    height: 100px;
+    margin-bottom: 20px;
 }
+
 .login_box {
-	text-align: start;
-	border: 1px solid #dedede;
-	padding: 20px;
-	border-radius: 4px;
-	box-shadow: 0 2px 4px 0 rgba(0,0,0,0.1);
+    text-align: start;
+    border: 1px solid #dedede;
+    padding: 20px;
+    border-radius: 4px;
+    box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.1);
 }
+
 .login_box h1 {
-	font-size: 18px;
-	margin-top: 0;
-	margin-bottom: 20px;
+    font-size: 18px;
+    margin-top: 0;
+    margin-bottom: 20px;
 }
+
 .login_box label {
-	display: block;
-	font-size: 14px;
-	margin-bottom: 5px;
+    display: block;
+    font-size: 14px;
+    margin-bottom: 5px;
 }
+
 .login_box input {
-	width: 100%;
-	border: 1px solid #ddd;
-	padding: 10px;
-	color:#494949;
-	font-size: 13px;
-	font-weight: 100;
-	margin-bottom: 20px;	
+    width: 100%;
+    border: 1px solid #ddd;
+    padding: 10px;
+    color: #494949;
+    font-size: 13px;
+    font-weight: 100;
+    margin-bottom: 20px;
 }
+
 .login_box button {
-	width: 100%;
-	height: 40px;
+    width: 100%;
+    height: 40px;
 }
+
 .copyright {
-	margin-top: 20px;
-	font-weight: 300;
-	font-size: 12px;
-	color: #ddd;
+    margin-top: 20px;
+    font-weight: 300;
+    font-size: 12px;
+    color: #ddd;
 }
 
