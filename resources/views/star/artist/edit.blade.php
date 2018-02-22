@@ -1,10 +1,12 @@
 @extends('layouts.star.master')
 @section('content')
     <div class="result_wrap">
-        <form action="{{route('star.artist.update',$artist->id)}}" method="POST" autocomplete="off">
+        <form action="{{route('star.artist.update',$artist->id)}}" method="POST" autocomplete="off" enctype="multipart/form-data">
             {{csrf_field()}}
             <input type="hidden" name="_method" value="PUT">
-            <div class="photo" style="background: url('{{$artist->picture_url}}')"></div>
+            <div class="photo" style="background: url('{{$artist->picture_url}}')">
+
+            </div>
             <div class="info">
                 <div class="item name {{ $errors->has('artist_name')?'has-error':'' }}">
                     <input name="artist_name" type="text" placeholder="가수를 입력해주세요"

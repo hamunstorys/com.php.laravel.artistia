@@ -3,8 +3,10 @@
 namespace App\Http\Controllers\Star;
 
 use App\Models\Star\Star_Artist;
+use Intervention\Image\ImageManager;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Storage;
 
 class ArtistController extends Controller
 {
@@ -15,7 +17,7 @@ class ArtistController extends Controller
 
     public function create()
     {
-        return view('star.artist.create',compact('query'));
+        return view('star.artist.create');
     }
 
     public function store(Request $request)
@@ -35,6 +37,24 @@ class ArtistController extends Controller
         ]);
 
         $artist = new Star_Artist();
+        $serverUrl = url('/');
+
+        if ($request->hasFile('picture_url')) {
+            $manager = new ImageManager();
+            $image = $request->picture_url;
+            $path = 'storage/star/uploads/artist/thumbnails/';
+            $filename = time() . '.' . $image->getClientOriginalExtension();
+            $manager->make($image)->save($path . $filename, 60);
+
+            $artist->fill([
+                'picture_url' => $serverUrl . '/' . $path . $filename
+            ]);
+        } else {
+            $artist->fill([
+                'picture_url' => $serverUrl . '/assets/img/star/singer.svg'
+            ]);
+        }
+
         $artist->fill([
             'artist_name' => $request->get('artist_name'),
             'guarantee_concert' => $request->get('guarantee_concert'),
@@ -45,21 +65,11 @@ class ArtistController extends Controller
             'manager_phone' => $request->get('manager_phone'),
             'company_name' => $request->get('company_name'),
             'company_email' => $request->get('company_email'),
-            'picture_url' => $request->get('picture_url'),
             'comment' => $request->get('comment'),
         ]);
 
         $artist->save();
 
-//        Article::whereSubject($request->get('subject'))->update([
-//            'thumbnail' => url('/') . '/storage/photos/' . $request->user()->id . '/articles/thumbnails/' . Article::whereSubject($request->get('subject'))->first()->id . '.jpg'
-//        ]);
-//        if ($request->hasFile('thumbnail')) {
-//            if (!File::isDirectory('storage/app/public/photos/articles/thumbnails/'))
-//                Storage::makeDirectory('public/photos/' . $request->user()->id . '/articles/thumbnails/');
-//            Image::make($request->thumbnail)->resize(384, 288)->save('storage/photos/' . $request->user()->id . '/articles/thumbnails/' . $article->id . '.jpg');
-//        }
-//        flash('게시물이 작성되었습니다.');
         return redirect(route('star.index'));
     }
 

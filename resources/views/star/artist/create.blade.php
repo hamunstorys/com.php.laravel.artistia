@@ -1,9 +1,11 @@
 @extends('layouts.star.master')
 @section('content')
     <div class="result_wrap">
-        <form action="{{route('star.artist.store')}}" method="POST" autocomplete="off">
+        <form action="{{route('star.artist.store')}}" method="POST" autocomplete="off" enctype="multipart/form-data">
             {{csrf_field()}}
-            <div class="photo"></div>
+            <div class="photo">
+                <input type="file" name="picture_url">
+            </div>
             <div class="info">
                 <div class="item name {{ $errors->has('artist_name')?'has-error':'' }}">
                     <input name="artist_name" type="text" placeholder="가수를 입력해주세요" value="{{old('artist_name')}}">

@@ -177,6 +177,9 @@ return [
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
 
+        /* Intervention\Image For Image Files in Laravel*/
+        Intervention\Image\ImageServiceProvider::class
+
     ],
 
     /*
@@ -192,6 +195,7 @@ return [
 
     'aliases' => [
 
+        /*Laravel 5.5.28 Default aliases */
         'App' => Illuminate\Support\Facades\App::class,
         'Artisan' => Illuminate\Support\Facades\Artisan::class,
         'Auth' => Illuminate\Support\Facades\Auth::class,
@@ -226,6 +230,8 @@ return [
         'Validator' => Illuminate\Support\Facades\Validator::class,
         'View' => Illuminate\Support\Facades\View::class,
 
+        /* Intervention\Image For Image Files in Laravel*/
+        'Image' => Intervention\Image\Facades\Image::class
     ],
 
 ];

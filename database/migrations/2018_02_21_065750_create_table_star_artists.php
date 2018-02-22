@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
+use Illuminate\Support\Facades\Storage;
 
 class CreateTableStarArtists extends Migration
 {
@@ -11,6 +12,7 @@ class CreateTableStarArtists extends Migration
      *
      * @return void
      */
+
     public function up()
     {
         Schema::create('star_artists', function (Blueprint $table) {
@@ -32,6 +34,10 @@ class CreateTableStarArtists extends Migration
             $table->string('comment')->nullable()->comment('메모');
             $table->timestamps();
         });
+
+        if (!is_dir('public/star/uploads/artist/thumbnails')) {
+            Storage::makeDirectory('public/star/uploads/artist/thumbnails');
+        }
     }
 
     /**
@@ -42,6 +48,9 @@ class CreateTableStarArtists extends Migration
     public function down()
     {
         Schema::dropIfExists('star_artists');
+        if (is_dir('public/star/uploads/artist/thumbnails')) {
+            Storage::deleteDirectory('public/star/uploads/artist/thumbnails');
+        }
     }
 }
 

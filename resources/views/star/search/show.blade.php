@@ -5,7 +5,8 @@
             <?php echo '결과 값이 전체 ' . $total_data . '개 중에서 ' . $data->count() . '개 만큼 검색 되었습니다.'; ?>
             @foreach($data as $artist)
                 <div class="result_wrap">
-                    <div class="photo" style="background: url('{{$artist->picture_url}}')"></div>
+                    <div class="photo"
+                         style="background: url('{{$artist->picture_url}}')"></div>
                     <div class="info">
                         <div class="item name">{{$artist->artist_name}}</div>
                         <div class="item pay">

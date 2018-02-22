@@ -55,7 +55,4 @@ Route::prefix('star')->group(function () {
             'uses' => 'Star\SearchController@search'
         ]);
     });
-
-    Route::get('step-1', ['as' => 'step1', 'uses' => 'StepOneController@showForm']);
-    Route::post('step-1', 'StepOneController@handle');
 });
