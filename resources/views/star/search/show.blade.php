@@ -32,6 +32,14 @@
                             <label>메모</label>
                             <span>{{$artist->comment}}</span>
                         </div>
+                        <div class="item memo">
+                            <label>등록일</label>
+                            <span>{{$artist->created_at}}</span>
+                        </div>
+                        <div class="item memo">
+                            <label>최종수조일</label>
+                            <span>{{$artist->updated_at}}</span>
+                        </div>
                         <Form action="{{route('star.artist.edit',$artist->id)}}" method="post">
                             {{csrf_field()}}
                             <input type="hidden" name="query" value="{{$query}}">
