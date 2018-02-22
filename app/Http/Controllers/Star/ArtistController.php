@@ -108,16 +108,10 @@ class ArtistController extends Controller
             $path = 'assets/star/uploads/artist/thumbnails/';
             $filename = time() . '.' . $image->getClientOriginalExtension();
             $manager->make($image)->save($path . $filename, 60);
-
             $artist->fill([
                 'picture_url' => $serverUrl . '/' . $path . $filename
             ]);
-        } else {
-            $artist->fill([
-                'picture_url' => $serverUrl . '/assets/star/img/singer.svg'
-            ]);
         }
-
         $artist->fill([
             'artist_name' => $request->get('artist_name'),
             'guarantee_concert' => $request->get('guarantee_concert'),

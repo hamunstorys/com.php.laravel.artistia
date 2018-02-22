@@ -7,7 +7,7 @@
             <input type="hidden" name="_method" value="PUT">
             <input type="hidden" name="query" value="{{$query}}">
             <div class="photo" style="background: url('{{$artist->picture_url}}')">
-                <input type="file" name="picture_url" value="{{$artist->picture_url}}">
+               <input type="file" name="picture_url" value="{{$artist->picture_url}}">
             </div>
             <div class="info">
                 <div class="item name {{ $errors->has('artist_name')?'has-error':'' }}">
@@ -90,6 +90,7 @@
         </form>
         <form action="{{route('star.search')}}" method="get">
             {{csrf_field()}}
+            <input type="hidden" value="{{$query}}">
             <div class="btn_wrap">
                 <button class="btn_add" type="submit">취소하기</button>
             </div>
