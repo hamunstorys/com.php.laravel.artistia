@@ -3,7 +3,7 @@
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
-use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\File;
 
 class CreateTableStarArtists extends Migration
 {
@@ -12,14 +12,11 @@ class CreateTableStarArtists extends Migration
      *
      * @return void
      */
-
     public function up()
     {
         Schema::create('star_artists', function (Blueprint $table) {
-
             $table->charset = 'utf8';
             $table->collation = 'utf8_general_ci';
-
             $table->increments('id');
             $table->string('artist_name')->comment('이름');
             $table->integer('guarantee_concert')->nullable()->comment('콘서트 개런티');
@@ -34,9 +31,8 @@ class CreateTableStarArtists extends Migration
             $table->string('comment')->nullable()->comment('메모');
             $table->timestamps();
         });
-
-        if (!is_dir('public/star/uploads/artist/thumbnails')) {
-            Storage::makeDirectory('public/star/uploads/artist/thumbnails');
+        if (!is_dir('assets/star/uploads/artist/thumbnails')) {
+            File::makeDirectory(public_path('assets/star/uploads/artist/thumbnails'), $mode = 0777, true, true);
         }
     }
 
@@ -48,9 +44,9 @@ class CreateTableStarArtists extends Migration
     public function down()
     {
         Schema::dropIfExists('star_artists');
-        if (is_dir('public/star/uploads/artist/thumbnails')) {
-            Storage::deleteDirectory('public/star/uploads/artist/thumbnails');
+
+        if (is_dir('assets/star/uploads/artist/thumbnails')) {
+            File::deleteDirectory(public_path('assets/star/uploads/artist/thumbnails'));
         }
     }
 }
-

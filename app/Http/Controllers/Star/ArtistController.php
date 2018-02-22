@@ -42,7 +42,7 @@ class ArtistController extends Controller
         if ($request->hasFile('picture_url')) {
             $manager = new ImageManager();
             $image = $request->picture_url;
-            $path = 'storage/star/uploads/artist/thumbnails/';
+            $path = 'assets/star/uploads/artist/thumbnails/';
             $filename = time() . '.' . $image->getClientOriginalExtension();
             $manager->make($image)->save($path . $filename, 60);
 
@@ -51,7 +51,7 @@ class ArtistController extends Controller
             ]);
         } else {
             $artist->fill([
-                'picture_url' => $serverUrl . '/assets/img/star/singer.svg'
+                'picture_url' => $serverUrl . '/assets/star/img/singer.svg'
             ]);
         }
 
