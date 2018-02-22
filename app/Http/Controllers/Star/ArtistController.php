@@ -69,8 +69,10 @@ class ArtistController extends Controller
         ]);
 
         $artist->save();
+        $query = $request->get('query');
 
-        return redirect(route('star.index'));
+        return redirect()->route('star.search', $query);
+
     }
 
     public function edit(Request $request, $id)
@@ -128,10 +130,11 @@ class ArtistController extends Controller
             'company_email' => $request->get('company_email'),
             'comment' => $request->get('comment'),
         ]);
-        
-        $artist->update();
 
-        return redirect(route('star.index'));
+        $artist->update();
+        $query = $request->get('query');
+
+        return redirect()->route('star.search', $query);
     }
 
     public function destroy($id)

@@ -2,7 +2,7 @@
 <body>
 @include('layouts.star.header')
 <div class="container">
-    <form action="{{route('star.search')}}" method="POST">
+    <form action="{{route('star.search')}}" method="get">
         {{csrf_field()}}
         <div class="search_header">
             <div class="search_wrap">

@@ -5,6 +5,7 @@
               enctype="multipart/form-data">
             {{csrf_field()}}
             <input type="hidden" name="_method" value="PUT">
+            <input type="hidden" name="query" value="{{$query}}">
             <div class="photo" style="background: url('{{$artist->picture_url}}')">
                 <input type="file" name="picture_url">
             </div>
@@ -87,9 +88,8 @@
                 <button class="btn_add" name="submit" type="submit">수정하기</button>
             </div>
         </form>
-        <form action="{{route('star.search')}}" method="post">
+        <form action="{{route('star.search')}}" method="get">
             {{csrf_field()}}
-            <input type="hidden" name="query" value="{{$query}}">
             <div class="btn_wrap">
                 <button class="btn_add" type="submit">취소하기</button>
             </div>

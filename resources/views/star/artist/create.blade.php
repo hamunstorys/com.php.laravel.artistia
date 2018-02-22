@@ -3,6 +3,7 @@
     <div class="result_wrap">
         <form action="{{route('star.artist.store')}}" method="POST" autocomplete="off" enctype="multipart/form-data">
             {{csrf_field()}}
+
             <div class="photo">
                 <input type="file" name="picture_url">
             </div>
@@ -66,11 +67,12 @@
                 <button class="btn_add" name="submit" type="submit">등록하기</button>
             </div>
         </form>
-        <div class="btn_wrap">
-            <a href="{{ url()->previous() }}">
+        <form action="{{route('star.search')}}" method="get">
+            {{csrf_field()}}
+            <div class="btn_wrap">
                 <button class="btn_add" type="submit">취소하기</button>
-            </a>
-        </div>
+            </div>
+        </form>
     </div><!-- result_wrap -->
 @section('scripts')
     <script>
