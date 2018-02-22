@@ -15,9 +15,10 @@ class ArtistController extends Controller
 
     }
 
-    public function create()
+    public function create(Request $request)
     {
-        return view('star.artist.create');
+        $query = $request->get('query');
+        return view('star.artist.create', compact('query'));
     }
 
     public function store(Request $request)
@@ -131,10 +132,11 @@ class ArtistController extends Controller
         return redirect()->route('star.search', $query);
     }
 
-    public function destroy($id)
+    public function destroy(Request $request, $id)
     {
         $artist = Star_Artist::findOrFail($id);
         $artist->delete();
-        return redirect(route('star.index'));
+        $query = $request->get('query');
+        return redirect()->route('star.search', $query);
     }
 }
