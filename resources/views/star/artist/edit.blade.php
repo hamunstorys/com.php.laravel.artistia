@@ -1,11 +1,12 @@
 @extends('layouts.star.master')
 @section('content')
     <div class="result_wrap">
-        <form action="{{route('star.artist.update',$artist->id)}}" method="POST" autocomplete="off" enctype="multipart/form-data">
+        <form action="{{route('star.artist.update',$artist->id)}}" method="POST" autocomplete="off"
+              enctype="multipart/form-data">
             {{csrf_field()}}
             <input type="hidden" name="_method" value="PUT">
             <div class="photo" style="background: url('{{$artist->picture_url}}')">
-
+                <input type="file" name="picture_url">
             </div>
             <div class="info">
                 <div class="item name {{ $errors->has('artist_name')?'has-error':'' }}">

@@ -96,8 +96,40 @@ class ArtistController extends Controller
             'comment' => 'max:255|nullable',
         ]);
 
-        $article = Star_Artist::findOrFail($id);
-        $article->update($request->all());
+        $artist = Star_Artist::findOrFail($id);
+
+        $serverUrl = url('/');
+
+        if ($request->hasFile('picture_url')) {
+            $manager = new ImageManager();
+            $image = $request->picture_url;
+            $path = 'assets/star/uploads/artist/thumbnails/';
+            $filename = time() . '.' . $image->getClientOriginalExtension();
+            $manager->make($image)->save($path . $filename, 60);
+
+            $artist->fill([
+                'picture_url' => $serverUrl . '/' . $path . $filename
+            ]);
+        } else {
+            $artist->fill([
+                'picture_url' => $serverUrl . '/assets/star/img/singer.svg'
+            ]);
+        }
+
+        $artist->fill([
+            'artist_name' => $request->get('artist_name'),
+            'guarantee_concert' => $request->get('guarantee_concert'),
+            'guarantee_metropolitan' => $request->get('guarantee_metropolitan'),
+            'guarantee_central' => $request->get('guarantee_central'),
+            'guarantee_south' => $request->get('guarantee_south'),
+            'manager_name' => $request->get('manager_name'),
+            'manager_phone' => $request->get('manager_phone'),
+            'company_name' => $request->get('company_name'),
+            'company_email' => $request->get('company_email'),
+            'comment' => $request->get('comment'),
+        ]);
+        
+        $artist->update();
 
         return redirect(route('star.index'));
     }
