@@ -3,7 +3,6 @@
     <div class="result_wrap">
         <form action="{{route('star.artist.store')}}" method="POST" autocomplete="off" enctype="multipart/form-data">
             {{csrf_field()}}
-
             <div class="photo">
                 <input type="file" name="picture_url">
             </div>
@@ -69,6 +68,7 @@
         </form>
         <form action="{{route('star.search')}}" method="get">
             {{csrf_field()}}
+            <input type="hidden" value="{{$query}}">
             <div class="btn_wrap">
                 <button class="btn_add" type="submit">취소하기</button>
             </div>
