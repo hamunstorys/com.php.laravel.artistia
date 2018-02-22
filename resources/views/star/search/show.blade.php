@@ -2,7 +2,7 @@
 @section('content')
     <div class="contents">
         @if(isset($data) || isset($total_data))
-            <?php echo '결과 값이 전체 ' . $total_data . '개 중에서' . $data->count() . '개 만큼 검색 되었습니다.'; ?>
+            <?php echo '결과 값이 전체 ' . $total_data . '개 중에서 ' . $data->count() . '개 만큼 검색 되었습니다.'; ?>
             @foreach($data as $artist)
                 <div class="result_wrap">
                     <div class="photo" style="background: url('{{$artist->picture_url}}')"></div>
@@ -31,10 +31,18 @@
                             <label>메모</label>
                             <span>{{$artist->comment}}</span>
                         </div>
-                        <Form action="{{route('star.artist.edit',$artist->id)}}">
+                        <Form action="{{route('star.artist.edit',$artist->id)}}" method="post">
                             {{csrf_field()}}
+                            <input type="hidden" name="query" value="{{$query}}">
                             <button>수정</button>
                         </Form>
+                        <div>
+                            <form action="{{route('star.artist.destroy',$artist->id)}}" method="post">
+                                {{csrf_field()}}
+                                <input type="hidden" name="_method" value="delete">
+                                <button type="submit">삭제하기</button>
+                            </form>
+                        </div>
                     </div>
                     <div class="clearfix"></div>
                 </div>

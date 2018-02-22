@@ -15,23 +15,23 @@ class ArtistController extends Controller
 
     public function create()
     {
-        return view('star.artist.create');
+        return view('star.artist.create',compact('query'));
     }
 
     public function store(Request $request)
     {
         $this->validate($request, [
             'artist_name' => 'required|max:255',
-            'guarantee_concert' => 'numeric|integer',
-            'guarantee_metropolitan' => 'numeric|integer',
-            'guarantee_central' => 'numeric|integer',
-            'guarantee_south' => 'numeric|integer',
-            'manager_name' => 'max:255',
-            'manager_phone' => 'numeric',
-            'company_name' => 'max:255',
-            'company_email' => 'max:255|email',
-            'picture_url' => 'max:2083',
-            'comment' => 'max:255',
+            'guarantee_concert' => 'nullable',
+            'guarantee_metropolitan' => 'nullable',
+            'guarantee_central' => 'nullable',
+            'guarantee_south' => 'nullable',
+            'manager_name' => 'max:255|nullable',
+            'manager_phone' => 'numeric|nullable',
+            'company_name' => 'max:255|nullable',
+            'company_email' => 'max:255|nullable',
+            'picture_url' => 'max:2083|nullable',
+            'comment' => 'max:255|nullable',
         ]);
 
         $artist = new Star_Artist();
@@ -63,26 +63,27 @@ class ArtistController extends Controller
         return redirect(route('star.index'));
     }
 
-    public function edit($id)
+    public function edit(Request $request, $id)
     {
+        $query = $request->get('query');
         $artist = Star_Artist::findOrFail($id);
-        return view('star.artist.edit', compact('artist'));
+        return view('star.artist.edit', compact(['artist', 'query']));
     }
 
     public function update(Request $request, $id)
     {
         $this->validate($request, [
             'artist_name' => 'required|max:255',
-            'guarantee_concert' => 'numeric|integer',
-            'guarantee_metropolitan' => 'numeric|integer',
-            'guarantee_central' => 'numeric|integer',
-            'guarantee_south' => 'numeric|integer',
-            'manager_name' => 'max:255',
-            'manager_phone' => 'numeric',
-            'company_name' => 'max:255',
-            'company_email' => 'max:255|email',
-            'picture_url' => 'max:2083',
-            'comment' => 'max:255',
+            'guarantee_concert' => 'nullable',
+            'guarantee_metropolitan' => 'nullable',
+            'guarantee_central' => 'nullable',
+            'guarantee_south' => 'nullable',
+            'manager_name' => 'max:255|nullable',
+            'manager_phone' => 'numeric|nullable',
+            'company_name' => 'max:255|nullable',
+            'company_email' => 'max:255|nullable',
+            'picture_url' => 'max:2083|nullable',
+            'comment' => 'max:255|nullable',
         ]);
 
         $article = Star_Artist::findOrFail($id);

@@ -25,7 +25,7 @@ Route::prefix('star')->group(function () {
 
     Route::group(['middleware' => ['web', 'guest']], function () {
 
-        Route::get('/artist/{artist}/edit', [
+        Route::post('/artist/{artist}/edit', [
             'as' => 'star.artist.edit',
             'uses' => 'Star\ArtistController@edit'
         ]);
@@ -55,4 +55,7 @@ Route::prefix('star')->group(function () {
             'uses' => 'Star\SearchController@search'
         ]);
     });
+
+    Route::get('step-1', ['as' => 'step1', 'uses' => 'StepOneController@showForm']);
+    Route::post('step-1', 'StepOneController@handle');
 });
