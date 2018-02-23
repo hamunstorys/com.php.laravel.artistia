@@ -5,11 +5,14 @@
         </div>
         <div class="logout">
             <form action="{{route('star.artist.create')}}">
-                {{csrf_field()}}
                 <button type="submit">등록</button>
             </form>
-            <button>로그아웃</button>
         </div>
-        <div class="clearfix"></div>
+        <div class="logout">
+            <form action="#">
+                <button type="submit">로그아웃</button>
+            </form>
+        </div>
     </div>
+    <div class="clearfix"></div>
 </header>

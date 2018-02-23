@@ -51,7 +51,7 @@ class ArtistController extends Controller
             ]);
         } else {
             $artist->fill([
-                'picture_url' => $serverUrl . '/assets/star/img/singer.svg'
+                'picture_url' => $serverUrl . '/assets/star/img/icon_singer.png'
             ]);
         }
 
