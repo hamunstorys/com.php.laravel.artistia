@@ -2,7 +2,7 @@
 @section('content')
     <div class="contents">
         @if(isset($data) || isset($total_data))
-            <?php echo '<p class="search_result_title">"전체 <span class="total">' . $total_data . '</span>건 중 총 <span>' . $data->count() . '</span>건이 검색되었습니다."</p>'; ?>
+            <?php echo '<p class="search_result_title">"전체 검색어 <span class="total">' . Session::get('query') . '</span>에 대해 <span>' . $data->count() . '</span>건이 검색되었습니다."</p>'; ?>
             @foreach($data as $artist)
                 <div class="result_wrap">
                     <div class="photo"
@@ -22,10 +22,32 @@
                             <label>개런티</label>
                             <span>
 			                        <ul>
-			                            <li><label>콘서트</label><span>{{$artist->guarantee_concert}}</span></li>
-			                            <li><label>행사(서울/경기)</label><span>{{$artist->guarantee_metropolitan}}</span></li>
-			                            <li><label>행사(중부)</label><span>{{$artist->guarantee_central}}</span></li>
-			                            <li><label>행사(남부)</label><span>{{$artist->guarantee_south}}</span></li>
+			                            <li><label>콘서트</label><span><?php if ($artist->guarantee_concert == null) {
+                                                    echo '0';
+                                                } else {
+                                                    echo $artist->guarantee_concert;
+                                                }
+                                                ?>
+			                            </span></li>
+			                            <li><label>행사(서울/경기)</label><span><?php if ($artist->guarantee_metropolitan == null) {
+                                                    echo '0';
+                                                } else {
+                                                    echo $artist->guarantee_metropolitan;
+                                                }
+                                                ?>
+                                            </span></li>
+			                            <li><label>행사(중부)</label><span><?php if ($artist->guarantee_central == null) {
+                                                    echo '0';
+                                                } else {
+                                                    echo $artist->guarantee_central;
+                                                }
+                                                ?></span></li>
+			                            <li><label>행사(남부)</label><span><?php if ($artist->guarantee_south == null) {
+                                                    echo '0';
+                                                } else {
+                                                    echo $artist->guarantee_south;
+                                                }
+                                                ?></span></li>
 			                        </ul>
 			                    </span>
                         </div>
