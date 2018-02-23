@@ -1,11 +1,11 @@
 <?php
 
-namespace App;
+namespace App\Models\Star;
 
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 
-class User extends Authenticatable
+class Star_User extends Authenticatable
 {
     use Notifiable;
 
@@ -14,8 +14,14 @@ class User extends Authenticatable
      *
      * @var array
      */
+    protected $table = 'star_users';
+
     protected $fillable = [
-        'name', 'email', 'password',
+        'email', 'password', 'remember_token'
+    ];
+
+    protected $dates = [
+        'created_at', 'updated_at'
     ];
 
     /**
@@ -26,4 +32,7 @@ class User extends Authenticatable
     protected $hidden = [
         'password', 'remember_token',
     ];
+
+    /* Eloquent Relation */
+
 }

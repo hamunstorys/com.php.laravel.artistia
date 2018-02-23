@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Star;
 
 use App\Models\Star\Star_Artist;
+use Illuminate\Support\Facades\File;
 use Intervention\Image\ImageManager;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
@@ -12,7 +13,7 @@ class ArtistController extends Controller
 {
     public function __construct()
     {
-
+        $this->middleware('auth');
     }
 
     public function create()
@@ -32,7 +33,7 @@ class ArtistController extends Controller
             'manager_phone' => 'nullable',
             'company_name' => 'max:255|nullable',
             'company_email' => 'max:255|nullable',
-            'picture_url' => 'max:2083|nullable',
+            'picture_url' => 'image:max:2083|nullable',
             'comment' => 'max:255|nullable',
         ]);
 
@@ -92,7 +93,7 @@ class ArtistController extends Controller
             'manager_phone' => 'nullable',
             'company_name' => 'max:255|nullable',
             'company_email' => 'max:255|nullable',
-            'picture_url' => 'max:2083|nullable',
+            'picture_url' => 'image:max:2083|nullable',
             'comment' => 'max:255|nullable',
         ]);
 
@@ -130,6 +131,10 @@ class ArtistController extends Controller
     public function destroy(Request $request, $id)
     {
         $artist = Star_Artist::findOrFail($id);
+        $file = str_replace(url('/') . '/', "", $artist->picture_url);
+        if (File::exists($file)) {
+            File::delete($file);
+        }
         $artist->delete();
         return redirect()->route('star.search.results');
     }

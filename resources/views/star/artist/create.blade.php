@@ -1,10 +1,12 @@
 @extends('layouts.star.master')
 @section('content')
     <div class="result_wrap">
-        <form action="{{route('star.artist.store')}}" method="POST" autocomplete="off" enctype="multipart/form-data">
+        <form action="{{route('star.artist.store')}}" method="POST" autocomplete="off" enctype="multipart/form-data"
+              id="info">
             {{csrf_field()}}
-            <div class="photo">
+            <div class="photo" {{ $errors->has('picture_url')?'has-error':'' }}>
                 <input type="file" name="picture_url">
+                {!! $errors->first('picture_url', ':message') !!}
             </div>
             <div class="info">
                 <div class="item name {{ $errors->has('artist_name')?'has-error':'' }}">
@@ -65,10 +67,10 @@
             <div class="clearfix"></div>
             <div class="btn_wrap">
                 <button name="submit" type="submit">확인</button>
-                <form action="{{route('star.search.results')}}" method="get">
-                    <button type="submit">취소</button>
-                </form>
             </div>
+        </form>
+        <form action="{{route('star.search.results')}}" method="get">
+            <button type="submit">취소</button>
         </form>
     </div><!-- result_wrap -->
 @section('scripts')
@@ -78,6 +80,5 @@
         jQuery(function () {
             $('input.price').filter();
         });
-    </script>
 @endsection
 @endsection

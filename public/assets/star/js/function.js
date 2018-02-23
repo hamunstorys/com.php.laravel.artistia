@@ -10,8 +10,12 @@
             return _v.replace(/[^0-9]/g, '');
         }
     };
-    /* 숫자 포맷 */
-    $.fn.numberFormat = function (_v) {
+
+    /**/
+    php의
+    number_format과
+    같은
+    효과.$.fn.numberFormat = function (_v) {
         this.proc = function (_v) {
             var tmp = '',
                 number = '',
@@ -45,17 +49,22 @@
             return proc(_v);
         }
     };
+
+    // 위 두개의 합성.
+    // 콤마 불필요시 numberFormat 부분을 주석처리.
     $.fn.filter = function (p) {
         $(this).each(function (i) {
-            $(this).attr({'style': 'text-align:left'});
+            $(this).attr({'style': 'text-align:right'});
 
             this.value = $(this).removeText(this.value);
             this.value = $(this).numberFormat(this.value);
 
             $(this).bind('keypress keyup', function (e) {
+                
                 this.value = $(this).removeText(this.value);
                 this.value = $(this).numberFormat(this.value);
             });
         });
     };
+
 })(jQuery);

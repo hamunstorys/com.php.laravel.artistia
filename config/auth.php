@@ -15,7 +15,7 @@ return [
 
     'defaults' => [
         'guard' => 'web',
-        'passwords' => 'users',
+        'passwords' => 'star_users',
     ],
 
     /*
@@ -38,7 +38,7 @@ return [
     'guards' => [
         'web' => [
             'driver' => 'session',
-            'provider' => 'users',
+            'provider' => 'star_users',
         ],
 
         'api' => [
@@ -65,9 +65,9 @@ return [
     */
 
     'providers' => [
-        'users' => [
+        'star_users' => [
             'driver' => 'eloquent',
-            'model' => App\User::class,
+            'model' => App\Models\Star\Star_User::class,
         ],
 
         // 'users' => [
@@ -92,9 +92,9 @@ return [
     */
 
     'passwords' => [
-        'users' => [
-            'provider' => 'users',
-            'table' => 'password_resets',
+        'star_users' => [
+            'provider' => 'star_users',
+            'table' => 'star_password_resets',
             'expire' => 60,
         ],
     ],

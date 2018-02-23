@@ -20,44 +20,57 @@ Route::prefix('star')->group(function () {
 
     Route::get('/', [
         'as' => 'star.index',
-        'uses' => 'Star\IndexController@index'
+        'uses' => 'Star\indexController@index'
     ]);
 
-    Route::group(['middleware' => ['web', 'guest']], function () {
+    Route::get('/users/login', [
+        'as' => 'star.session.create',
+        'uses' => 'Star\SessionController@create'
+    ]);
 
-        Route::get('/artist/{artist}/edit', [
-            'as' => 'star.artist.edit',
-            'uses' => 'Star\ArtistController@edit'
-        ]);
+    Route::post('/users/login', [
+        'as' => 'star.session.store',
+        'uses' => 'Star\SessionController@store'
+    ]);
 
-        Route::put('/artist/{artist}', [
-            'as' => 'star.artist.update',
-            'uses' => 'Star\ArtistController@update'
-        ]);
+    Route::get('/users/logout', [
+        'as' => 'star.session.destroy',
+        'uses' => 'Star\SessionController@destroy'
+    ]);
 
-        Route::get('/artist/register', [
-            'as' => 'star.artist.create',
-            'uses' => 'Star\ArtistController@create'
-        ]);
+    Route::get('/artist/{artist}/edit', [
+        'as' => 'star.artist.edit',
+        'uses' => 'Star\ArtistController@edit'
+    ]);
 
-        Route::post('/artist/register', [
-            'as' => 'star.artist.store',
-            'uses' => 'Star\ArtistController@store'
-        ]);
+    Route::put('/artist/{artist}', [
+        'as' => 'star.artist.update',
+        'uses' => 'Star\ArtistController@update'
+    ]);
 
-        Route::delete('/artist/{artist}', [
-            'as' => 'star.artist.destroy',
-            'uses' => 'Star\ArtistController@destroy'
-        ]);
+    Route::get('/artist/register', [
+        'as' => 'star.artist.create',
+        'uses' => 'Star\ArtistController@create'
+    ]);
 
-        Route::get('/search', [
-            'as' => 'star.search',
-            'uses' => 'Star\SearchController@search'
-        ]);
+    Route::post('/artist/register', [
+        'as' => 'star.artist.store',
+        'uses' => 'Star\ArtistController@store'
+    ]);
 
-        Route::get('/search/results', [
-            'as' => 'star.search.results',
-            'uses' => 'Star\SearchController@showResults'
-        ]);
-    });
+    Route::delete('/artist/{artist}', [
+        'as' => 'star.artist.destroy',
+        'uses' => 'Star\ArtistController@destroy'
+    ]);
+
+    Route::get('/search', [
+        'as' => 'star.search',
+        'uses' => 'Star\SearchController@search'
+    ]);
+
+    Route::get('/search/results', [
+        'as' => 'star.search.results',
+        'uses' => 'Star\SearchController@showResults'
+    ]);
+
 });
