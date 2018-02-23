@@ -1,6 +1,6 @@
 @extends('layouts.star.master')
 @section('content')
-    <div class="result_wrap">
+    <div class="result_wrap" xmlns="http://www.w3.org/1999/html">
         <form action="{{route('star.artist.store')}}" method="POST" autocomplete="off" enctype="multipart/form-data"
               id="info">
             {{csrf_field()}}
@@ -66,15 +66,12 @@
             </div>
             <div class="clearfix"></div>
             <div class="btn_wrap">
-                <button name="submit" type="submit">확인</button>
+                <button type="submit">확인</button>
+                <button><a href="{{route('star.search.results')}}">취소하기</a></button>
             </div>
-        </form>
-        <form action="{{route('star.search.results')}}" method="get">
-            <button type="submit">취소</button>
         </form>
     </div><!-- result_wrap -->
 @section('scripts')
-    <script src="{{asset('assets/star/js/jquery-3.3.1.min.js')}}"></script>
     <script src="{{asset('assets/star/js/function.js')}}"></script>
     <script type="text/javascript">
         jQuery(function () {

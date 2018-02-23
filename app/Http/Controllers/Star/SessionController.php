@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Star;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Session;
 
 class SessionController extends Controller
 {
@@ -19,12 +20,14 @@ class SessionController extends Controller
 
     public function store(Request $request)
     {
-        $this->validate($request, [
-            'email' => 'required|email|max:255',
-            'password' => 'required|min:6|max:255'
-        ]);
+
         if (!auth()->attempt($request->only('email', 'password'), $request->has('remember'))) {
-            return back()->withInput();
+            $notification = array(
+                'message' => '로그인 정보가 잘 못 되었습니다.',
+                'alert-type' => 'error',
+            );
+            session()->put('notification', $notification);
+            return back();
         }
         return redirect()->route('star.index');
     }

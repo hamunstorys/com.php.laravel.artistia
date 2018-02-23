@@ -83,19 +83,17 @@
             <div class="clearfix"></div>
             <div class="btn_wrap">
                 <button name="submit" type="submit">확인</button>
-                <a href="{{route('star.search.results')}}">
-                    <button name="submit">취소하기</button>
-                </a>
+                <button><a href="{{route('star.search.results')}}">취소하기</a></button>
             </div>
         </form>
     </div>
-@endsection
 @section('scripts')
     <script src="{{asset('assets/star/js/jquery-3.3.1.min.js')}}"></script>
     <script src="{{asset('assets/star/js/function.js')}}"></script>
     <script type="text/javascript">
         jQuery(function () {
-            $('input.price').filter();
+            $('input.price').onlyNumber();
         });
     </script>
+@endsection
 @endsection

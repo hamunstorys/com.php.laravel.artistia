@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\File;
 use Intervention\Image\ImageManager;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Storage;
 
 class ArtistController extends Controller
 {
