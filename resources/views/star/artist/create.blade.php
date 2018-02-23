@@ -8,7 +8,8 @@
             </div>
             <div class="info">
                 <div class="item name {{ $errors->has('artist_name')?'has-error':'' }}">
-                    <input name="artist_name" type="text" placeholder="가수를 입력해주세요" value="{{old('artist_name')}}">
+                    <input name="artist_name" type="text" placeholder="가수를 입력해주세요" value="{{old('artist_name')}}"
+                           tabindex="1">
                     {!! $errors->first('artist_name', ':message') !!}
                 </div>
                 <div class="item pay">
@@ -19,24 +20,24 @@
                                 <label>콘서트</label>
                             <input class="price" name="guarantee_concert"
                                    placeholder="금액을 입력해주세요" value="{{old('guarantee_concert')}}"
-                                   onkeydown='return checkInsertNumber(event)' onkeyup='removeCharacter(event)'></li>
+                                   tabindex="2"></li>
 							<li>
                                 <label>서울/경기</label>
                                 <input class="price" id="guarantee_metropolitan" name="guarantee_metropolitan"
                                        placeholder="금액을 입력해주세요" value="{{old('guarantee_metropolitan')}}"
-                                       onkeydown='return checkInsertNumber(event)' onkeyup='removeCharacter(event)'>
+                                       tabindex="3">
                             </li>
 							<li>
                                 <label>중부</label>
                                 <input class="price" name="guarantee_central"
                                        placeholder="금액을 입력해주세요" value="{{old('guarantee_central')}}"
-                                       onkeydown='return checkInsertNumber(event)' onkeyup='removeCharacter(event)'>
+                                       tabindex="4">
                             </li>
 							<li>
                                 <label>남부</label>
                                 <input class="price" name="guarantee_south"
                                        placeholder="금액을 입력해주세요" value="{{old('guarantee_south')}}"
-                                       onkeydown='return checkInsertNumber(event)' onkeyup='removeCharacter(event)'>
+                                       tabindex="5">
                             </li>
 						</ul>
 					</span>
@@ -58,37 +59,25 @@
                 <div class="item memo">
                     <label>메모</label>
                     <textarea class="memo" rows="3" name="comment"
-                              placeholder="참고사항을 입력하세요">{{old('comment')}}</textarea>
+                              placeholder="참고사항을 입력하세요" tabindex="9">{{old('comment')}}</textarea>
                 </div>
             </div>
             <div class="clearfix"></div>
             <div class="btn_wrap">
                 <button name="submit" type="submit">확인</button>
                 <form action="{{route('star.search.results')}}" method="get">
-                <button type="submit">취소</button>
-        		</form>
+                    <button type="submit">취소</button>
+                </form>
             </div>
         </form>
     </div><!-- result_wrap -->
 @section('scripts')
-    <script>
-        function checkInsertNumber(event) {
-            event = event || window.event;
-            var keyID = (event.which) ? event.which : event.keyCode;
-            if ((keyID >= 48 && keyID <= 57) || (keyID >= 96 && keyID <= 105) || keyID == 8 || keyID == 46 || keyID == 37 || keyID == 39)
-                return;
-            else
-                return false;
-        }
-
-        function removeCharacter(event) {
-            event = event || window.event;
-            var keyID = (event.which) ? event.which : event.keyCode;
-            if (keyID == 8 || keyID == 46 || keyID == 37 || keyID == 39)
-                return;
-            else
-                event.target.value = event.target.value.replace(/[^0-9]/g, "");
-        }
+    <script src="{{asset('assets/star/js/jquery-3.3.1.min.js')}}"></script>
+    <script src="{{asset('assets/star/js/function.js')}}"></script>
+    <script type="text/javascript">
+        jQuery(function () {
+            $('input.price').filter();
+        });
     </script>
 @endsection
 @endsection

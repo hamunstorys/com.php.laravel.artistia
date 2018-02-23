@@ -11,7 +11,7 @@
             <div class="info">
                 <div class="item name {{ $errors->has('artist_name')?'has-error':'' }}">
                     <input name="artist_name" type="text" placeholder="이름을 입력해주세요"
-                           value="{{$artist->artist_name}}">
+                           value="{{$artist->artist_name}}" tabindex="0">
                     {!! $errors->first('artist_name', ':message') !!}
                 </div>
 
@@ -23,29 +23,25 @@
                                 <label>콘서트</label>
                                 <input class="price" name="guarantee_concert"
                                        placeholder="금액을 입력해주세요"
-                                       value="{{$artist->guarantee_concert}}"
-                                       onkeydown='return checkInsertNumber(event)' onkeyup='removeCharacter(event)'>
+                                       value="{{$artist->guarantee_concert}}" tabindex="1">
                             </li>
 							<li>
                                 <label>서울/경기</label>
                                 <input class="price" name="guarantee_metropolitan"
                                        placeholder="금액을 입력해주세요"
-                                       value="{{$artist->guarantee_metropolitan}}"
-                                       onkeydown='return checkInsertNumber(event)' onkeyup='removeCharacter(event)'>
+                                       value="{{$artist->guarantee_metropolitan}}" tabindex="2">
                             </li>
 							<li>
                                 <label>중부</label>
                                 <input class="price" name="guarantee_central"
                                        placeholder="금액을 입력해주세요"
-                                       value="{{$artist->guarantee_central}}"
-                                       onkeydown='return checkInsertNumber(event)' onkeyup='removeCharacter(event)'>
+                                       value="{{$artist->guarantee_central}}" tabindex="3">
                             </li>
 							<li>
                                 <label>남부</label>
                                 <input class="price" name="guarantee_south"
                                        placeholder="금액을 입력해주세요"
-                                       value="{{$artist->guarantee_south}}"
-                                       onkeydown='return checkInsertNumber(event)' onkeyup='removeCharacter(event)'>
+                                       value="{{$artist->guarantee_south}}" tabindex="4">
                             </li>
 						</ul>
 					</span>
@@ -54,24 +50,24 @@
                     <label>담당자</label>
                     <input class="option" name="manager_name"
                            placeholder="담당자 이름"
-                           value="{{$artist->manager_name}}">
+                           value="{{$artist->manager_name}}" tabindex="5">
                     <input class="option" name="manager_phone"
                            placeholder="담당자 연락처"
-                           value="{{$artist->manager_phone}}">
+                           value="{{$artist->manager_phone}}" tabindex="6">
                 </div>
                 <div class="item company">
                     <label>소속사</label>
                     <input class="option" name="company_name"
                            placeholder="소속사"
-                           value="{{$artist->company_name}}">
+                           value="{{$artist->company_name}}" tabindex="7">
                     <input class="option" name="company_email"
                            placeholder="소속사 이메일"
-                           value="{{$artist->company_email}}">
+                           value="{{$artist->company_email}}" tabindex="8">
                 </div>
                 <div class="item memo">
                     <label>참고내용</label>
                     <textarea class="memo" rows="3" name="comment"
-                              placeholder="참고사항을 입력하세요">{{$artist->comment}}</textarea>
+                              placeholder="참고사항을 입력하세요" tabindex="9">{{$artist->comment}}</textarea>
                 </div>
                 <div class="item">
                     <label>등록일</label>
@@ -88,28 +84,16 @@
             </div>
         </form>
         <form action="{{route('star.search.results')}}" method="get">
-                <button type="submit">취소</button>
+            <button type="submit">취소</button>
         </form>
     </div>
 @section('scripts')
-    <script>
-        function checkInsertNumber(event) {
-            event = event || window.event;
-            var keyID = (event.which) ? event.which : event.keyCode;
-            if ((keyID >= 48 && keyID <= 57) || (keyID >= 96 && keyID <= 105) || keyID == 8 || keyID == 46 || keyID == 37 || keyID == 39)
-                return;
-            else
-                return false;
-        }
-
-        function removeCharacter(event) {
-            event = event || window.event;
-            var keyID = (event.which) ? event.which : event.keyCode;
-            if (keyID == 8 || keyID == 46 || keyID == 37 || keyID == 39)
-                return;
-            else
-                event.target.value = event.target.value.replace(/[^0-9]/g, "");
-        }
+    <script src="{{asset('assets/star/js/jquery-3.3.1.min.js')}}"></script>
+    <script src="{{asset('assets/star/js/function.js')}}"></script>
+    <script type="text/javascript">
+        jQuery(function () {
+            $('input.price').filter();
+        });
     </script>
 @endsection
 @endsection
