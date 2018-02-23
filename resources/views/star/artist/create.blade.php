@@ -63,13 +63,10 @@
             </div>
             <div class="clearfix"></div>
             <div class="btn_wrap">
-                <button class="btn_add" name="submit" type="submit">등록하기</button>
-            </div>
-        </form>
-        <form action="{{route('star.search')}}" method="get">
-            {{csrf_field()}}
-            <div class="btn_wrap">
-                <button class="btn_add" type="submit">취소하기</button>
+                <button name="submit" type="submit">확인</button>
+                <form action="{{route('star.search.results')}}" method="get">
+                <button type="submit">취소</button>
+        		</form>
             </div>
         </form>
     </div><!-- result_wrap -->

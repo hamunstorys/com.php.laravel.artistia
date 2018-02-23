@@ -15,10 +15,9 @@ class ArtistController extends Controller
 
     }
 
-    public function create(Request $request)
+    public function create()
     {
-        $query = $request->get('query');
-        return view('star.artist.create', compact('query'));
+        return view('star.artist.create');
     }
 
     public function store(Request $request)
@@ -70,17 +69,15 @@ class ArtistController extends Controller
         ]);
 
         $artist->save();
-        $query = $request->get('query');
 
-        return redirect()->route('star.search', $query);
+        return redirect()->route('star.search.results');
 
     }
 
-    public function edit(Request $request, $id)
+    public function edit($id)
     {
-        $query = $request->get('query');
         $artist = Star_Artist::findOrFail($id);
-        return view('star.artist.edit', compact(['artist', 'query']));
+        return view('star.artist.edit', compact(['artist']));
     }
 
     public function update(Request $request, $id)
@@ -127,16 +124,13 @@ class ArtistController extends Controller
         ]);
 
         $artist->update();
-        $query = $request->get('query');
-
-        return redirect()->route('star.search', $query);
+        return redirect()->route('star.search.results');
     }
 
     public function destroy(Request $request, $id)
     {
         $artist = Star_Artist::findOrFail($id);
         $artist->delete();
-        $query = $request->get('query');
-        return redirect()->route('star.search', $query);
+        return redirect()->route('star.search.results');
     }
 }

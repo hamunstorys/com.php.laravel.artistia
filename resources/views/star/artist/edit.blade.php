@@ -5,16 +5,16 @@
               enctype="multipart/form-data">
             {{csrf_field()}}
             <input type="hidden" name="_method" value="PUT">
-            <input type="hidden" name="query" value="{{$query}}">
-            <div class="photo" style="background: url('{{$artist->picture_url}}')">
-               <input type="file" name="picture_url" value="{{$artist->picture_url}}">
+            <div class="photo" style="background-image: url('{{$artist->picture_url}}')">
+                <input type="file" name="picture_url">
             </div>
             <div class="info">
                 <div class="item name {{ $errors->has('artist_name')?'has-error':'' }}">
-                    <input name="artist_name" type="text" placeholder="가수를 입력해주세요"
+                    <input name="artist_name" type="text" placeholder="이름을 입력해주세요"
                            value="{{$artist->artist_name}}">
                     {!! $errors->first('artist_name', ':message') !!}
                 </div>
+
                 <div class="item pay">
                     <label>개런티</label>
                     <span>
@@ -69,7 +69,7 @@
                            value="{{$artist->company_email}}">
                 </div>
                 <div class="item memo">
-                    <label>메모</label>
+                    <label>참고내용</label>
                     <textarea class="memo" rows="3" name="comment"
                               placeholder="참고사항을 입력하세요">{{$artist->comment}}</textarea>
                 </div>
@@ -77,7 +77,6 @@
                     <label>등록일</label>
                     <span>{{$artist->created_at}}</span>
                 </div>
-
                 <div class="item">
                     <label>최종 수정일</label>
                     <span>{{$artist->updated_at}}</span>
@@ -85,16 +84,13 @@
             </div>
             <div class="clearfix"></div>
             <div class="btn_wrap">
-                <button class="btn_add" name="submit" type="submit">수정하기</button>
+                <button name="submit" type="submit">확인</button>
             </div>
         </form>
-        <form action="{{route('star.search')}}" method="get">
-            {{csrf_field()}}
-            <div class="btn_wrap">
-                <button class="btn_add" type="submit">취소하기</button>
-            </div>
+        <form action="{{route('star.search.results')}}" method="get">
+                <button type="submit">취소</button>
         </form>
-    </div><!-- result_wrap -->
+    </div>
 @section('scripts')
     <script>
         function checkInsertNumber(event) {

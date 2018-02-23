@@ -2,7 +2,6 @@
 @import url('https://fonts.googleapis.com/css?family=Roboto:100,300,400,500,700');
 @import url(http://fonts.googleapis.com/earlyaccess/notosanskr.css);
 @import url(https://use.fontawesome.com/releases/v5.0.6/css/all.css);
-
 * {
     -webkit-box-sizing: border-box;
     -moz-box-sizing: border-box;
@@ -31,6 +30,7 @@ ul, ol, li {
     margin: 0;
     padding: 0;
 }
+
 /***** HEADER *****/
 header .logo {
     font-size: 14px;
@@ -78,15 +78,14 @@ section {
 /***** BUTTON STYLE *****/
 button {
     display: inline-block;
-    background-color: #0093F7;
+    background-color: #494949;
     color: #fff;
     text-align: center;
-    padding: 5px 10px;
+    padding: 5px 15px;
     border: none;
-    vertical-align: baseline;
+    border-radius: 4px;
     cursor: pointer;
     opacity: 0.9;
-    transition: all .3s;
 }
 
 button:hover {
@@ -123,21 +122,32 @@ button:hover {
     background-color: transparent;
     font-size: 36px;
 }
-
+.search_result_title {
+	font-size: 21px;
+	font-weight: 300;
+}
+.search_result_title > .total {
+	color: #1e75d6;
+}
+.search_result_title span {
+	color: #1e75d6;
+}
 .btn_add {
     font-size: 18px;
     padding: 10px 20px;
     margin: 10px auto;
 }
-
 .btn_logout {
 
 }
-
 .btn_wrap {
+	border-top: 1px solid #dedede;
+	padding-top: 10px;
     text-align: center;
 }
-
+.btn.edit {
+	
+}
 .btn_search {
     float: right;
     display: inline-block;
@@ -146,8 +156,23 @@ button:hover {
     background: url('../img/search.png') no-repeat center center;
     background-size: 30px;
 }
-
+.item_del {
+	display: inline-block;
+	position: absolute;
+	top:20px;
+	right: 15px;
+	padding: 0;
+	line-height: 24px;
+}
+.icon_del {
+	background: none;
+	color:tomato;
+	padding: 0;
+	margin: 0;
+	font-size: 18px;
+}
 .result_wrap {
+	position: relative;
     max-width: 800px;
     margin: 20px auto;
     border: 1px solid #dedede;
@@ -155,7 +180,6 @@ button:hover {
     overflow: hidden;
     text-align: left;
 }
-
 .result_wrap .photo {
     float: left;
     margin-right: 40px;
@@ -165,30 +189,32 @@ button:hover {
     background-color: #f2f2f2;
     background-repeat: no-repeat;
     background-position: center center;
-    background-size: 200px;
+    background-size: cover;
 }
 
 .result_wrap .info {
     font-size: 14px;
     overflow: hidden;
 }
-
 .result_wrap .info label {
     display: inline-block;
-    width: 80px;
+    width: 100px;
     color: #828282;
     float: left;
 }
-
 .result_wrap .info .item {
     margin-bottom: 10px;
 }
 
 .result_wrap .info .item span {
-    display: block;
+    display: inline-block;
     overflow: hidden;
 }
-
+.result_wrap .info .item .contact {
+    margin-left: 10px;
+    color: #1e75d6;
+    font-weight: 300;
+}
 .result_wrap .info .name {
     font-size: 24px;
     font-weight: 100;
@@ -196,8 +222,12 @@ button:hover {
 
 .result_wrap .info li label {
     font-weight: 100;
+    width: 120px;
 }
-
+.result_wrap .info li span:before {
+    content: "₩";
+    margin-right: 5px;
+}
 .result_wrap .info .pay .type {
 
 }
@@ -210,7 +240,7 @@ button:hover {
 
 }
 
-.result_wrap .info .memo {
+.result_wrap .info .date {
 
 }
 
@@ -235,7 +265,7 @@ button:hover {
 }
 
 .result_wrap .info input.option {
-    width: 150px;
+    width: 140px;
     display: inline-block;
     font-size: 14px;
     font-weight: 100;
@@ -249,9 +279,11 @@ button:hover {
 }
 
 .result_wrap .info textarea {
-    width: 300px;
+	resize : vertical;
+    width: 100%;
+    min-height: 80px;
     font-size: 14px;
-    font-weight: 100;
+    line-height: 1.6;
     border: 1px solid #dedede;
     margin-bottom: 5px;
     padding: 5px 10px;
