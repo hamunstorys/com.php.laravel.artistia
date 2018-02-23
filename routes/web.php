@@ -20,7 +20,7 @@ Route::prefix('star')->group(function () {
 
     Route::get('/', [
         'as' => 'star.index',
-        'uses' => 'Star\indexController@index'
+        'uses' => 'Star\IndexController@index'
     ]);
 
     Route::get('/users/login', [
