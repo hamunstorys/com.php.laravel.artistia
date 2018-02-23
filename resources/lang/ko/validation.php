@@ -41,7 +41,7 @@ return [
     'exists' => '선택된 :attribute은(는) 유효하지 않습니다.',
     'file' => ':attribute은(는) 파일이어야 합니다.',
     'filled' => ':attribute 필드는 값이 있어야 합니다.',
-    'image' => ':attribute은(는) 이미지여야 합니다.',
+    'image' => '<div class="tooltip">:attribute은(는) 이미지여야 합니다.</div>',
     'in' => '선택된 :attribute은(는) 유효하지 않습니다.',
     'in_array' => ':attribute 필드는 :other에 존재하지 않습니다.',
     'integer' => ':attribute은(는) 정수여야 합니다.',
