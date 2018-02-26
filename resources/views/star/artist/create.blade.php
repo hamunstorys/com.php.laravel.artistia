@@ -1,7 +1,8 @@
 @extends('layouts.star.master')
 @section('content')
     <div class="result_wrap" xmlns="http://www.w3.org/1999/html">
-        <form action="{{route('star.artist.store')}}" method="POST" autocomplete="off" enctype="multipart/form-data"
+        <form action="{{route('star.artist.store')}}" method="POST" autocomplete="off"
+              enctype="multipart/form-data"
               id="info">
             {{csrf_field()}}
             <div class="photo" {{ $errors->has('picture_url')?'has-error':'' }}>
@@ -71,11 +72,11 @@
             </div>
         </form>
     </div><!-- result_wrap -->
+@endsection
 @section('scripts')
     <script src="{{asset('assets/star/js/function.js')}}"></script>
     <script type="text/javascript">
         jQuery(function () {
             $('input.price').filter();
         });
-@endsection
 @endsection

@@ -13,7 +13,7 @@ class NotificationController extends Controller
     }
 
     public function error(Request $request)
-    {r
+    {
         $alert = array(
             'message' => $request->message,
             'alert-type' => 'error',
@@ -21,18 +21,19 @@ class NotificationController extends Controller
         );
         $route = $request->route;
         session()->put('notification', $alert);
-        return redirect()->route($route);
+        return redirect(route($route));
     }
 
-    public function warning(Request $request)
+    public function confirm(Request $request)
     {
         $alert = array(
             'message' => $request->message,
-            'alert-type' => 'warning',
+            'alert-type' => 'confirm',
             'positionClass' => 'toast-top-center',
+            "tapToDismiss" => false,
         );
         $route = $request->route;
         session()->put('notification', $alert);
-        return redirect()->route($route);
+        return redirect(route($route));
     }
 }

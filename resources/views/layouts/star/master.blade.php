@@ -17,6 +17,7 @@
     </form>
 </div>
 @yield('content')
+@include('layouts.star.alert')
 @include('layouts.star.footer')
 @yield('scripts')
 </body>

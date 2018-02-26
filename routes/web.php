@@ -58,6 +58,12 @@ Route::prefix('star')->group(function () {
         'uses' => 'Star\ArtistController@store'
     ]);
 
+    Route::post('/artist/register/confirm', [
+        'as' => 'star.artist.confirmStore',
+        'uses' => 'Star\ArtistController@confirmStore'
+    ]);
+
+
     Route::delete('/artist/{artist}', [
         'as' => 'star.artist.destroy',
         'uses' => 'Star\ArtistController@destroy'
@@ -79,8 +85,8 @@ Route::prefix('star')->group(function () {
     ]);
 
 
-    Route::get('/notification/warning', [
-        'as' => 'star.notification.warning',
-        'uses' => 'Star\NotificationController@warning'
+    Route::get('/notification/confirm', [
+        'as' => 'star.notification.confirm',
+        'uses' => 'Star\NotificationController@confirm'
     ]);
 });
