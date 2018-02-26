@@ -5,8 +5,10 @@
               enctype="multipart/form-data">
             {{csrf_field()}}
             <input type="hidden" name="_method" value="PUT">
-            <div class="photo"
-                 style="background-image: url('{{$artist->picture_url}}')" {{ $errors->has('picture_url')?'has-error':'' }}>
+            <div class="poster"{{ $errors->has('picture_url')?'has-error':'' }} style="background-image: url('{{$artist->picture_url}}')">
+                <i class="far fa-file-image"></i>
+                <h4>대표 이미지 업로드</h4>
+                <p>파일 형식은 jpg 또는 png로,<br>사이즈는 가로 620px, 세로 465px 이상으로 올려주세요.</p>
                 <input type="file" name="picture_url">
                 {!! $errors->first('picture_url', ':message') !!}
             </div>
@@ -49,6 +51,7 @@
 					</span>
                 </div>
                 <div class="item manager">
+	                <span>
                     <label>담당자</label>
                     <input class="option" name="manager_name"
                            placeholder="담당자 이름"
@@ -56,8 +59,10 @@
                     <input class="option" name="manager_phone"
                            placeholder="담당자 연락처"
                            value="{{$artist->manager_phone}}">
+	                </span>
                 </div>
                 <div class="item company">
+	                <span>
                     <label>소속사</label>
                     <input class="option" name="company_name"
                            placeholder="소속사"
@@ -65,6 +70,7 @@
                     <input class="option" name="company_email"
                            placeholder="소속사 이메일"
                            value="{{$artist->company_email}}">
+	                </span>
                 </div>
                 <div class="item memo">
                     <label>참고내용</label>
@@ -83,7 +89,9 @@
             <div class="clearfix"></div>
             <div class="btn_wrap">
                 <button name="submit" type="submit">확인</button>
-                <button><a href="{{route('star.search.results')}}">취소하기</a></button>
+                <a href="{{route('star.search.results')}}">
+                    <button name="submit">취소하기</button>
+                </a>
             </div>
         </form>
     </div>

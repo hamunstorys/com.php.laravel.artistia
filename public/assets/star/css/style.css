@@ -2,6 +2,7 @@
 @import url('https://fonts.googleapis.com/css?family=Roboto:100,300,400,500,700');
 @import url(http://fonts.googleapis.com/earlyaccess/notosanskr.css);
 @import url(https://use.fontawesome.com/releases/v5.0.6/css/all.css);
+@import url('https://fonts.googleapis.com/icon?family=Material+Icons');
 * {
     -webkit-box-sizing: border-box;
     -moz-box-sizing: border-box;
@@ -17,6 +18,7 @@ body {
     font-family: 'Roboto', 'Noto Sans KR', sans-serif;
     color: #494949;
     line-height: 1.8;
+    background: #ecf0f1;
 }
 
 a {
@@ -30,42 +32,92 @@ ul, ol, li {
     margin: 0;
     padding: 0;
 }
-
-/***** HEADER *****/
-header .logo {
-    font-size: 14px;
-    font-weight: 100;
-}
-
-header .logo span {
-    font-weight: 700;
-}
-
-header .logo img {
-    height: 60px;
-    vertical-align: middle;
-}
-
-header .top {
-    width: 100%;
-    max-width: 800px;
-    margin: 0 auto;
-    padding-top: 10px;
-}
-
-header .logo {
-    float: left;
-}
-
-header .logout {
-    float: right;
-    margin-top: 20px;
-}
-
 .clearfix {
     clear: both;
 }
+input::-ms-input-placeholder { color: #bebebe; font-weight: 100; }
+input::-webkit-input-placeholder { color: #bebebe; font-weight: 100;} 
+input::-moz-placeholder { color: #bebebe; font-weight: 100;}
+input::-moz-placeholder { color: #bebebe; font-weight: 100;}
 
+textarea::-ms-input-placeholder { color: #bebebe; font-weight: 100;}
+textarea::-webkit-input-placeholder { color: #bebebe; font-weight: 100;} 
+textarea::-moz-placeholder { color: #bebebe; font-weight: 100;}
+textarea::-moz-placeholder { color: #bebebe; font-weight: 100;}
+
+input, textarea {
+	border: 1px solid #ccc;
+}
+form {
+	margin: 0;
+	padding: 0;
+}
+
+/***** HEADER *****/
+header {
+	background: #fff;
+}
+header .top_wrap {
+    width: 800px;
+    margin: 0 auto;
+    display: flex;
+}
+header .top {
+	flex: 1;
+	padding: 0;
+	margin: 10px 0;
+}
+header .logo {
+}
+header .logo span {
+	font-size: 18px;
+    font-weight: 700;
+}
+header .logo img {
+    height: 50px;
+    vertical-align: middle;
+}
+header .account {
+	text-align: right;
+	padding-top: 10px;
+	position: relative;
+}
+header .account .mypage_drop {
+	border: 1px solid #dedede;
+	position: absolute;
+	top:60px;
+	right: 0;
+	padding:0;
+	background: #fff;
+	z-index: 10;
+	text-align: left;
+	width: 200px;
+	box-shadow: 0 3px 10px 0 rgba(0,0,0,0.3);
+}
+header .account .mypage_drop li {
+	font-size: 14px;
+	font-weight: 100;
+	padding: 10px;
+	border-bottom: 1px solid #dedede;
+	cursor: pointer;
+}
+header .account .mypage_drop li:last-child {
+	border-bottom: none;
+}
+header .account .mypage_drop li:hover {
+	background: #f8f8f8;
+}
+header .icon {
+	font-size: 32px;
+	color: #000;
+	cursor: pointer;
+}
+header .icon:first-child {
+	margin-right: 20px;
+}
+.dash {
+	margin: 0 5px;
+}
 /***** BODY *****/
 .container {
 
@@ -94,7 +146,7 @@ button:hover {
 .search_header {
     width: 100%;
     text-align: center;
-    padding: 30px 0 20px 0;
+    padding:0;
     background-color: #000;
     color: #fff;
     font-size: 2em;
@@ -102,6 +154,7 @@ button:hover {
 .search_wrap {
     max-width: 800px;
     margin: 0 auto;
+    padding: 15px 0;
 }
 .search_wrap:after {
     content: "";
@@ -110,13 +163,80 @@ button:hover {
 }
 .form-search {
     float: left;
-    width: 700px;
+    width: 90%;
     border: none;
     display: inline-block;
     color: #fff;
     background-color: transparent;
     font-size: 36px;
 }
+.search_option_wrap {
+	border-top: 1px solid #494949;
+	padding: 10px;
+}
+.search_option {
+	max-width: 800px;
+	margin: 0 auto;
+	font-size: 13px;
+	text-align: left;
+}
+.search_option label {
+	margin-left: 20px;
+}
+.search_option select {
+	width: 80px;
+	border: 1px solid #494949;
+	background: transparent;
+	color: #fff;
+	font-size: inherit;
+	padding: 5px 10px;
+	margin: 0 5px;
+	border-radius: 0px; /* iOS 둥근모서리 제거 */ 
+	-webkit-appearance: none; /* 네이티브 외형 감추기 */ 
+	-moz-appearance: none; 
+	appearance: none;
+	position: relative;
+}
+.search_option select:before { /* 화살표 대체 */ 
+	content: ""; 
+	position: absolute;
+	top: 50%; 
+	right: 15px; 
+	width: 0; 
+	height: 0; 
+	margin-top: -1px; 
+	border-left: 5px solid blue; 
+	border-right: 5px solid blue; 
+	border-top: 5px solid red;
+}
+.search_option input {
+	width: 80px;
+	border: 1px solid #494949;
+	background: transparent;
+	color: #fff;
+	font-size: inherit;
+	padding: 5px 10px;
+	margin: 0 5px;
+}
+.btn_price {
+	border: 1px solid #666;
+	border-radius: 0;
+	background: transparent;
+	padding: 5px 10px;
+	font-size: inherit;
+}
+.btn_all {
+	border: 1px solid #666;
+	border-radius: 0;
+	background: transparent;
+	padding: 5px 10px;
+	font-size: inherit;
+}
+.search_option .all_num {
+	color: gold;
+	margin-left: 5px;
+}
+
 .search_result_title {
 	font-size: 21px;
 	font-weight: 300;
@@ -136,9 +256,10 @@ button:hover {
 
 }
 .btn_wrap {
-	border-top: 1px solid #dedede;
+	border-top: 0px solid #dedede;
 	padding-top: 10px;
     text-align: center;
+    margin: 0;
 }
 .btn.edit {
 
@@ -209,6 +330,13 @@ button:hover {
     padding: 20px;
     overflow: hidden;
     text-align: left;
+    background: #fff;
+    transition: all 0.2s ease-in-out;
+}
+.result_wrap:hover {
+	box-shadow: 0 5px 10px 0 rgba(0,0,0,0.2);
+	transition: all 0.2s ease-in-out;
+	transform: translateY(-10px);
 }
 .result_wrap .photo {
     float: left;
@@ -221,7 +349,41 @@ button:hover {
     background-position: center center;
     background-size: cover;
 }
-
+.poster {
+	width:300px;
+	float: left;
+	color: #727272;
+	font-weight: 100;
+	border: 1px solid #dedede;
+	background: #fff;
+	background-repeat: no-repeat;
+	background-position: center center;
+	margin-right: 20px;
+	padding: 130px 20px;
+	text-align: center;
+	border-radius: 4px;
+	cursor: pointer;
+	transition: all 0.2s;
+}
+.poster h4 {
+	color: #727272;
+	font-weight: 300;
+	margin-bottom: 10px;
+}
+.poster:hover {
+	color: #000;
+	border-color:#5264AE;
+	background: rgba(0,0,0,0.05);
+	background-repeat: no-repeat;
+	background-position: center center;
+}
+.result_wrap .poster i {
+	font-size: 46px;
+	opacity: 0.5;
+}
+.result_wrap .poster p {
+	font-size: 14px;
+}
 .result_wrap .info {
     font-size: 14px;
     overflow: hidden;
@@ -229,13 +391,14 @@ button:hover {
 .result_wrap .info label {
     display: inline-block;
     width: 100px;
-    color: #828282;
+    color: #000;
     float: left;
+    font-weight: 100;
 }
 .result_wrap .info .item {
     margin-bottom: 10px;
+    border-bottom: 1px solid #f2f2f2;
 }
-
 .result_wrap .info .item span {
     display: inline-block;
     overflow: hidden;
@@ -247,14 +410,31 @@ button:hover {
 }
 .result_wrap .info .name {
     font-size: 24px;
-    font-weight: 100;
+    font-weight: 400;
 }
 
 .result_wrap .info li label {
     font-weight: 100;
     width: 120px;
 }
-.result_wrap .info li span:before {
+.result_wrap .info li label.concert::before {
+    content: "\f005";
+	font-family: 'Font Awesome 5 free';
+	display: inline-block;
+	margin-right: 5px;
+	font-size: 14px;
+	line-height: 14px;
+}
+.result_wrap .info li label.event::before {
+    content: "\f004";
+	font-family: 'Font Awesome 5 free';
+	font-style: normal;
+	display: inline-block;
+	margin-right: 5px;
+	font-size: 12px;
+	line-height: 12px;
+}
+.result_wrap .info li span::before {
     content: "₩";
     margin-right: 5px;
 }
@@ -274,22 +454,20 @@ button:hover {
 
 }
 
-.result_wrap .info input {
+.result_wrap .info .name input {
     font-size: 18px;
     font-weight: 500;
     padding: 10px 10px 10px 5px;
     display: block;
     width: 400px;
     border: none;
-    border-bottom: 1px solid #757575;
-    margin-bottom: 20px;
+    border-bottom: 0px solid #bebebe;
 }
 
 .result_wrap .info input.price {
-    width: 140px;
+    width: 175px;
     font-size: 14px;
     font-weight: 100;
-    border: 1px solid #dedede;
     margin-bottom: 5px;
     padding: 5px 10px;
 }
@@ -299,7 +477,6 @@ button:hover {
     display: inline-block;
     font-size: 14px;
     font-weight: 100;
-    border: 1px solid #dedede;
     margin-right: 10px;
     padding: 5px 10px;
 }
@@ -321,7 +498,7 @@ button:hover {
 
 .result_wrap .info input.price:after {
     content: "원";
-    display: block;
+    display: inline-block;
 }
 
 .contents {
@@ -330,7 +507,6 @@ button:hover {
     text-align: center;
 
 }
-
 /***** FOOTER *****/
 footer {
     width: 100%;
@@ -340,7 +516,6 @@ footer {
     font-weight: 300;
     padding: 40px;
 }
-
 /***** LOGIN *****/
 .login_container {
     height: 100%;
@@ -351,10 +526,8 @@ footer {
     -webkit-align-items: center;
     align-items: center;
 }
-
 .login_wrap {
     width: 400px;
-    margin: 0 auto;
     text-align: center;
 }
 

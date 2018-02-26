@@ -7,4 +7,6 @@
     <title>SJ COMPANY STAR</title>
     <link href="{{asset('assets/star/css/style.css')}}" rel="stylesheet" type="text/css">
     <script src="{{asset('assets/star/js/jquery-3.3.1.min.js')}}"></script>
+    <script type="text/javascript" src="//code.jquery.com/jquery-1.8.3.js"></script>
+    <script defer src="https://use.fontawesome.com/releases/v5.0.6/js/all.js"></script>
 </head>

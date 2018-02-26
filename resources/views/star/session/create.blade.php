@@ -12,6 +12,10 @@
                 <button type="submit" name="submit" label="로그인하기">로그인</button>
             </div>
         </FORM>
-        @include('layouts.star.alert')
+        <div class="copyright">
+            © 2018 SJCOMPANY Inc.
+        </div>
     </div>
 </div>
+</body>
+</html>

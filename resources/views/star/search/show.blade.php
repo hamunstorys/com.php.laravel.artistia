@@ -2,7 +2,7 @@
 @section('content')
     <div class="contents">
         @if(isset($data) || isset($total_data))
-            <?php echo '<p class="search_result_title">"전체 검색어 <span class="total">' . Session::get('query') . '</span>에 대해 <span>' . $data->count() . '</span>건이 검색되었습니다."</p>'; ?>
+            <?php echo '<div class="search_result_title"><span class="total">"' . Session::get('query') . '"</span>에 대해 <span>' . $data->count() . '</span>건이 검색되었습니다."</div>'; ?>
             @foreach($data as $artist)
                 <div class="result_wrap">
                     <div class="photo"
