@@ -22,12 +22,8 @@ class SessionController extends Controller
     {
 
         if (!auth()->attempt($request->only('email', 'password'), $request->has('remember'))) {
-            $notification = array(
-                'message' => '로그인 정보가 잘 못 되었습니다.',
-                'alert-type' => 'error',
-            );
-            session()->put('notification', $notification);
-            return back();
+
+            return redirect(route('star.notification.error', ['message' => '로그인 정보가 잘 못 되었습니다.', 'route' => 'star.session.create']));
         }
         return redirect()->route('star.index');
     }

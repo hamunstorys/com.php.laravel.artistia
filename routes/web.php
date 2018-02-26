@@ -73,4 +73,14 @@ Route::prefix('star')->group(function () {
         'uses' => 'Star\SearchController@showResults'
     ]);
 
+    Route::get('/notification/error', [
+        'as' => 'star.notification.error',
+        'uses' => 'Star\NotificationController@error'
+    ]);
+
+
+    Route::get('/notification/warning', [
+        'as' => 'star.notification.warning',
+        'uses' => 'Star\NotificationController@warning'
+    ]);
 });

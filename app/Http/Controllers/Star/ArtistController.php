@@ -18,11 +18,15 @@ class ArtistController extends Controller
 
     public function create()
     {
+
+        return redirect(route('star.notification.error', ['message' => '로그인 정보가 잘 못 되었습니다.', 'route' => 'star.session.create']));
+
         return view('star.artist.create');
     }
 
     public function store(Request $request)
     {
+
         $this->validate($request, [
             'artist_name' => 'required|max:255',
             'guarantee_concert' => 'nullable',

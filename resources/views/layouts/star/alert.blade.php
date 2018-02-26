@@ -4,24 +4,26 @@
 <script>
             @if(Session::has('notification'))
     var type = "{{ Session::get('notification.alert-type') }}";
+    var positionClass = "{{Session::get('notification.positionClass')}}";
     var closeButton = "{{ Session ::get('notification.closeButton') }}";
 
     switch (type) {
         case 'info':
+            toastr.options.positionClass = positionClass;
             toastr.info("{{ Session::get('notification.message') }}");
-            toastr.options = [$closeButton = true]
             break;
         case 'warning':
+            toastr.options.positionClass = positionClass;
             toastr.warning("{{ Session::get('notification.message') }}");
-            toastr.options = [$closeButton = true];
             break;
         case 'success':
+            toastr.options.positionClass = positionClass;
             toastr.success("{{ Session::get('notification.message') }}");
-            toastr.options = [$closeButton = true];
             break;
         case 'error':
+
+            toastr.options.positionClass = positionClass;
             toastr.error("{{ Session::get('notification.message') }}");
-            toastr.options = [$closeButton = true];
             break;
     }
     {{Session::forget('notification')}}

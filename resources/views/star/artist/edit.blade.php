@@ -88,7 +88,6 @@
         </form>
     </div>
 @section('scripts')
-    <script src="{{asset('assets/star/js/jquery-3.3.1.min.js')}}"></script>
     <script src="{{asset('assets/star/js/function.js')}}"></script>
     <script type="text/javascript">
         jQuery(function () {
