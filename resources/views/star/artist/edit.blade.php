@@ -5,7 +5,8 @@
               enctype="multipart/form-data">
             {{csrf_field()}}
             <input type="hidden" name="_method" value="PUT">
-            <div class="poster"{{ $errors->has('picture_url')?'has-error':'' }} style="background-image: url('{{$artist->picture_url}}')">
+            <div class="poster"
+                 {{ $errors->has('picture_url')?'has-error':'' }} style="background-image: url('{{$artist->picture_url}}')">
                 <i class="far fa-file-image"></i>
                 <h4>대표 이미지 업로드</h4>
                 <p>파일 형식은 jpg 또는 png로,<br>사이즈는 가로 620px, 세로 465px 이상으로 올려주세요.</p>
@@ -100,7 +101,7 @@
     <script src="{{asset('assets/star/js/function.js')}}"></script>
     <script type="text/javascript">
         jQuery(function () {
-            $('input.price').filter();
+            $('.price').filter();
         });
     </script>
 @endsection

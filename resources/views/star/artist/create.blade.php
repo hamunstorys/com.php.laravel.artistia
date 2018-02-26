@@ -14,7 +14,7 @@
             </div>
             <div class="info">
                 <div class="item name {{ $errors->has('artist_name')?'has-error':'' }}">
-                     <input name="artist_name" type="text" placeholder="이름을 입력해주세요"
+                    <input name="artist_name" type="text" placeholder="이름을 입력해주세요"
                            value="{{old('artist_name')}}">
                     {!! $errors->first('artist_name', ':message') !!}
                 </div>
@@ -27,7 +27,8 @@
                                 <label>콘서트</label>
                                 <input class="price" name="guarantee_concert"
                                        placeholder="금액을 입력해주세요"
-                                       value="{{old('guarantee_concert')}}">
+                                       value="{{old('guarantee_concert')}} {{ $errors->has('guarantee_concert')?'has-error':'' }}">
+                                {!! $errors->first('guarantee_concert', ':message') !!}
                             </li>
 							<li>
                                 <label>서울/경기</label>
@@ -100,7 +101,7 @@
     <script src="{{asset('assets/star/js/function.js')}}"></script>
     <script type="text/javascript">
         jQuery(function () {
-            $('input.price').filter();
+            $('.price').filter();
         });
     </script>
 @endsection

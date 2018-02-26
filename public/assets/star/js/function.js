@@ -1,6 +1,6 @@
 (function ($) {
-    /* 숫자를 제외한 모든 문자 삭제*/
     $.fn.removeText = function (_v) {
+        //console.log("removeText: 숫자 제거 합니다.");
         if (typeof(_v) === "undefined") {
             $(this).each(function () {
                 this.value = this.value.replace(/[^0-9]/g, '');
@@ -10,12 +10,7 @@
             return _v.replace(/[^0-9]/g, '');
         }
     };
-
-    /**/
-    php의
-    number_format과
-    같은
-    효과.$.fn.numberFormat = function (_v) {
+    $.fn.numberFormat = function (_v) {
         this.proc = function (_v) {
             var tmp = '',
                 number = '',
@@ -49,18 +44,14 @@
             return proc(_v);
         }
     };
-
-    // 위 두개의 합성.
-    // 콤마 불필요시 numberFormat 부분을 주석처리.
     $.fn.filter = function (p) {
         $(this).each(function (i) {
-            $(this).attr({'style': 'text-align:right'});
+            $(this).attr({'style': 'text-align:left'});
 
             this.value = $(this).removeText(this.value);
             this.value = $(this).numberFormat(this.value);
 
             $(this).bind('keypress keyup', function (e) {
-                
                 this.value = $(this).removeText(this.value);
                 this.value = $(this).numberFormat(this.value);
             });

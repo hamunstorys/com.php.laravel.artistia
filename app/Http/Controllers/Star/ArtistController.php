@@ -6,6 +6,7 @@ use App\Models\Star\Star_Artist;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Input;
 use Illuminate\Support\Facades\Session;
+use Illuminate\Support\Facades\Validator;
 use Intervention\Image\ImageManager;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
@@ -23,20 +24,28 @@ class ArtistController extends Controller
         return view('star.artist.create');
     }
 
-    public function confirmStore(Request $request)
-    {
-
-        return redirect(route('star.notification.confirm', ['route' => 'star.artist.create', 'response_route' => 'star.artist.store', 'message' => '등록하시겠습니까?']));
-    }
-
     public function store(Request $request)
     {
-        $this->validate($request, [
+        $post_data = $request->replace(array(
+            'artist_name' => $request->artist_name,
+            'guarantee_concert' => (int)preg_replace("/[^\d]/", "", $request->guarantee_concert),
+            'guarantee_metropolitan' => (int)preg_replace("/[^\d]/", "", $request->guarantee_metropolitan),
+            'guarantee_central' => (int)preg_replace("/[^\d]/", "", $request->guarantee_central),
+            'guarantee_south' => (int)preg_replace("/[^\d]/", "", $request->guarantee_south),
+            'manager_name' => $request->manager_name,
+            'manager_phone' => $request->manager_phone,
+            'company_name' => $request->company_name,
+            'company_email' => $request->company_email,
+            'picture_url' => $request->picture_url,
+            'comment' => $request->comment
+        ));
+
+        $this->validate($post_data, [
             'artist_name' => 'required|max:255',
-            'guarantee_concert' => 'nullable',
-            'guarantee_metropolitan' => 'nullable',
-            'guarantee_central' => 'nullable',
-            'guarantee_south' => 'nullable',
+            'guarantee_concert' => 'nullable|max:2147483647|Integer',
+            'guarantee_metropolitan' => 'nullable|max:2147483647|Integer',
+            'guarantee_central' => 'nullable|max:2147483647|Integer',
+            'guarantee_south' => 'nullable|max:2147483647|Integer',
             'manager_name' => 'max:255|nullable',
             'manager_phone' => 'nullable',
             'company_name' => 'max:255|nullable',
@@ -45,42 +54,30 @@ class ArtistController extends Controller
             'comment' => 'max:255|nullable',
         ]);
 
-        $post_data = $request->all();
         $artist = new Star_Artist();
-        $serverUrl = url('/');
 
-        if (isset($post_data['picture_url']) != null) {
+        if (isset($post_data->picture_url) != null) {
             $manager = new ImageManager();
-            $image = $post_data['picture_url'];
-            $path = 'assets/star/uploads/artist/thumbnails/';
+            $image = $post_data->picture_url;
+            $savePath = 'assets/star/uploads/artist/thumbnails/';
             $filename = time() . '.' . $image->getClientOriginalExtension();
-            $manager->make($image)->save($path . $filename, 60);
+            $manager->make($image)->save($savePath . $filename, 60);
 
             $artist->fill([
-                'picture_url' => $serverUrl . '/' . $path . $filename
+                'picture_url' => url('/') . '/' . $savePath . $filename
             ]);
+            $artist->fill($post_data->except('picture_url'));
+
         } else {
             $artist->fill([
-                'picture_url' => $serverUrl . '/assets/star/img/icon_singer.png'
+                'picture_url' => url('/') . '/assets/star/img/icon_singer.svg'
             ]);
+            $artist->fill($post_data->except('picture_url'));
         }
-
-        $artist->fill([
-            'artist_name' => $post_data['artist_name'],
-            'guarantee_concert' => $post_data['guarantee_concert'],
-            'guarantee_metropolitan' => $post_data['guarantee_metropolitan'],
-            'guarantee_central' => $post_data['guarantee_central'],
-            'guarantee_south' => $post_data['guarantee_south'],
-            'manager_name' => $post_data['manager_name'],
-            'manager_phone' => $post_data['manager_phone'],
-            'company_name' => $post_data['company_name'],
-            'company_email' => $post_data['company_email'],
-            'comment' => $post_data['comment'],
-        ]);
 
         $artist->save();
 
-        return redirect()->route('star.notification.confirm', ['message' => '등록이 완료되었습니다.','route'=>'star.index']);
+        return redirect()->route('star.notification.confirm', ['message' => '등록이 완료되었습니다.', 'route' => 'star.index']);
 
     }
 
@@ -92,12 +89,26 @@ class ArtistController extends Controller
 
     public function update(Request $request, $id)
     {
-        $this->validate($request, [
+        $post_data = $request->replace(array(
+            'artist_name' => $request->artist_name,
+            'guarantee_concert' => (int)preg_replace("/[^\d]/", "", $request->guarantee_concert),
+            'guarantee_metropolitan' => (int)preg_replace("/[^\d]/", "", $request->guarantee_metropolitan),
+            'guarantee_central' => (int)preg_replace("/[^\d]/", "", $request->guarantee_central),
+            'guarantee_south' => (int)preg_replace("/[^\d]/", "", $request->guarantee_south),
+            'manager_name' => $request->manager_name,
+            'manager_phone' => $request->manager_phone,
+            'company_name' => $request->company_name,
+            'company_email' => $request->company_email,
+            'picture_url' => $request->picture_url,
+            'comment' => $request->comment
+        ));
+
+        $this->validate($post_data, [
             'artist_name' => 'required|max:255',
-            'guarantee_concert' => 'nullable',
-            'guarantee_metropolitan' => 'nullable',
-            'guarantee_central' => 'nullable',
-            'guarantee_south' => 'nullable',
+            'guarantee_concert' => 'nullable|max:2147483647|Integer',
+            'guarantee_metropolitan' => 'nullable|max:2147483647|Integer',
+            'guarantee_central' => 'nullable|max:2147483647|Integer',
+            'guarantee_south' => 'nullable|max:2147483647|Integer',
             'manager_name' => 'max:255|nullable',
             'manager_phone' => 'nullable',
             'company_name' => 'max:255|nullable',
@@ -110,28 +121,22 @@ class ArtistController extends Controller
 
         $serverUrl = url('/');
 
-        if ($request->hasFile('picture_url')) {
+        if ($post_data->hasFile('picture_url')) {
+            $path = $this->getPath($artist->picture_url);
+            if (file_exists($path) && public_path($path) != public_path('assets/star/img/icon_singer.svg')) {
+                File::delete(public_path($path));
+            }
             $manager = new ImageManager();
-            $image = $request->picture_url;
+            $image = $post_data->picture_url;
             $path = 'assets/star/uploads/artist/thumbnails/';
             $filename = time() . '.' . $image->getClientOriginalExtension();
             $manager->make($image)->save($path . $filename, 60);
             $artist->fill([
                 'picture_url' => $serverUrl . '/' . $path . $filename
             ]);
+            $artist->fill($post_data->except('picture_url'));
         }
-        $artist->fill([
-            'artist_name' => $request->get('artist_name'),
-            'guarantee_concert' => $request->get('guarantee_concert'),
-            'guarantee_metropolitan' => $request->get('guarantee_metropolitan'),
-            'guarantee_central' => $request->get('guarantee_central'),
-            'guarantee_south' => $request->get('guarantee_south'),
-            'manager_name' => $request->get('manager_name'),
-            'manager_phone' => $request->get('manager_phone'),
-            'company_name' => $request->get('company_name'),
-            'company_email' => $request->get('company_email'),
-            'comment' => $request->get('comment'),
-        ]);
+        $artist->fill($post_data->except('picture_url'));
 
         $artist->update();
         return redirect()->route('star.search.results');
@@ -140,11 +145,17 @@ class ArtistController extends Controller
     public function destroy(Request $request, $id)
     {
         $artist = Star_Artist::findOrFail($id);
-        $file = str_replace(url('/') . '/', "", $artist->picture_url);
-        if (File::exists($file)) {
-            File::delete($file);
+        $path = $this->getPath($artist->picture_url);
+        if (file_exists($path) && public_path($path) != public_path('assets/star/img/icon_singer.svg')) {
+            File::delete(public_path($path));
         }
+
         $artist->delete();
         return redirect()->route('star.search.results');
+    }
+
+    public function getPath($url)
+    {
+        return str_replace(url('/') . '/', "", $url);
     }
 }
