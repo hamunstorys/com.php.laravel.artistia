@@ -16,7 +16,7 @@
                     });
                 });
 
-                $(document).on("dropdown-menu", function () {
+                $(document).click(function () {
                     $(".dropdown").hide();
                 });
 
@@ -26,8 +26,8 @@
             <div class="mypage_drop dropdown">
                 <ul>
                     <li>마이페이지</li>
-                    <a href="" {{route('star.artist.create')}}">
-                    <li>아티스트 등록하기</li>
+                    <a href="{{route('star.artist.create')}}">
+                        <li>아티스트 등록하기</li>
                     </a>
                 </ul>
             </div>
