@@ -90,7 +90,7 @@
             <div class="clearfix"></div>
             <div class="btn_wrap">
                 <button name="submit" type="submit">확인</button>
-                <a href="{{route('star.search.results')}}">
+                <a href="{{route('star.index')}}">
                     <button name="submit">취소하기</button>
                 </a>
             </div>

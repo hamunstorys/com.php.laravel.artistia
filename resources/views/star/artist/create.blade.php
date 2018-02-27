@@ -90,11 +90,13 @@
             <div class="clearfix"></div>
             <div class="btn_wrap">
                 <button name="submit" type="submit">확인</button>
-                <a href="{{route('star.search.results')}}">
-                    <button name="submit">취소하기</button>
-                </a>
             </div>
         </form>
+        <div>
+            <a href="{{route('star.notification.confirm',['message'=>'취소','route'=>'star.index'])}}">
+                <button>취소하기</button>
+            </a>
+        </div>
     </div>
 @endsection
 @section('scripts')

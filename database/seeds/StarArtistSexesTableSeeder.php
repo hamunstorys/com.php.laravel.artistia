@@ -22,12 +22,14 @@ class StarArtistSexesTableSeeder extends Seeder
 
     public function insertColumns(Array $data)
     {
-        foreach ($data as $value) {
-            $song_genre = new \App\Models\Star\Star_Artist_Sex();
-            $song_genre->fill([
+
+        foreach ($data as $key => $value) {
+            $sex = new \App\Models\Star\Star_Artist_Sex();
+            $sex->fill([
                 'sex' => $value,
+                'value' => $key + 1
             ]);
-            $song_genre->save();
+            $sex->save();
         }
     }
 }
