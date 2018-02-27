@@ -10,8 +10,10 @@ class Star_Artist extends Model
     protected $table = 'star_artists';
 
     protected $fillable = [
-        'artist_name', 'guarantee_concert', 'guarantee_metropolitan', 'guarantee_central', 'guarantee_south',
+        'artist_name',
+        'guarantee_concert', 'guarantee_metropolitan', 'guarantee_central', 'guarantee_south',
         'manager_name', 'manager_phone', 'company_name', 'company_email', 'picture_url', 'comment', 'created_at', 'updated_at',
+        'group_type_single', 'group_type_sex', 'group_type_song_genre'
     ];
 
     protected $dates = [
@@ -24,4 +26,13 @@ class Star_Artist extends Model
     ];
 
     /* Eloquent Relation */
+    public function sex()
+    {
+        $this->hasOne(Star_Artist_Sex::class);
+    }
+
+    public function song_genres()
+    {
+        $this->hasMany(Star_Artist_Song_Genre::class);
+    }
 }

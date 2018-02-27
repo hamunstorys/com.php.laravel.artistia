@@ -36,6 +36,7 @@ class SessionController extends Controller
     public function destroy()
     {
         auth()->logout();
+        Session::flush();
         return redirect()->route('star.index');
     }
 }

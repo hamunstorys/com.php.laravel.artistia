@@ -15,11 +15,9 @@
                         event.stopPropagation();
                     });
                 });
-
                 $(document).click(function () {
                     $(".dropdown").hide();
                 });
-
             </script>
             <i class="fas fa-user-circle icon mypage dropdown-menu"></i>
             <a href="{{route('star.session.destroy')}}"><i class="fas fa-sign-out-alt icon logout"></i></a>

@@ -3,6 +3,7 @@
 namespace App\Http;
 
 
+use App\Http\Middleware\Star\SearchRequirement;
 use App\Http\Middleware\Star\FlushQuery;
 use Illuminate\Foundation\Http\Kernel as HttpKernel;
 
@@ -59,6 +60,9 @@ class Kernel extends HttpKernel
         'can' => \Illuminate\Auth\Middleware\Authorize::class,
         'guest' => \App\Http\Middleware\RedirectIfAuthenticated::class,
         'throttle' => \Illuminate\Routing\Middleware\ThrottleRequests::class,
-        'flushQuery' => FlushQuery::class,
+
+        /*Star Custom routeMiddleware*/
+        'flush_query' => FlushQuery::class,
+        'search_requirement' => SearchRequirement::class,
     ];
 }

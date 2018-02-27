@@ -11,6 +11,11 @@ class StarUserTableSeeder extends Seeder
      */
     public function run()
     {
+        $this->seed();
+    }
+
+    public function seed()
+    {
         $this->CreateAdministrator();
     }
 

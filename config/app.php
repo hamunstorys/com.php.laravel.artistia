@@ -171,7 +171,6 @@ return [
         /*
          * Application Service Providers...
          */
-        App\Providers\AppServiceProvider::class,
         App\Providers\AuthServiceProvider::class,
         // App\Providers\BroadcastServiceProvider::class,
         App\Providers\EventServiceProvider::class,
@@ -180,7 +179,7 @@ return [
         /* Intervention\Image For Image Files in Laravel*/
         Intervention\Image\ImageServiceProvider::class,
 
-        Collective\Html\HtmlServiceProvider::class,
+        \App\Providers\HelpServiceProvider::class,
     ],
 
     /*
@@ -234,8 +233,7 @@ return [
         /* Intervention\Image For Image Files in Laravel*/
         'Image' => Intervention\Image\Facades\Image::class,
 
-        'Form' => Collective\Html\FormFacade::class,
-        'Html' => Collective\Html\HtmlFacade::class,
+        'Helper' => \App\Helpers\Helper::class,
     ],
 
 ];

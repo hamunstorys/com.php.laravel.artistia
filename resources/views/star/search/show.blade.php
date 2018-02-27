@@ -22,32 +22,11 @@
                             <label>개런티</label>
                             <span>
 			                        <ul>
-			                            <li><label>콘서트</label><span><?php if ($artist->guarantee_concert == null) {
-                                                    echo '0';
-                                                } else {
-                                                    echo number_format($artist->guarantee_concert);
-                                                }
-                                                ?>
-			                            </span></li>
-			                            <li><label>행사(서울/경기)</label><span><?php if ($artist->guarantee_metropolitan == null) {
-                                                    echo '0';
-                                                } else {
-                                                    echo number_format($artist->guarantee_metropolitan);
-                                                }
-                                                ?>
-                                            </span></li>
-			                            <li><label>행사(중부)</label><span><?php if ($artist->guarantee_central == null) {
-                                                    echo '0';
-                                                } else {
-                                                    echo number_format($artist->guarantee_central);
-                                                }
-                                                ?></span></li>
-			                            <li><label>행사(남부)</label><span><?php if ($artist->guarantee_south == null) {
-                                                    echo '0';
-                                                } else {
-                                                    echo number_format($artist->guarantee_south);
-                                                }
-                                                ?></span></li>
+                                <?php $helper = new \App\Helpers\Helper(); ?>
+                                        <li><label>콘서트</label><span><?php $helper->NumberNullCheck($artist->guarantee_concert) ?></span></li>
+			                            <li><label>행사(서울/경기)</label><span><?php $helper->NumberNullCheck($artist->guarantee_metropolitan) ?></span></li>
+			                            <li><label>행사(중부)</label><span><?php $helper->NumberNullCheck($artist->guarantee_central) ?></span></li>
+			                            <li><label>행사(남부)</label><span><?php $helper->NumberNullCheck($artist->guarantee_south) ?></span></li>
 			                        </ul>
 			                    </span>
                         </div>

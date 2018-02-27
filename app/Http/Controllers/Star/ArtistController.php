@@ -17,7 +17,7 @@ class ArtistController extends Controller
     public function __construct()
     {
         $this->middleware('auth');
-        $this->middleware('flushQuery');
+        $this->middleware('flush_query');
     }
 
     public function create()
