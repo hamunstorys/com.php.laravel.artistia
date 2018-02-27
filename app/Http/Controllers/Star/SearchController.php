@@ -35,4 +35,8 @@ class SearchController extends Controller
         $data = DB::table('star_artists')->orWhere(DB::raw("CONCAT_WS('|',artist_name,manager_name,manager_phone,company_name,company_email,comment)"), 'LIKE', "%" . $query . "%")->get();
         return view('star.search.show', compact(['data', 'total_data', 'query']));
     }
+
+    public function CheckNull() {
+
+    }
 }

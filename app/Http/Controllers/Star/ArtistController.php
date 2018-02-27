@@ -17,6 +17,7 @@ class ArtistController extends Controller
     public function __construct()
     {
         $this->middleware('auth');
+        $this->middleware('flushQuery');
     }
 
     public function create()
@@ -76,7 +77,6 @@ class ArtistController extends Controller
         }
 
         $artist->save();
-
         return redirect()->route('star.notification.confirm', ['message' => '등록이 완료되었습니다.', 'route' => 'star.index']);
 
     }
@@ -139,7 +139,7 @@ class ArtistController extends Controller
         $artist->fill($post_data->except('picture_url'));
 
         $artist->update();
-        return redirect()->route('star.search.results');
+        return redirect()->route('star.notification.confirm', ['message' => '수정이 완료되었습니다.', 'route' => 'star.index']);
     }
 
     public function destroy(Request $request, $id)
@@ -151,7 +151,7 @@ class ArtistController extends Controller
         }
 
         $artist->delete();
-        return redirect()->route('star.search.results');
+        return redirect()->route('star.notification.confirm', ['message' => '삭제가 완료되었습니다.', 'route' => 'star.index']);
     }
 
     public function getPath($url)

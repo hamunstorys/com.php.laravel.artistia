@@ -6,6 +6,11 @@ use App\Http\Controllers\Controller;
 
 class IndexController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('flushQuery');
+    }
+
     public function index()
     {
         if (auth()->check()) {
