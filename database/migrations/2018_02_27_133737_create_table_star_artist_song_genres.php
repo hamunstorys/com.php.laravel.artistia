@@ -16,6 +16,7 @@ class CreateTableStarArtistSongGenres extends Migration
         Schema::create('star_artist_song_genres', function (Blueprint $table) {
             $table->increments('id');
             $table->string('name');
+            $table->tinyInteger('value')->unique();
             $table->timestamps();
         });
     }

@@ -16,7 +16,7 @@ class StarArtistSongGenresTableSeeder extends Seeder
 
     public function seed()
     {
-        $data = array('전체','발라드', '댄스', '락', '트로트', '인디', '힙합', '재즈', '일렉', '뮤지컬', '클래식', '퓨전', '인스트루먼트');
+        $data = array('발라드', '댄스', '락', '트로트', '인디', '힙합', '재즈', '일렉', '뮤지컬', '클래식', '퓨전', '인스트루먼트');
         $this->insertColumns($data);
     }
 

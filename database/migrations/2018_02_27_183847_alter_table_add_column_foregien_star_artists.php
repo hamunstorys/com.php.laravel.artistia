@@ -27,8 +27,8 @@ class AlterTableAddColumnForegienStarArtists extends Migration
      */
     public function down()
     {
-//        Schema::table('star_artists', function ($table) {
-//            $table->dropForeign('star_artist_group_type_song_genre_foreign');
-//        });
+        Schema::table('star_artists', function ($table) {
+            $table->dropForeign('star_artists_group_type_sex_foreign');
+        });
     }
 }

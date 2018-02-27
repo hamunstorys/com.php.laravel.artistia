@@ -16,7 +16,7 @@ class StarArtistSexesTableSeeder extends Seeder
 
     public function seed()
     {
-        $data = array('전체', '남성', '여성', '혼성');
+        $data = array('남성', '여성', '혼성');
         $this->insertColumns($data);
     }
 

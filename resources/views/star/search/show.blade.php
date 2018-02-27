@@ -23,10 +23,10 @@
                             <span>
 			                        <ul>
                                 <?php $helper = new \App\Helpers\Helper(); ?>
-                                        <li><label>콘서트</label><span><?php $helper->NumberNullCheck($artist->guarantee_concert) ?></span></li>
-			                            <li><label>행사(서울/경기)</label><span><?php $helper->NumberNullCheck($artist->guarantee_metropolitan) ?></span></li>
-			                            <li><label>행사(중부)</label><span><?php $helper->NumberNullCheck($artist->guarantee_central) ?></span></li>
-			                            <li><label>행사(남부)</label><span><?php $helper->NumberNullCheck($artist->guarantee_south) ?></span></li>
+                                        <li><label>콘서트</label><span><?php echo $helper->NumberNullCheck($artist->guarantee_concert) ?></span></li>
+			                            <li><label>행사(서울/경기)</label><span><?php echo $helper->NumberNullCheck($artist->guarantee_metropolitan) ?></span></li>
+			                            <li><label>행사(중부)</label><span><?php echo $helper->NumberNullCheck($artist->guarantee_central) ?></span></li>
+			                            <li><label>행사(남부)</label><span><?php echo $helper->NumberNullCheck($artist->guarantee_south) ?></span></li>
 			                        </ul>
 			                    </span>
                         </div>

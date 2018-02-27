@@ -21,12 +21,12 @@
                         <option selected="selected" value="0">전체</option>
                         <option value="1">솔로</option>
                         <option value="2">그룹</option>
-                    </select>
+                    </select>s
                     <select name="group_type_sex">
-                        <option selected="selected" value="">전체</option>
-                        <option value="1">혼성</option>
-                        <option value="2">남성</option>
-                        <option value="3">여성</option>
+                        <option selected="selected" value="0">전체</option>
+                            <option value="1">혼성</option>
+                            <option value="2">남성</option>
+                            <option value="3">여성</option>
                     </select>
                     <label>장르</label>
                     <select name="group_type_song_genre">

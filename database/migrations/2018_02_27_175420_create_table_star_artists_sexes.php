@@ -16,6 +16,7 @@ class CreateTableStarArtistsSexes extends Migration
         Schema::create('star_artist_sexes', function (Blueprint $table) {
             $table->increments('id');
             $table->string('sex')->nullable();
+            $table->tinyInteger('value')->unique();
             $table->timestamps();
         });
     }
