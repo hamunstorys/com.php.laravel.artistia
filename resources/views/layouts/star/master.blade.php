@@ -12,7 +12,6 @@
                     echo '<input class="form-search" name="query" placeholder="검색어를 입력해 주세요" autocomplete="off">';
                 }?>
                 <button class="btn_search" type="submit"></button>
-                <?php var_dump(Session::get('search_requirement'))?>
             </div>
             <div class="search_option_wrap">
                 <div class="search_option">
@@ -24,7 +23,6 @@
                         <option value="2">그룹</option>
                     </select>
                     <select name="group_type_sex">
-                        {{}}
                         <option selected="selected" value="">전체</option>
                         <option value="1">혼성</option>
                         <option value="2">남성</option>
