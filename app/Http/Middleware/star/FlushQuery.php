@@ -5,7 +5,7 @@ namespace App\Http\Middleware\Star;
 use Closure;
 use Illuminate\Support\Facades\Session;
 
-class FlushQueryMiddleare
+class FlushQuery
 {
     /**
      * Handle an incoming request.

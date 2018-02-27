@@ -3,7 +3,7 @@
 namespace App\Http;
 
 
-use App\Http\Middleware\Star\FlushQueryMiddleare;
+use App\Http\Middleware\Star\FlushQuery;
 use Illuminate\Foundation\Http\Kernel as HttpKernel;
 
 class Kernel extends HttpKernel
@@ -59,6 +59,6 @@ class Kernel extends HttpKernel
         'can' => \Illuminate\Auth\Middleware\Authorize::class,
         'guest' => \App\Http\Middleware\RedirectIfAuthenticated::class,
         'throttle' => \Illuminate\Routing\Middleware\ThrottleRequests::class,
-        'flushQuery' => FlushQueryMiddleare::class,
+        'flushQuery' => FlushQuery::class,
     ];
 }
