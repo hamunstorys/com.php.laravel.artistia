@@ -41,7 +41,7 @@ class ArtistController extends Controller
             'comment' => $request->comment
         ));
 
-        $this->validate($post_data, [
+        $validator = $this->validate($post_data, [
             'artist_name' => 'required|max:255',
             'guarantee_concert' => 'nullable|max:2147483647|Integer',
             'guarantee_metropolitan' => 'nullable|max:2147483647|Integer',

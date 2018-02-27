@@ -11,10 +11,10 @@
                         <div class="item name">
                             {{$artist->artist_name}}
                             <div class="item_del">
-                                <form action="{{route('star.artist.destroy',$artist->id)}}" method="post">
-                                    {{csrf_field()}}
-                                    <input type="hidden" name="_method" value="delete">
-                                    <button type="submit" class="icon_del"><i class="fas fa-trash-alt"></i></button>
+                                <form>
+                                    <input type="hidden" id="url" value="{{route('star.artist.destroy',$artist->id)}}">
+                                    <input type="hidden" id="_method" name="_method" value="delete">
+                                    <button id="delete" class="icon_del"><i class="fas fa-trash-alt"></i></button>
                                 </form>
                             </div>
                         </div>
@@ -64,4 +64,41 @@
             @endforeach
         @endif
     </div>
+@endsection
+@section('scripts')
+    <script src="{{asset('assets/star/js/function.js')}}"></script>
+    <script type="text/javascript">
+        jQuery(function () {
+            $('.price').filter();
+        });
+
+        $('button#delete').click(function () {
+            if (confirm("삭제하시겠습니까?") == true) {
+
+                url = $('#url').val();
+                data = {
+                    _method: $('#_method').val(),
+                };
+
+                $.ajaxSetup({
+                    headers: {
+                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                    }
+                });
+
+                $.ajax({
+                    url: url,
+                    data: data,
+                    type: 'POST',
+                    success: function () {
+                        alert('삭제 되었습니다.');
+                        window.location = back();
+                    },
+                    error: function ($error) {
+                        alert('삭제에 실패하였습니다.');
+                    }
+                });
+            }
+        })
+    </script>
 @endsection
