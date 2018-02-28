@@ -94,7 +94,6 @@
     </div>
 @endsection
 @section('scripts')
-    <script src="{{asset('assets/star/js/function.js')}}"></script>
     <script type="text/javascript">
         jQuery(function () {
             $('.price').filter();

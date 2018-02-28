@@ -1,3 +1,4 @@
+/*input numberformat function*/
 (function ($) {
     $.fn.removeText = function (_v) {
         //console.log("removeText: 숫자 제거 합니다.");
@@ -59,3 +60,26 @@
     };
 
 })(jQuery);
+
+/*dropdown-mypage dropdown feature*/
+$(window).on('load', function () {
+    if ($('#dropdown-mypage').css("display") != "none") {
+        $('#dropdown-mypage').hide();
+    } else {
+        return false;
+    }
+
+    $(document).click(function () {
+        if ($('#dropdown-mypage').css("display") != "none") {
+            $('#dropdown-mypage').slideUp();
+        } else {
+            return false;
+        }
+    })
+
+    $('#dropdown-mypage-show').click(function (e) {
+        e.stopPropagation();
+        $('#dropdown-mypage').slideToggle();
+    });
+
+});
