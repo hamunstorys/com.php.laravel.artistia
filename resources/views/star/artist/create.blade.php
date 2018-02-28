@@ -117,7 +117,7 @@
                 type: 'POST',
                 success: function () {
                     alert('등록 되었습니다.');
-                    window.location = '/star';
+                    window.redirect('/star');
                 },
                 error: function (data) {
                     alert('등록 실패');

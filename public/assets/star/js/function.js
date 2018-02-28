@@ -69,6 +69,11 @@ $(window).on('load', function () {
         return false;
     }
 
+    $('#dropdown-mypage-show').click(function (e) {
+        e.stopPropagation();
+        $('#dropdown-mypage').slideToggle();
+    });
+
     $(document).click(function () {
         if ($('#dropdown-mypage').css("display") != "none") {
             $('#dropdown-mypage').slideUp();
@@ -76,10 +81,5 @@ $(window).on('load', function () {
             return false;
         }
     })
-
-    $('#dropdown-mypage-show').click(function (e) {
-        e.stopPropagation();
-        $('#dropdown-mypage').slideToggle();
-    });
 
 });
