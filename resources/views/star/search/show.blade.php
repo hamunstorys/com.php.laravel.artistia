@@ -1,9 +1,8 @@
 @extends('layouts.star.master')
 @section('content')
-    <meta name="csrf-token" content="{{ csrf_token() }}">>
     <div class="contents">
-        @if(isset($data) || isset($total_data))
-            <?php echo '<div class="search_result_title"><span class="total">"' . Session::get('query') . '"</span>에 대해 <span>' . $data->count() . '</span>건이 검색되었습니다."</div>'; ?>
+        @if(isset($data))
+            <?php echo $message?>
             @foreach($data as $artist)
                 <div class="result_wrap">
                     <div class="photo"
@@ -12,12 +11,11 @@
                         <div class="item name">
                             {{$artist->artist_name}}
                             <div class="item_del">
-                                <input type="hidden" id="url-{{$artist->id}}"
-                                       value="{{route('star.artist.destroy',$artist->id)}}">
-                                <input type="hidden" id="_method-{{$artist->id}}" value="delete">
-                                <button class="icon_del"
-                                        onclick="ajax($('#url-{{$artist->id}}').val(),$('#_method-{{$artist->id}}').val())">
-                                    <i class="fas fa-trash-alt"></i></button>
+                                <form action="{{route('star.artist.destroy',$artist->id)}}" method="post">
+                                    {{csrf_field()}}
+                                    <input type="hidden" name="_method" value="delete">
+                                    <button type="submit" class="icon_del"><i class="fas fa-trash-alt"></i></button>
+                                </form>
                             </div>
                         </div>
                         <div class="item pay">
@@ -37,7 +35,7 @@
                                     class="contact">{{$artist->manager_phone}}</span>
                         </div>
                         <div class="item company">
-                            <label>소속사</label>W
+                            <label>소속사</label>
                             <span>{{$artist->company_name}}</span><span
                                     class="contact">{{$artist->company_email}}</span>
                         </div>
@@ -54,9 +52,10 @@
                             <span>{{$artist->updated_at}}</span>
                         </div>
                         <div class="btn_wrap">
-                            <a href="{{route('star.artist.edit',$artist->id)}}">
+                            <Form action="{{route('star.artist.edit',$artist->id)}}" method="get">
+                                {{csrf_field()}}
                                 <button>수정하기</button>
-                            </a>
+                            </Form>
                         </div>
                     </div>
                     <div class="clearfix"></div>
@@ -64,35 +63,4 @@
             @endforeach
         @endif
     </div>
-@endsection
-@section('scripts')
-    <script type="text/javascript">
-        jQuery(function () {
-            $('.price').filter();
-        });
-        function ajax(url, method) {
-            if (confirm("삭제하시겠습니까?") == true) {
-                data = {
-                    _method: method
-                };
-                $.ajaxSetup({
-                    headers: {
-                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                    }
-                });
-                $.ajax({
-                    url: url,
-                    data: data,
-                    type: 'POST',
-                    success: function () {
-                        alert('삭제 되었습니다.');
-                        window.history.go(-1);
-                    },
-                    error: function ($error) {
-                        alert('삭제에 실패하였습니다.');
-                    }
-                });
-            }
-        }
-    </script>
 @endsection

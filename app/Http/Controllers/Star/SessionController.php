@@ -24,10 +24,10 @@ class SessionController extends Controller
     {
         $user = DB::table('star_users')->where('email', $request->email)->first();
         if ($user == null) {
-            return redirect(route('star.notification.error', ['message' => '해당 이메일이 없습니다.', 'route' => 'star.session.create']));
+            return 'id';
         } else {
             if (!auth()->attempt($request->only('email', 'password'))) {
-                return redirect(route('star.notification.error', ['message' => '비밀번호가 맞지 않습니다.', 'route' => 'star.session.create']));
+                return 'password';
             }
         }
         return redirect()->route('star.index');

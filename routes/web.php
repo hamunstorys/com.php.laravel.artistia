@@ -69,7 +69,7 @@ Route::prefix('star')->group(function () {
         'uses' => 'Star\ArtistController@destroy'
     ]);
 
-    Route::get('/search', [
+    Route::post('/search', [
         'as' => 'star.search',
         'uses' => 'Star\SearchController@search'
     ]);

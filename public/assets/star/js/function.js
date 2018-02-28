@@ -77,5 +77,4 @@ $(window).on('load', function () {
             $('#dropdown-mypage').slideUp();
         }
     })
-
 });

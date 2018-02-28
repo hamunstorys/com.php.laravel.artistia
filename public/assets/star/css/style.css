@@ -93,6 +93,7 @@ header .account .mypage_drop {
 	text-align: left;
 	width: 200px;
 	box-shadow: 0 3px 10px 0 rgba(0,0,0,0.3);
+	display: none;
 }
 header .account .mypage_drop li {
 	font-size: 14px;
