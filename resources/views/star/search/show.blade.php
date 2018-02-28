@@ -66,25 +66,20 @@
     </div>
 @endsection
 @section('scripts')
-    <script src="{{asset('assets/star/js/function.js')}}"></script>
     <script type="text/javascript">
         jQuery(function () {
             $('.price').filter();
         });
-
         function ajax(url, method) {
             if (confirm("삭제하시겠습니까?") == true) {
-
                 data = {
                     _method: method
                 };
-
                 $.ajaxSetup({
                     headers: {
                         'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                     }
                 });
-
                 $.ajax({
                     url: url,
                     data: data,

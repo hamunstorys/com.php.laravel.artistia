@@ -98,10 +98,8 @@
         jQuery(function () {
             $('.price').filter();
         });
-
         $('button#confirm').click(function () {
             if (confirm("수정하시겠습니까?") == true) {
-
                 url = $('#url').val();
                 data = {
                     _method: $('#_method').val(),
@@ -116,13 +114,11 @@
                     company_email: $('#company_email').val(),
                     comment: $('#comment').val()
                 };
-
                 $.ajaxSetup({
                     headers: {
                         'X-CSRF-TOKEN': $('input[name="csrf-token"]').attr('content')
                     }
                 });
-
                 $.ajax({
                     url: url,
                     data: data,

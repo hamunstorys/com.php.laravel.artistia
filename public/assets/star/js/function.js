@@ -65,8 +65,6 @@
 $(window).on('load', function () {
     if ($('#dropdown-mypage').css("display") != "none") {
         $('#dropdown-mypage').hide();
-    } else {
-        return false;
     }
 
     $('#dropdown-mypage-show').click(function (e) {
@@ -77,8 +75,6 @@ $(window).on('load', function () {
     $(document).click(function () {
         if ($('#dropdown-mypage').css("display") != "none") {
             $('#dropdown-mypage').slideUp();
-        } else {
-            return false;
         }
     })
 

@@ -89,7 +89,6 @@
         jQuery(function () {
             $('.price').filter();
         });
-
         $('button#confirm').click(function () {
             url = $('#url').val();
             data = {
@@ -104,26 +103,23 @@
                 company_email: $('#company_email').val(),
                 comment: $('#comment').val()
             };
-
             $.ajaxSetup({
                 headers: {
                     'X-CSRF-TOKEN': $('input[name="csrf-token"]').attr('content')
                 }
             });
-
             $.ajax({
                 url: url,
                 data: data,
                 type: 'POST',
                 success: function () {
                     alert('등록 되었습니다.');
-                    window.redirect('/star');
+                    window.location = '/star';
                 },
                 error: function (data) {
                     alert('등록 실패');
                 }
             });
-
         })
     </script>
 @endsection
