@@ -75,10 +75,7 @@ class ArtistController extends Controller
             ]);
             $artist->fill($post_data->except('picture_url'));
         }
-
         $artist->save();
-        return redirect()->route('star.notification.confirm', ['message' => '등록이 완료되었습니다.', 'route' => 'star.index']);
-
     }
 
     public function edit($id)
@@ -137,9 +134,7 @@ class ArtistController extends Controller
             $artist->fill($post_data->except('picture_url'));
         }
         $artist->fill($post_data->except('picture_url'));
-
         $artist->update();
-        return redirect()->route('star.notification.confirm', ['message' => '수정이 완료되었습니다.', 'route' => 'star.index']);
     }
 
     public function destroy(Request $request, $id)
@@ -149,9 +144,7 @@ class ArtistController extends Controller
         if (file_exists($path) && public_path($path) != public_path('assets/star/img/icon_singer.svg')) {
             File::delete(public_path($path));
         }
-
         $artist->delete();
-        return redirect()->route('star.notification.confirm', ['message' => '삭제가 완료되었습니다.', 'route' => 'star.index']);
     }
 
     public function getPath($url)

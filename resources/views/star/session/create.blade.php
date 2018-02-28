@@ -17,6 +17,5 @@
         </div>
     </div>
 </div>
-@include('layouts.star.alert')
 </body>
 </html>

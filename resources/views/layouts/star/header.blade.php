@@ -5,23 +5,9 @@
             <span>SJ COMPANY</span>
         </div>
         <div class="top account">
-            <script type="text/javascript">
-                $(document).ready(function () {
-                    $('.dropdown-menu').click(function (event) {
-                        event.stopPropagation();
-                        $(".dropdown").slideToggle("fast");
-                    });
-                    $(".dropdown").on("click", function (event) {
-                        event.stopPropagation();
-                    });
-                });
-                $(document).click(function () {
-                    $(".dropdown").hide();
-                });
-            </script>
-            <i class="fas fa-user-circle icon mypage dropdown-menu"></i>
+            <i class="fas fa-user-circle icon mypage show_hide"></i>
             <a href="{{route('star.session.destroy')}}"><i class="fas fa-sign-out-alt icon logout"></i></a>
-            <div class="mypage_drop dropdown">
+            <div class="mypage_drop slidingDiv">
                 <ul>
                     <li>마이페이지</li>
                     <a href="{{route('star.artist.create')}}">
