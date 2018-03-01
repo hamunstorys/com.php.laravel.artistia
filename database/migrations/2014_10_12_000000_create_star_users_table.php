@@ -14,6 +14,8 @@ class CreateStarUsersTable extends Migration
     public function up()
     {
         Schema::create('star_users', function (Blueprint $table) {
+            $table->charset = 'utf8';
+            $table->collation = 'utf8_general_ci';
             $table->increments('id');
             $table->string('email')->unique();
             $table->string('password');

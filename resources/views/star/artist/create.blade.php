@@ -71,6 +71,37 @@
                            value="{{old('company_email')}}">
 	                </span>
             </div>
+            <div class="item group_type">
+                <label>그룹 유형</label>
+                <select name="group_type_number">
+                    <option selected="selected" value="0">인원 수</option>
+                    <option value="1">솔로</option>
+                    <option value="2">그룹</option>
+                </select>
+                <select name="group_type_sex">
+                    <option selected="selected" value="0">성별</option>
+                    @foreach($sexes = Session::get('search_requirement.sexes') as $sex)
+                        <?php echo '<option value="' . $sex->id . '">' . $sex->value . '</option>'; ?>
+                    @endforeach
+                </select>
+                <select name="group_type_song_genre">
+                    <option selected="selected" value="0">장르</option>
+                    @foreach($song_generes = Session::get('search_requirement.song_generes') as $song_genere)
+                        <?php echo '<option value="' . $song_genere->id . '">' . $song_genere->value . '</option>'; ?>
+                    @endforeach
+                </select>
+            </div>
+            <div class="item group_type">
+	                <span>
+                    <label>소속사</label>
+                    <input class="option" id="company_name" name="company_name"
+                           placeholder="소속사"
+                           value="{{old('company_name')}}">
+                    <input class="option" id="company_email" name="company_email"
+                           placeholder="소속사 이메일"
+                           value="{{old('company_email')}}">
+	                </span>
+            </div>
             <div class="item memo">
                 <label>참고내용</label>
                 <textarea class="memo" rows="3" id="comment" name="comment"

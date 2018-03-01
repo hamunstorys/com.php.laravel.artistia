@@ -14,6 +14,8 @@ class CreateTableStarArtistItemSongGenres extends Migration
     public function up()
     {
         Schema::create('star_artist_item_song_genres', function (Blueprint $table) {
+            $table->charset = 'utf8';
+            $table->collation = 'utf8_general_ci';
             $table->increments('id');
             $table->integer('artist_id')->unsigned()->nullable();
             $table->integer('song_genre_id')->unsigned()->nullable();

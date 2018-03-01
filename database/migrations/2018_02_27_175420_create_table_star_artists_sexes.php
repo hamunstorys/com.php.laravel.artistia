@@ -14,9 +14,10 @@ class CreateTableStarArtistsSexes extends Migration
     public function up()
     {
         Schema::create('star_artist_sexes', function (Blueprint $table) {
+            $table->charset = 'utf8';
+            $table->collation = 'utf8_general_ci';
             $table->increments('id');
-            $table->string('sex')->nullable();
-            $table->tinyInteger('value')->unique();
+            $table->string('value')->unique();
             $table->timestamps();
         });
     }

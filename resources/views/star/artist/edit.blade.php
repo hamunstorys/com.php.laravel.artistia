@@ -72,16 +72,44 @@
                            value="{{$artist->company_email}}">
 	                </span>
             </div>
+            <div class="item group_type">
+                <span>
+                <label>그룹 유형(인원)</label>
+                <select name="group_type_number" disabled="disabled">
+                    <option selected="selected">{{$artist->group_type_number}}</option>
+                    <!-- 수정 버튼을 눌렸을 때만 전체 목록을 보여줌-->
+                </select>
+                     <button>수정</button>
+                </span>
+            </div>
+            <div class="item group_type">
+                <span>
+                <label>그룹 유형(성별)</label>
+                <select name="group_type_number" disabled="disabled">
+                    <option selected="selected">{{$artist->group_type_number}}</option>
+                </select>
+                     <button>수정</button>
+                </span>
+            </div>
+            <div class="item group_type">
+                <span>
+                <label>그룹 유형(장르)</label>
+                <select name="group_type_number" disabled="disabled">
+                    <option selected="selected">{{$artist->group_type_number}}</option>
+                </select>
+                    <button>수정</button>
+                </span>
+            </div>
             <div class="item memo">
                 <label>참고내용</label>
                 <textarea class="memo" rows="3" id="comment" name="comment"
                           placeholder="참고사항을 입력하세요">{{$artist->comment}}</textarea>
             </div>
-            <div class="item">
+            <div class="item date">
                 <label>등록일</label>
                 <span>{{$artist->created_at}}</span>
             </div>
-            <div class="item">
+            <div class="item date">
                 <label>최종 수정일</label>
                 <span>{{$artist->updated_at}}</span>
             </div>

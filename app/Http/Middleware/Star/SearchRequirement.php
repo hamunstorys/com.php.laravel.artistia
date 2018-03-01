@@ -15,20 +15,20 @@ class SearchRequirement
      * @param  \Closure $next
      * @return mixed
      */
+
     public function handle($request, Closure $next)
     {
         if (Session::has('search_requirement')) {
             return $next($request);
         } else
-            $this->setDefaultSearchRequirement('song_generes', $this->getSearchRequirement('star_artist_song_genres', 'name'));
-            $this->setDefaultSearchRequirement('sexes', $this->getSearchRequirement('star_artist_sexes', 'sex'));
-
+            $this->setDefaultSearchRequirement('song_generes', $this->getSearchRequirement('star_artist_song_genres'));
+        $this->setDefaultSearchRequirement('sexes', $this->getSearchRequirement('star_artist_sexes'));
         return $next($request);
     }
 
-    public function getSearchRequirement($table, $column)
+    public function getSearchRequirement($table)
     {
-        return DB::table($table)->select($column)->get();
+        return DB::table($table)->select('value')->get();
     }
 
     public function setDefaultSearchRequirement($requirement, $data)

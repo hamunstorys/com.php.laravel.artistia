@@ -16,32 +16,23 @@
             <div class="search_option">
                 <button class="btn_all">전체목록<span class="all_num">1,234</span></button>
                 <label>유형</label>
-                <select name="group_type_single">
+                <select name="group_type_number">
                     <option selected="selected" value="0">전체</option>
                     <option value="1">솔로</option>
                     <option value="2">그룹</option>
-                </select>s
+                </select>
                 <select name="group_type_sex">
                     <option selected="selected" value="0">전체</option>
-                    <option value="1">혼성</option>
-                    <option value="2">남성</option>
-                    <option value="3">여성</option>
+                    @foreach($sexes = Session::get('search_requirement.sexes') as $sex)
+                        <?php echo '<option value="' . $sex->id . '">' . $sex->value . '</option>'; ?>
+                    @endforeach
                 </select>
                 <label>장르</label>
                 <select name="group_type_song_genre">
-                    <option selected="selected" value="">전체</option>
-                    <option value="">발라드</option>
-                    <option value="">댄스</option>
-                    <option value="">락</option>
-                    <option value="">트로트</option>
-                    <option value="">인디음악</option>
-                    <option value="">힙합/랩</option>
-                    <option value="">재즈</option>
-                    <option value="">일렉</option>
-                    <option value="">뮤지컬</option>
-                    <option value="">클래식</option>
-                    <option value="">퓨전음악</option>
-                    <option value="">인스트루먼트</option>
+                    <option selected="selected" value="0">전체</option>
+                    @foreach($song_generes = Session::get('search_requirement.song_generes') as $song_genere)
+                        <?php echo '<option value="' . $song_genere->id . '">' . $song_genere->value . '</option>'; ?>
+                    @endforeach
                 </select>
                 <label>금액</label>
                 <input type="text"><span class="dash">~</span><input type="text">
@@ -62,19 +53,16 @@
                 'X-CSRF-TOKEN': $('input[name="csrf-token"]').attr('content')
             }
         });
-
         $.ajax({
             url: url,
             data: data,
             type: 'POST',
             success: function () {
-                alert({{Session::get('query')}})
                 window.location = '/star/search/results';
             },
         });
     })
 </script>
-@include('layouts.star.scripts')
 @yield('content')
 @yield('scripts')
 @include('layouts.star.footer')

@@ -40,6 +40,18 @@
                                     class="contact">{{$artist->company_email}}</span>
                         </div>
                         <div class="item memo">
+                            <label>그룹 유형(인원)</label>
+                            <span>{{$artist->group_type_number}}</span>
+                        </div>
+                        <div class="item memo">
+                            <label>그룹 유형(성별)</label>
+                            <span>{{$artist->group_type_sex}}</span>
+                        </div>
+                        <div class="item memo">
+                            <label>그룹 유형(장르)</label>
+                            <span>{{$artist->group_type_song_genre}}</span>
+                        </div>
+                        <div class="item memo">
                             <label>참고내용</label>
                             <span>{{$artist->comment}}</span>
                         </div>

@@ -28,8 +28,7 @@ class StarArtistSongGenresTableSeeder extends Seeder
         foreach ($data as $key => $value) {
             $song_genre = new \App\Models\Star\Star_Artist_Song_Genre();
             $song_genre->fill([
-                'name' => $value,
-                'value' => $key + 1,
+                'value' => $value,
             ]);
             $song_genre->save();
         }

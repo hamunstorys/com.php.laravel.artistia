@@ -26,8 +26,7 @@ class StarArtistSexesTableSeeder extends Seeder
         foreach ($data as $key => $value) {
             $sex = new \App\Models\Star\Star_Artist_Sex();
             $sex->fill([
-                'sex' => $value,
-                'value' => $key + 1
+                'value' => $value,
             ]);
             $sex->save();
         }

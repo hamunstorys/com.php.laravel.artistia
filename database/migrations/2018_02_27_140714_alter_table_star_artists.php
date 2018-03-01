@@ -14,7 +14,7 @@ class AlterTableStarArtists extends Migration
     public function up()
     {
         Schema::table('star_artists', function (Blueprint $table) {
-            $table->boolean('group_type_single')->nullable();
+            $table->boolean('group_type_number')->nullable();
             $table->integer('group_type_song_genre')->unsigned()->nullable();
 
             $table->foreign('group_type_song_genre')->references('id')->on('star_artist_item_song_genres')->onUpdate('cascade')->onDelete('cascade');
@@ -29,7 +29,7 @@ class AlterTableStarArtists extends Migration
     public function down()
     {
         Schema::table('star_artists', function ($table) {
-            $table->dropColumn('group_type_single');
+            $table->dropColumn('group_type_number');
             $table->dropForeign('star_artist_group_type_song_genre_foreign');
             $table->dropColumn('group_type_song_genre');
         });
