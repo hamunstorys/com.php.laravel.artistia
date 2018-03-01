@@ -11,36 +11,32 @@
             <input type="password" name="password" placeholder="비밀번호를 입력해주세요" value="{{old('password')}}">
             <button id="login" label="로그인하기">로그인</button>
         </div>
-        </FORM>
         <div class="copyright">
             © 2018 SJCOMPANY Inc.
-        </div>
+        </div>W
     </div>
 </div>
 <script type="text/javascript">
     $('button#login').click(function () {
-        url = '{{secure_url(route('star.session.store', [], false))}}';
-        data = {
-            picture_url: $('input[name="email"]').val(),
-            artist_name: $('input[name="password"]').val(),
-        };
+        url = '{{route('star.session.store')}}';
         $.ajaxSetup({
             headers: {
                 'X-CSRF-TOKEN': $('input[name="csrf-token"]').attr('content')
             }
         });
         $.ajax({
+            type: "POST",
             url: url,
-            data: data,
-            type: 'POST',
+            dataType: "json",
+            data: {
+                email: $('input[name="email"]').val(),
+                password: $('input[name="password"]').val()
+            },
             success: function () {
-                window.location = '/star';
+                window.location = '/star'
             },
-            id: function () {
-                alert('아이디가 틀렸습니다.');
-            },
-            password: function () {
-                alert('비밀번호가 틀렸습니다.');
+            error: function (data) {
+                alert(data.message);
             }
         });
     })
