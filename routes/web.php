@@ -23,17 +23,17 @@ Route::prefix('star')->group(function () {
         'uses' => 'Star\IndexController@index'
     ]);
 
-    Route::get('/users/login', [
+    Route::get('/user/login', [
         'as' => 'star.session.create',
         'uses' => 'Star\SessionController@create'
     ]);
 
-    Route::post('/users/login', [
+    Route::post('/user/login', [
         'as' => 'star.session.store',
         'uses' => 'Star\SessionController@store'
     ]);
 
-    Route::get('/users/logout', [
+    Route::get('/user/logout', [
         'as' => 'star.session.destroy',
         'uses' => 'Star\SessionController@destroy'
     ]);
@@ -72,10 +72,5 @@ Route::prefix('star')->group(function () {
     Route::post('/search', [
         'as' => 'star.search',
         'uses' => 'Star\SearchController@search'
-    ]);
-
-    Route::get('/search/results', [
-        'as' => 'star.search.results',
-        'uses' => 'Star\SearchController@showResults'
     ]);
 });
