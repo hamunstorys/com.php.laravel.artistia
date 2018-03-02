@@ -13,7 +13,7 @@
         </div>
         <div class="copyright">
             © 2018 SJCOMPANY Inc.
-        </div>W
+        </div>
     </div>
 </div>
 <script type="text/javascript">
