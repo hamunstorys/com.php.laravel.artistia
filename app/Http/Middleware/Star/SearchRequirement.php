@@ -28,7 +28,7 @@ class SearchRequirement
 
     public function getSearchRequirement($table)
     {
-        return DB::table($table)->select('value')->get();
+        return DB::table($table)->select('id', 'value')->get();
     }
 
     public function setDefaultSearchRequirement($requirement, $data)
