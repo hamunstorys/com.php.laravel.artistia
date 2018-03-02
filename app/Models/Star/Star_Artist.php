@@ -13,7 +13,7 @@ class Star_Artist extends Model
         'artist_name',
         'guarantee_concert', 'guarantee_metropolitan', 'guarantee_central', 'guarantee_south',
         'manager_name', 'manager_phone', 'company_name', 'company_email', 'picture_url', 'comment', 'created_at', 'updated_at',
-        'group_type_single', 'group_type_sex', 'group_type_song_genre'
+        'group_type_number', 'group_type_sex', 'group_type_song_genre'
     ];
 
     protected $dates = [
@@ -26,9 +26,9 @@ class Star_Artist extends Model
     ];
 
     /* Eloquent Relation */
-    public function sex()
+    public function sexs()
     {
-        $this->hasOne(Star_Artist_Sex::class);
+        $this->belongsToMany(Star_Artist::class);
     }
 
     public function song_genres()

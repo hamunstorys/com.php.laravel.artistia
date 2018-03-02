@@ -13,11 +13,12 @@ class CreateTableStarArtistsSexes extends Migration
      */
     public function up()
     {
-        Schema::create('star_artist_sexes', function (Blueprint $table) {
+        Schema::create('star_artists_sexes', function (Blueprint $table) {
             $table->charset = 'utf8';
             $table->collation = 'utf8_general_ci';
             $table->increments('id');
-            $table->string('value')->unique();
+            $table->string('value');
+
             $table->timestamps();
         });
     }
@@ -29,6 +30,6 @@ class CreateTableStarArtistsSexes extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('star_artist_sexes');
+        Schema::dropIfExists('star_artists_sexes');
     }
 }

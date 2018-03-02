@@ -2,7 +2,7 @@
 
 use Illuminate\Database\Seeder;
 
-class StarArtistSongGenresTableSeeder extends Seeder
+class StarArtistsSexesTableSeeder extends Seeder
 {
     /**
      * Run the database seeds.
@@ -16,21 +16,19 @@ class StarArtistSongGenresTableSeeder extends Seeder
 
     public function seed()
     {
-        $data = array(
-            '발라드', '댄스', '락', '트로트', '인디',
-            '힙합', '재즈', '일렉', '뮤지컬', '클래식', '퓨전', '인스트루먼트'
-        );
+        $data = array('남성', '여성', '혼성');
         $this->insertColumns($data);
     }
 
     public function insertColumns(Array $data)
     {
+
         foreach ($data as $key => $value) {
-            $song_genre = new \App\Models\Star\Star_Artist_Song_Genre();
-            $song_genre->fill([
+            $sex = new \App\Models\Star\Star_Artist_Sex();
+            $sex->fill([
                 'value' => $value,
             ]);
-            $song_genre->save();
+            $sex->save();
         }
     }
 }

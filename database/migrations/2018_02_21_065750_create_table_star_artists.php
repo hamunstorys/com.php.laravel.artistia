@@ -29,6 +29,7 @@ class CreateTableStarArtists extends Migration
             $table->string('company_email')->nullable();
             $table->string('picture_url', 2083)->nullable();
             $table->string('comment')->nullable()->comment('메모');
+            $table->integer('group_type_sex')->unsigned();
             $table->timestamps();
         });
         if (!is_dir('assets/star/uploads/artist/thumbnails')) {

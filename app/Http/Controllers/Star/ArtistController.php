@@ -76,9 +76,11 @@ class ArtistController extends Controller
             ]);
             $artist->fill($post_data->except('picture_url'));
         }
-        return $sex = Star_Artist_Sex::where('value',$request->get('group_type_sex'))->get();
 
-        $artist->song_genres()->save(Star_Artist_Song_Genre::where('value', '=', $request->get('group_type_song_genre')));
+        $sex = $artist->sex()->create([
+            'value' => $request->group_type_sex
+        ]);
+        $sex->save();
         $artist->save();
     }
 
