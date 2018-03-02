@@ -1,7 +1,9 @@
 @extends('layouts.star.master')
 @section('content')
     <div class="result_wrap">
-        <input type="hidden" name="csrf-token" content="{{csrf_token()}}"/>
+        <form action="{{route('star.artist.store')}}" method="post">
+        {{csrf_field()}}
+            {{--<input type="hidden" name="csrf-token" content="{{csrf_token()}}"/>--}}
         <input type="hidden" id="url" value="{{route('star.artist.store')}}">
         <div class="poster"
              {{ $errors->has('picture_url')?'has-error':'' }} style="background-image: url('{{old('picture_url')}}')">
@@ -73,18 +75,18 @@
             </div>
             <div class="item group_type">
                 <label>그룹 유형</label>
-                <select name="group_type_number">
+                <select name="group_type_number" id="group_type_number">
                     <option selected="selected" value="0">인원 수</option>
                     <option value="1">솔로</option>
                     <option value="2">그룹</option>
                 </select>
-                <select name="group_type_sex">
+                <select name="group_type_sex" id="group_type_sex">
                     <option selected="selected" value="0">성별</option>
                     @foreach($sexes = Session::get('search_requirement.sexes') as $sex)
                         <?php echo '<option value="' . $sex->id . '">' . $sex->value . '</option>'; ?>
                     @endforeach
                 </select>
-                <select name="group_type_song_genre">
+                <select name="group_type_song_genre" id="group_type_song_genre">
                     <option selected="selected" value="0">장르</option>
                     @foreach($song_generes = Session::get('search_requirement.song_generes') as $song_genere)
                         <?php echo '<option value="' . $song_genere->id . '">' . $song_genere->value . '</option>'; ?>
@@ -111,46 +113,51 @@
         <div class="clearfix"></div>
         <div class="btn_wrap">
             <button id="confirm">확인</button>
+            </form>
             <button id="cancle" onclick="window.history.go(-1)">취소하기</button>
         </div>
     </div>
 @endsection
 @section('scripts')
-    <script type="text/javascript">
-        jQuery(function () {
-            $('.price').filter();
-        });
-        $('button#confirm').click(function () {
-            url = $('#url').val();
-            data = {
-                picture_url: $('#picture_url').val(),
-                artist_name: $('#artist_name').val(),
-                guarantee_concert: $('#guarantee_concert').val(),
-                guarantee_metropolitan: $('#guarantee_metropolitan').val(),
-                guarantee_central: $('#guarantee_central').val(),
-                manager_name: $('#manager_name').val(),
-                manager_phone: $('#manager_phone').val(),
-                company_name: $('#company_name').val(),
-                company_email: $('#company_email').val(),
-                comment: $('#comment').val()
-            };
-            $.ajaxSetup({
-                headers: {
-                    'X-CSRF-TOKEN': $('input[name="csrf-token"]').attr('content')
-                }
-            });
-            $.ajax({
-                url: url,
-                data: data,
-                type: 'POST',
-                success: function () {
-                    alert('등록 되었습니다.');
-                    window.location = '/star';
-                },
-                error: function (data) {
-                    alert('등록 실패');
-                }
-            });
-        })
-    </script>
+    {{--<script type="text/javascript">--}}
+        {{--jQuery(function () {--}}
+            {{--$('.price').filter();--}}
+        {{--});--}}
+        {{--$('button#confirm').click(function () {--}}
+            {{--url = $('#url').val();--}}
+            {{--data = {--}}
+                {{--picture_url: $('#picture_url').val(),--}}
+                {{--artist_name: $('#artist_name').val(),--}}
+                {{--guarantee_concert: $('#guarantee_concert').val(),--}}
+                {{--guarantee_metropolitan: $('#guarantee_metropolitan').val(),--}}
+                {{--guarantee_central: $('#guarantee_central').val(),--}}
+                {{--manager_name: $('#manager_name').val(),--}}
+                {{--manager_phone: $('#manager_phone').val(),--}}
+                {{--company_name: $('#company_name').val(),--}}
+                {{--company_email: $('#company_email').val(),--}}
+                {{--group_type_number: $('#group_type_number').val(),--}}
+                {{--group_type_sex: $('#group_type_sex').val(),--}}
+                {{--group_type_song_genre: $('#group_type_song_genre').val(),--}}
+                {{--comment: $('#comment').val(),--}}
+
+            {{--};--}}
+            {{--$.ajaxSetup({--}}
+                {{--headers: {--}}
+                    {{--'X-CSRF-TOKEN': $('input[name="csrf-token"]').attr('content')--}}
+                {{--}--}}
+            {{--});--}}
+            {{--$.ajax({--}}
+                {{--url: url,--}}
+                {{--data: data,--}}
+                {{--type: 'POST',--}}
+                {{--success: function () {--}}
+                    {{--alert('등록 되었습니다.');--}}
+                    {{--window.location = '/star';--}}
+                {{--},--}}
+                {{--error: function (data) {--}}
+                    {{--alert('등록 실패');--}}
+                {{--}--}}
+            {{--});--}}
+        {{--})--}}
+    {{--</script>--}}
 @endsection

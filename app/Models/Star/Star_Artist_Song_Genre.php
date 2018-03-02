@@ -8,7 +8,7 @@ class Star_Artist_Song_Genre extends Model
 {
     protected $table = 'star_artist_song_genres';
     protected $fillable = [
-        'name',
+        'value',
     ];
 
     /* Eloquent Relation */

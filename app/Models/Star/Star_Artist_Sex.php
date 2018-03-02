@@ -8,7 +8,7 @@ class Star_Artist_Sex extends Model
 {
     protected $table = 'star_artist_sexes';
     protected $fillable = [
-        'sex',
+        'value',
     ];
 
     /* Eloquent Relation */

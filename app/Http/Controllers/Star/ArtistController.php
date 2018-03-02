@@ -3,14 +3,12 @@
 namespace App\Http\Controllers\Star;
 
 use App\Models\Star\Star_Artist;
+use App\Models\Star\Star_Artist_Sex;
+use App\Models\Star\Star_Artist_Song_Genre;
 use Illuminate\Support\Facades\File;
-use Illuminate\Support\Facades\Input;
-use Illuminate\Support\Facades\Session;
-use Illuminate\Support\Facades\Validator;
 use Intervention\Image\ImageManager;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use Illuminate\Support\Facades\Storage;
 
 class ArtistController extends Controller
 {
@@ -38,6 +36,9 @@ class ArtistController extends Controller
             'company_name' => $request->company_name,
             'company_email' => $request->company_email,
             'picture_url' => $request->picture_url,
+            'group_type_number' => $request->group_type_number,
+            'group_type_sex' => $request->group_type_sex,
+            'group_type_song_genre' => $request->group_type_song_genre,
             'comment' => $request->comment
         ));
 
@@ -75,6 +76,9 @@ class ArtistController extends Controller
             ]);
             $artist->fill($post_data->except('picture_url'));
         }
+        return $sex = Star_Artist_Sex::where('value',$request->get('group_type_sex'))->get();
+
+        $artist->song_genres()->save(Star_Artist_Song_Genre::where('value', '=', $request->get('group_type_song_genre')));
         $artist->save();
     }
 
@@ -96,6 +100,9 @@ class ArtistController extends Controller
             'manager_phone' => $request->manager_phone,
             'company_name' => $request->company_name,
             'company_email' => $request->company_email,
+            'group_type_number' => $request->group_type_number,
+            'group_type_sex' => $request->group_type_sex,
+            'group_type_song_genre' => $request->group_type_song_genre,
             'picture_url' => $request->picture_url,
             'comment' => $request->comment
         ));

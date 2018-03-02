@@ -7,7 +7,7 @@
             <div class="search_wrap">
                 {{csrf_field()}}
                 @if(isset($query))
-                    <?php echo '<input class="form-search" name="query" id="query" placeholder="검색어를 입력해 주세요" autocomplete="off" value="'.$query . '">';?>
+                    <?php echo '<input class="form-search" name="query" id="query" placeholder="검색어를 입력해 주세요" autocomplete="off" value="' . $query . '">';?>
                 @else
                     <?php echo '<input class="form-search" name="query" id="query" placeholder="검색어를 입력해 주세요" autocomplete="off">' ?>
 
@@ -44,6 +44,25 @@
         </Form>
     </div>
 </div>
+<script>
+    /*dropdown-mypage dropdown feature*/
+    $(window).on('load', function () {
+        if ($('#dropdown-mypage').css("display") != "none") {
+            $('#dropdown-mypage').hide();
+        }
+
+        $('#dropdown-mypage-show').click(function (e) {
+            e.stopPropagation();
+            $('#dropdown-mypage').slideToggle();
+        });
+
+        $(document).click(function () {
+            if ($('#dropdown-mypage').css("display") != "none") {
+                $('#dropdown-mypage').slideUp();
+            }
+        })
+    });
+</script>
 @yield('content')
 @yield('scripts')
 @include('layouts.star.footer')
