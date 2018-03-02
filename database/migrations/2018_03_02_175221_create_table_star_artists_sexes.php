@@ -18,8 +18,8 @@ class CreateTableStarArtistsSexes extends Migration
             $table->collation = 'utf8_general_ci';
             $table->increments('id');
             $table->string('value');
-
             $table->timestamps();
+
         });
     }
 

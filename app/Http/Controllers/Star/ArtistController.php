@@ -77,10 +77,6 @@ class ArtistController extends Controller
             $artist->fill($post_data->except('picture_url'));
         }
 
-        $sex = $artist->sex()->create([
-            'value' => $request->group_type_sex
-        ]);
-        $sex->save();
         $artist->save();
     }
 

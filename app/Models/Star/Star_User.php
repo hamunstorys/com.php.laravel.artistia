@@ -16,6 +16,8 @@ class Star_User extends Authenticatable
      */
     protected $table = 'star_users';
 
+    protected $primaryKey = 'id';
+
     protected $fillable = [
         'email', 'password', 'remember_token'
     ];

@@ -7,6 +7,9 @@ use Illuminate\Database\Eloquent\Model;
 class Star_Artist_Song_Genre extends Model
 {
     protected $table = 'star_artists_song_genres';
+
+    protected $primaryKey = 'id';
+
     protected $fillable = [
         'value',
     ];

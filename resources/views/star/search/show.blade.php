@@ -41,15 +41,19 @@
                         </div>
                         <div class="item memo">
                             <label>그룹 유형(인원)</label>
-                            <span>{{$artist->group_type_number}}</span>
+                            @if($artist->group_type_number == 1)
+                                <span>솔로</span>
+                            @else
+                                <span>그룹</span>
+                            @endif
                         </div>
                         <div class="item memo">
                             <label>그룹 유형(성별)</label>
-                            <span>{{$artist->group_type_sex}}</span>
+                            <span>{{\App\Models\Star\Star_Artist_Sex::where('id', $artist->group_type_sex)->first()->value}}</span>
                         </div>
                         <div class="item memo">
                             <label>그룹 유형(장르)</label>
-                            <span>{{$artist->group_type_song_genre}}</span>
+                            <span>{{\App\Models\Star\Star_Artist_Song_Genre::where('id', $artist->group_type_sex)->first()->value}}</span>
                         </div>
                         <div class="item memo">
                             <label>참고내용</label>

@@ -21,6 +21,7 @@ class SearchController extends Controller
     public function search(Request $request)
     {
         $query = $request->get('query');
+
         return $this->show($query);
 
     }
@@ -30,6 +31,8 @@ class SearchController extends Controller
         $this->setData($query);
         $this->setMessage($query);
         $helper = $this->getHelper();
+
+
         return view('star.search.show', ['data' => $this->data, 'helper' => $helper, 'message' => $this->message, 'query' => $query]);
     }
 

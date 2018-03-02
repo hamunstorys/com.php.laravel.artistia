@@ -7,13 +7,13 @@ use Illuminate\Database\Eloquent\Model;
 class Star_Artist_Sex extends Model
 {
     protected $table = 'star_artists_sexes';
+
+    protected $primaryKey = 'id';
+
     protected $fillable = [
         'value',
     ];
 
     /* Eloquent Relation */
-    public function artist()
-    {
-        return $this->belongsToMany(Star_Artist::class);
-    }
+
 }

@@ -9,6 +9,8 @@ class Star_Artist extends Model
 {
     protected $table = 'star_artists';
 
+    protected $primaryKey = 'id';
+
     protected $fillable = [
         'artist_name',
         'guarantee_concert', 'guarantee_metropolitan', 'guarantee_central', 'guarantee_south',
@@ -26,13 +28,9 @@ class Star_Artist extends Model
     ];
 
     /* Eloquent Relation */
-    public function sexs()
-    {
-        $this->belongsToMany(Star_Artist::class);
-    }
-
     public function song_genres()
     {
         $this->hasMany(Star_Artist_Song_Genre::class);
     }
+
 }

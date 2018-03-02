@@ -21,8 +21,8 @@ class SearchRequirement
         if (Session::has('search_requirement')) {
             return $next($request);
         } else
-            $this->setDefaultSearchRequirement('song_generes', $this->getSearchRequirement('star_artist_song_genres'));
-        $this->setDefaultSearchRequirement('sexes', $this->getSearchRequirement('star_artist_sexes'));
+            $this->setDefaultSearchRequirement('song_generes', $this->getSearchRequirement('star_artists_song_genres'));
+        $this->setDefaultSearchRequirement('sexes', $this->getSearchRequirement('star_artists_sexes'));
         return $next($request);
     }
 
