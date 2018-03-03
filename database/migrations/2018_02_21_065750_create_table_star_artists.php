@@ -30,8 +30,8 @@ class CreateTableStarArtists extends Migration
             $table->string('picture_url', 2083)->nullable();
             $table->string('comment')->nullable()->comment('메모');
             $table->integer('group_type_sex')->unsigned()->nulable();
-            $table->integer('group_type_number')->unsigned();
-            $table->integer('group_type_song_genre')->unsigned();
+            $table->integer('group_type_number')->unsigned()->nullble();
+            $table->integer('group_type_song_genre')->unsigned()->nullable();
             $table->timestamps();
         });
         if (!is_dir('assets/star/uploads/artist/thumbnails')) {

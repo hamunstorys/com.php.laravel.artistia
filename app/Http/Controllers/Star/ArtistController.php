@@ -76,7 +76,6 @@ class ArtistController extends Controller
             ]);
             $artist->fill($post_data->except('picture_url'));
         }
-
         $artist->save();
     }
 

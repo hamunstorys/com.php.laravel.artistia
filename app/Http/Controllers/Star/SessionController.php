@@ -28,14 +28,14 @@ class SessionController extends Controller
             return \response()->json([
                 'success' => false,
                 'message' => '아이디가 없습니다.',
-            ], Response::HTTP_FORBIDDEN);
+            ], 403);
         } else {
             if (!auth()->attempt($request->only('email', 'password'))) {
                 $request->flashOnly(['password', 'email']);
                 return \response()->json([
                     'success' => false,
                     'message' => '비밀번호가 틀렸습니다.',
-                ], Response::HTTP_FORBIDDEN);
+                ], 403);
             }
         }
 

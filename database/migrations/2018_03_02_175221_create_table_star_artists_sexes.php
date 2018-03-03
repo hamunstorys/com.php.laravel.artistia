@@ -21,6 +21,11 @@ class CreateTableStarArtistsSexes extends Migration
             $table->timestamps();
 
         });
+
+        Schema::table('star_artists', function (Blueprint $table) {
+            $table->foreign('group_type_sex')->references('id')
+                ->on('star_artists_sexes')->onUpdate('cascade')->onDelete('cascade');
+        });
     }
 
     /**
