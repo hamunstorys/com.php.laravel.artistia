@@ -15,5 +15,8 @@ class Star_Artist_Sex extends Model
     ];
 
     /* Eloquent Relation */
-
+    public function artist()
+    {
+        return $this->hasOne(Star_Artist::class, 'group_type_sex');
+    }
 }

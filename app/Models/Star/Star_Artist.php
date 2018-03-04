@@ -28,6 +28,10 @@ class Star_Artist extends Model
     ];
 
     /* Eloquent Relation */
+    public function sex()
+    {
+        return $this->belongsTo(Star_Artist_Sex::class);
+    }
 
     public function song_genres()
     {

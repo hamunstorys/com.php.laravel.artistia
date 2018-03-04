@@ -76,7 +76,9 @@ class ArtistController extends Controller
             ]);
             $artist->fill($post_data->except('picture_url'));
         }
+
         $artist->save();
+        Star_Artist_Sex::find($request->group_type_sex)->artist()->save($artist);
         $artist->song_genres()->sync($request->group_type_song_genres);
     }
 
@@ -187,6 +189,7 @@ class ArtistController extends Controller
         }
         $artist->fill($post_data->except('picture_url'));
         $artist->update();
+        Star_Artist_Sex::find($request->group_type_sex)->artist()->save($artist);
         $artist->song_genres()->sync($request->group_type_song_genres);
     }
 

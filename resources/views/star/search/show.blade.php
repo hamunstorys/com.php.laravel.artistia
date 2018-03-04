@@ -1,8 +1,8 @@
 @extends('layouts.star.master')
 @section('content')
     <div class="contents">
+        <?php echo $message?>
         @if(isset($data))
-            <?php echo $message?>
             @foreach($data as $artist)
                 <div class="result_wrap">
                     <div class="photo"
