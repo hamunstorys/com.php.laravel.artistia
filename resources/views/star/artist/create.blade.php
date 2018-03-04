@@ -125,9 +125,6 @@
 @endsection
 @section('scripts')
     <script type="text/javascript">
-        jQuery(function () {
-            $('.price').filter();
-        });
         // $('button#confirm').click(function () {
         //     url = $('#url').val();
         //     data = {
@@ -163,8 +160,7 @@
         //         }
         //     });
         // })
-        jQuery(function ($) {
-
+        $(document).ready(function ($) {
             var rex_name = /^[\s\S]{1,16}$/;
             var rex_price = /^[0-9]{0,11}$/;
             var re_email = /^([\w\.-]+)@([a-z\d\.-]+)\.([a-z\.]{2,6})$/;
@@ -176,11 +172,17 @@
                 guarantee_concert = $('#guarantee_concert'),
                 guarantee_metropolitan = $('#guarantee_metropolitan'),
                 guarantee_central = $('#guarantee_central');
+            
+
+            $.fn.addCommas(guarantee_concert);
+            $.fn.addCommas(guarantee_metropolitan);
+            $.fn.addCommas(guarantee_central);
 
             $('button#confirm').click(function () {
-                    $guarantee_concert = removeComma(guarantee_concert.val());
-                    $guarantee_metropolitan = removeComma(guarantee_metropolitan.val());
-                    $guarantee_central = removeComma(guarantee_central.val());
+
+                    $guarantee_concert = $.fn.removeComma(guarantee_concert.val());
+                    $guarantee_metropolitan = $.fn.removeComma(guarantee_metropolitan.val());
+                    $guarantee_central = $.fn.removeComma(guarantee_central.val());
 
                     if (rex_name.test(artist_name.val()) != true) {
                         $("#error-artist_name").show();
@@ -207,10 +209,5 @@
                 $("#error-guarantee_metropolitan").hide();
             });
         });
-
-        function removeComma(str) {
-            return parseInt(str.replace(/,/g, ""));
-        }
-
     </script>
 @endsection
