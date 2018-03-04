@@ -35,6 +35,7 @@
                                 <input class="price" id="guarantee_metropolitan" name="guarantee_metropolitan"
                                        placeholder="금액을 입력해주세요"
                                        value="{{old('guarantee_metropolitan')}}">
+                                    <div class="tooltip" id="error-guarantee_metropolitan" style="display: none">1자 이상 11자 이하 숫자만 입력 가능합니다.</div>
                             </li>
 							<li>
                                 <label>중부</label>
@@ -171,21 +172,34 @@
 
             var
                 artist_name = $('#artist_name'),
-                guarantee_concert = $('#guarantee_concert');
+                guarantee_concert = $('#guarantee_concert'),
+                guarantee_metropolitan = $('#guarantee_metropolitan');
 
             $('button#confirm').click(function () {
-                $guarantee_concert = removeComma(guarantee_concert.val());
-                if (rex_name.test(artist_name.val()) != true) { // 아이디 검사
-                    $("#error-artist_name").show();
-                } else if ($guarantee_concert.length != 0 && rex_price.test($guarantee_concert) != true) {
-                    $("#error-guarantee_concert").show();
+                    $guarantee_concert = removeComma(guarantee_concert.val());
+                    $guarantee_metropolitan = removeComma(guarantee_metropolitan.val());
+
+                    if (rex_name.test(artist_name.val()) != true) {
+                        $("#error-artist_name").show();
+                    } else if (!isNaN($guarantee_concert) && rex_price.test($guarantee_concert) != true) {
+                        guarantee_concert.val("");
+                        $("#error-guarantee_concert").show();
+                    } else if (!isNaN($guarantee_metropolitan) && rex_price.test($guarantee_metropolitan) != true) {
+                        guarantee_metropolitan.val("");
+                        $("#error-guarantee_metropolitan").show();
+                    }
                 }
-            });
+            );
 
             artist_name.keyup(function () {
                 $("#error-artist_name").hide();
             });
-
+            guarantee_concert.keyup(function () {
+                $("#error-guarantee_concert").hide();
+            });
+            guarantee_metropolitan.keyup(function () {
+                $("#error-guarantee_metropolitan").hide();
+            });
         });
 
         function removeComma(str) {
