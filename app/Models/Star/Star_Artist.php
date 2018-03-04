@@ -27,11 +27,6 @@ class Star_Artist extends Model
 
     ];
 
-    public function sex()
-    {
-        return $this->hasOne(Star_Artist_Sex::class);
-    }
-
     /* Eloquent Relation */
 
     public function song_genres()

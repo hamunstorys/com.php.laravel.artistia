@@ -83,7 +83,54 @@ class ArtistController extends Controller
     public function edit($id)
     {
         $artist = Star_Artist::findOrFail($id);
+
+        $this->setGrouptypeNumberInEdit($artist);
+        $this->setGrouptypeSexInEdit($artist);
+        $this->setGrouptypeSongGenresInEdit($artist);
+
         return view('star.artist.edit', compact(['artist']));
+    }
+
+    public function setGrouptypeNumberInEdit($artist)
+    {
+        if ($artist->group_type_number == 1) {
+            $artist->group_type_number = array('<option selected="selected" value="1">솔로</option>', '<option value="2">그룹</option>');
+        } else {
+            $artist->group_type_number = array('<option value="1">솔로</option>', '<option selected="selected" value="2">그룹</option>');
+        }
+    }
+
+    public function setGrouptypeSexInEdit($artist)
+    {
+        $sex = Star_Artist_Sex::all();
+        $artist_sex_temp = array();
+        for ($i = 1; $i <= $sex->count(); $i++) {
+            if ($i == $artist->group_type_sex) {
+                array_push($artist_sex_temp, '<option selected="selected" value="' . $i . '">' . $sex->find($i)->value . '</option>');
+                continue;
+            } else {
+                array_push($artist_sex_temp, '<option value="' . $i . '">' . $sex->find($i)->value . '</option>');
+            }
+        }
+        $artist->group_type_sex = $artist_sex_temp;
+        unset($artist_sex_temp);
+    }
+
+    public function setGrouptypeSongGenresInEdit($artist)
+    {
+        $song_genres = Star_Artist_Song_Genre::all();
+        $artist_song_genres = Star_Artist::find($artist->id)->song_genres()->first()->pivot;
+        $artist_song_genres_temp = array();
+        for ($i = 1; $i <= $song_genres->count(); $i++) {
+            if ($i == $artist_song_genres->song_genre_id) {
+                array_push($artist_song_genres_temp, '<option selected="selected" value="' . $i . '">' . $song_genres->find($i)->value . '</option>');
+                continue;
+            } else {
+                array_push($artist_song_genres_temp, '<option value="' . $i . '">' . $song_genres->find($i)->value . '</option>');
+            }
+        }
+        $artist->group_type_song_genres = $artist_song_genres_temp;
+        unset($artist_sex_temp);
     }
 
     public function update(Request $request, $id)
@@ -143,7 +190,8 @@ class ArtistController extends Controller
         $artist->song_genres()->sync($request->group_type_song_genres);
     }
 
-    public function destroy(Request $request, $id)
+    public
+    function destroy(Request $request, $id)
     {
         $artist = Star_Artist::findOrFail($id);
         $path = $this->getPath($artist->picture_url);
@@ -153,7 +201,8 @@ class ArtistController extends Controller
         $artist->delete();
     }
 
-    public function getPath($url)
+    public
+    function getPath($url)
     {
         return str_replace(url('/') . '/', "", $url);
     }

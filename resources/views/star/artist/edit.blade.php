@@ -77,26 +77,15 @@
                 <div class="item group_type">
                 <span>
                 <label>그룹 유형</label>
-                    <select name="group_type_number" id="group_type_number">
-                        <?php
-                        if ($artist->group_type_number == 1) {
-                            echo '<option selected="selected" value="1">솔로</option>';
-                        } else {
-                            echo '<option selected="selected" value="2">그룹</option>';
-                        }
-                        ?>
-                    </select>
-                    <select name="group_type_sex">
-                    <?php
-                        $group_type_sex = App\Models\Star\Star_Artist_Sex::all();
-                        for ($i = 1; $i <= $group_type_sex->count(); $i++) {
-                            if ($i == $artist->group_type_sex) {
-                                echo '<option selected="selected" value="' . $i . '">' . $group_type_sex->find($i)->value . '</option>';
-                            } else {
-                                echo '<option value="' . $i . '">' . $group_type_sex->find($i)->value . '</option>';
-                            }
-                        }
-                        ?>
+                <select name="group_type_number" id="group_type_number">
+                   @foreach($artist->group_type_number as $group_type_number)
+                        <?php echo $group_type_number ?>
+                    @endforeach
+                </select>
+                   <select name="group_type_sex">
+                     @foreach($artist->group_type_sex as $group_type_sex)
+                           <?php echo $group_type_sex ?>
+                       @endforeach
                 </select>
                 </span>
                 </div>
@@ -104,17 +93,9 @@
                 <span>
                 <label>장르</label>
                 <select name="group_type_song_genres" id="group_type_song_genres">
-                    <?php
-                    $group_type_song_genres = App\Models\Star\Star_Artist_Song_Genre::all();
-                    $genres = App\Models\Star\Star_Artist::find($artist->id)->song_genres()->first()->pivot;
-                    for ($i = 1; $i <= $group_type_song_genres->count(); $i++) {
-                        if ($i == $genres->song_genre_id) {
-                            echo '<option selected="selected" value="' . $i . '">' . $group_type_song_genres->find($i)->value . '</option>';
-                        } else {
-                            echo '<option value="' . $i . '">' . $group_type_song_genres->find($i)->value . '</option>';
-                        }
-                    }
-                    ?>
+                   @foreach($artist->group_type_song_genres as $group_type_song_genre)
+                        <?php echo $group_type_song_genre ?>
+                    @endforeach
                     </select>
                 </span>
                 </div>
