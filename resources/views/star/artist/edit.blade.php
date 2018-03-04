@@ -1,27 +1,29 @@
 @extends('layouts.star.master')
 @section('content')
     <div class="result_wrap">
-        <input type="hidden" name="csrf-token" content="{{csrf_token()}}"/>
-        <input type="hidden" id="url" value="{{route('star.artist.update',$artist->id)}}">
-        <input type="hidden" id="_method" name="_method" value="PUT">
-        <div class="poster"
-             {{ $errors->has('picture_url')?'has-error':'' }} style="background-image: url('{{$artist->picture_url}}')">
-            <i class="far fa-file-image"></i>
-            <h4>대표 이미지 업로드</h4>
-            <p>파일 형식은 jpg 또는 png로,<br>사이즈는 가로 620px, 세로 465px 이상으로 올려주세요.</p>
-            <input type="file" id="picture_url" name="picture_url">
-            {!! $errors->first('picture_url', ':message') !!}
-        </div>
-        <div class="info">
-            <div class="item name {{ $errors->has('artist_name')?'has-error':'' }}">
-                <input id="artist_name" name="artist_name" type="text" placeholder="이름을 입력해주세요"
-                       value="{{$artist->artist_name}}">
-                {!! $errors->first('artist_name', ':message') !!}
+        <Form action="{{route('star.artist.update',$artist->id)}}" method="post">
+            {{csrf_field()}}
+            {{--<input type="hidden" name="csrf-token" content="{{csrf_token()}}"/>--}}
+            {{--<input type="hidden" id="url" value="{{route('star.artist.update',$artist->id)}}">--}}
+            <input type="hidden" id="_method" name="_method" value="PUT">
+            <div class="poster"
+                 {{ $errors->has('picture_url')?'has-error':'' }} style="background-image: url('{{$artist->picture_url}}')">
+                <i class="far fa-file-image"></i>
+                <h4>대표 이미지 업로드</h4>
+                <p>파일 형식은 jpg 또는 png로,<br>사이즈는 가로 620px, 세로 465px 이상으로 올려주세요.</p>
+                <input type="file" id="picture_url" name="picture_url">
+                {!! $errors->first('picture_url', ':message') !!}
             </div>
+            <div class="info">
+                <div class="item name {{ $errors->has('artist_name')?'has-error':'' }}">
+                    <input id="artist_name" name="artist_name" type="text" placeholder="이름을 입력해주세요"
+                           value="{{$artist->artist_name}}">
+                    {!! $errors->first('artist_name', ':message') !!}
+                </div>
 
-            <div class="item pay">
-                <label>개런티</label>
-                <span>
+                <div class="item pay">
+                    <label>개런티</label>
+                    <span>
 						<ul>
 							<li>
                                 <label>콘서트</label>
@@ -49,8 +51,8 @@
                             </li>
 						</ul>
 					</span>
-            </div>
-            <div class="item manager">
+                </div>
+                <div class="item manager">
 	                <span>
                     <label>담당자</label>
                     <input class="option" id="manager_name" name="manager_name"
@@ -60,8 +62,8 @@
                            placeholder="담당자 연락처"
                            value="{{$artist->manager_phone}}">
 	                </span>
-            </div>
-            <div class="item company">
+                </div>
+                <div class="item company">
 	                <span>
                     <label>소속사</label>
                     <input class="option" id="company_name" name="company_name"
@@ -71,95 +73,112 @@
                            placeholder="소속사 이메일"
                            value="{{$artist->company_email}}">
 	                </span>
-            </div>
-            <div class="item group_type">
+                </div>
+                <div class="item group_type">
                 <span>
-                <label>그룹 유형(인원)</label>
-                <select name="group_type_number" disabled="disabled">
-                    <option selected="selected">{{$artist->group_type_number}}</option>
-                    <!-- 수정 버튼을 눌렸을 때만 전체 목록을 보여줌-->
+                <label>그룹 유형</label>
+                    <select name="group_type_number" id="group_type_number">
+                        <?php
+                        if ($artist->group_type_number == 1) {
+                            echo '<option selected="selected" value="1">솔로</option>';
+                        } else {
+                            echo '<option selected="selected" value="2">그룹</option>';
+                        }
+                        ?>
+                    </select>
+                    <select name="group_type_sex">
+                    <?php
+                        $group_type_sex = App\Models\Star\Star_Artist_Sex::all();
+                        for ($i = 1; $i <= $group_type_sex->count(); $i++) {
+                            if ($i == $artist->group_type_sex) {
+                                echo '<option selected="selected" value="' . $i . '">' . $group_type_sex->find($i)->value . '</option>';
+                            } else {
+                                echo '<option value="' . $i . '">' . $group_type_sex->find($i)->value . '</option>';
+                            }
+                        }
+                        ?>
                 </select>
-                     <button>수정</button>
                 </span>
-            </div>
-            <div class="item group_type">
+                </div>
+                <div class="item group_type">
                 <span>
-                <label>그룹 유형(성별)</label>
-                <select name="group_type_number" disabled="disabled">
-                    <option selected="selected">{{$artist->group_type_number}}</option>
-                </select>
-                     <button>수정</button>
+                <label>장르</label>
+                <select name="group_type_song_genres" id="group_type_song_genres">
+                    <?php
+                    $group_type_song_genres = App\Models\Star\Star_Artist_Song_Genre::all();
+                    $genres = App\Models\Star\Star_Artist::find($artist->id)->song_genres()->first()->pivot;
+                    for ($i = 1; $i <= $group_type_song_genres->count(); $i++) {
+                        if ($i == $genres->song_genre_id) {
+                            echo '<option selected="selected" value="' . $i . '">' . $group_type_song_genres->find($i)->value . '</option>';
+                        } else {
+                            echo '<option value="' . $i . '">' . $group_type_song_genres->find($i)->value . '</option>';
+                        }
+                    }
+                    ?>
+                    </select>
                 </span>
+                </div>
+                <div class="item memo">
+                    <label>참고내용</label>
+                    <textarea class="memo" rows="3" id="comment" name="comment"
+                              placeholder="참고사항을 입력하세요">{{$artist->comment}}</textarea>
+                </div>
+                <div class="item date">
+                    <label>등록일</label>
+                    <span>{{$artist->created_at}}</span>
+                </div>
+                <div class="item date">
+                    <label>최종 수정일</label>
+                    <span>{{$artist->updated_at}}</span>
+                </div>
             </div>
-            <div class="item group_type">
-                <span>
-                <label>그룹 유형(장르)</label>
-                <select name="group_type_number" disabled="disabled">
-                    <option selected="selected">{{$artist->group_type_number}}</option>
-                </select>
-                    <button>수정</button>
-                </span>
+            <div class="clearfix"></div>
+            <div class="btn_wrap">
+                <button id="confirm">확인</button>
+                <button id="cancle" onclick="window.history.go(-1)">취소하기</button>
             </div>
-            <div class="item memo">
-                <label>참고내용</label>
-                <textarea class="memo" rows="3" id="comment" name="comment"
-                          placeholder="참고사항을 입력하세요">{{$artist->comment}}</textarea>
-            </div>
-            <div class="item date">
-                <label>등록일</label>
-                <span>{{$artist->created_at}}</span>
-            </div>
-            <div class="item date">
-                <label>최종 수정일</label>
-                <span>{{$artist->updated_at}}</span>
-            </div>
-        </div>
-        <div class="clearfix"></div>
-        <div class="btn_wrap">
-            <button id="confirm">확인</button>
-            <button id="cancle" onclick="window.history.go(-1)">취소하기</button>
-        </div>
+        </Form>
     </div>
 @endsection
 @section('scripts')
-    <script type="text/javascript">
-        jQuery(function () {
-            $('.price').filter();
-        });
-        $('button#confirm').click(function () {
-            if (confirm("수정하시겠습니까?") == true) {
-                url = $('#url').val();
-                data = {
-                    _method: $('#_method').val(),
-                    picture_url: $('#picture_url').val(),
-                    artist_name: $('#artist_name').val(),
-                    guarantee_concert: $('#guarantee_concert').val(),
-                    guarantee_metropolitan: $('#guarantee_metropolitan').val(),
-                    guarantee_central: $('#guarantee_central').val(),
-                    manager_name: $('#manager_name').val(),
-                    manager_phone: $('#manager_phone').val(),
-                    company_name: $('#company_name').val(),
-                    company_email: $('#company_email').val(),
-                    comment: $('#comment').val()
-                };
-                $.ajaxSetup({
-                    headers: {
-                        'X-CSRF-TOKEN': $('input[name="csrf-token"]').attr('content')
-                    }
-                });
-                $.ajax({
-                    url: url,
-                    data: data,
-                    type: 'POST',
-                    success: function () {
-                        alert('수정되었습니다.');
-                        window.history.go(-1);
-                    },
-                    error: function ($error) {
-                        alert('등록에 실패하였습니다.');
-                    }
-                });
-            }
-        })
-    </script>
+    {{--<script type="text/javascript">--}}
+    {{--jQuery(function () {--}}
+    {{--$('.price').filter();--}}
+    {{--});--}}
+    {{--$('button#confirm').click(function () {--}}
+    {{--if (confirm("수정하시겠습니까?") == true) {--}}
+    {{--url = $('#url').val();--}}
+    {{--data = {--}}
+    {{--_method: $('#_method').val(),--}}
+    {{--picture_url: $('#picture_url').val(),--}}
+    {{--artist_name: $('#artist_name').val(),--}}
+    {{--guarantee_concert: $('#guarantee_concert').val(),--}}
+    {{--guarantee_metropolitan: $('#guarantee_metropolitan').val(),--}}
+    {{--guarantee_central: $('#guarantee_central').val(),--}}
+    {{--manager_name: $('#manager_name').val(),--}}
+    {{--manager_phone: $('#manager_phone').val(),--}}
+    {{--company_name: $('#company_name').val(),--}}
+    {{--company_email: $('#company_email').val(),--}}
+    {{--comment: $('#comment').val()--}}
+    {{--};--}}
+    {{--$.ajaxSetup({--}}
+    {{--headers: {--}}
+    {{--'X-CSRF-TOKEN': $('input[name="csrf-token"]').attr('content')--}}
+    {{--}--}}
+    {{--});--}}
+    {{--$.ajax({--}}
+    {{--url: url,--}}
+    {{--data: data,--}}
+    {{--type: 'POST',--}}
+    {{--success: function () {--}}
+    {{--alert('수정되었습니다.');--}}
+    {{--window.history.go(-1);--}}
+    {{--},--}}
+    {{--error: function ($error) {--}}
+    {{--alert('등록에 실패하였습니다.');--}}
+    {{--}--}}
+    {{--});--}}
+    {{--}--}}
+    {{--})--}}
+    {{--</script>--}}
 @endsection

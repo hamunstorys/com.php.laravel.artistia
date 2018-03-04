@@ -22,7 +22,7 @@ class SearchRequirement
             return $next($request);
         } else
             $this->setDefaultSearchRequirement('song_genres', $this->getSearchRequirement('star_artists_song_genres'));
-        $this->setDefaultSearchRequirement('sexes', $this->getSearchRequirement('star_artists_sexes'));
+            $this->setDefaultSearchRequirement('sexes', $this->getSearchRequirement('star_artists_sexes'));
         return $next($request);
     }
 

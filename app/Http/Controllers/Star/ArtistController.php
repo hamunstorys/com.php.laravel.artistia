@@ -3,10 +3,11 @@
 namespace App\Http\Controllers\Star;
 
 use App\Models\Star\Star_Artist;
+use App\Models\Star\Star_Artist_Sex;
 use App\Models\Star\Star_Artist_Song_Genre;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\File;
 use Intervention\Image\ImageManager;
-use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
 class ArtistController extends Controller
@@ -75,10 +76,8 @@ class ArtistController extends Controller
             ]);
             $artist->fill($post_data->except('picture_url'));
         }
-
         $artist->save();
-        $artist->song_genres()->attach($request->group_type_song_genres);
-
+        $artist->song_genres()->sync($request->group_type_song_genres);
     }
 
     public function edit($id)
@@ -141,6 +140,7 @@ class ArtistController extends Controller
         }
         $artist->fill($post_data->except('picture_url'));
         $artist->update();
+        $artist->song_genres()->sync($request->group_type_song_genres);
     }
 
     public function destroy(Request $request, $id)
