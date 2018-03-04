@@ -11,7 +11,7 @@ class Star_Artist_Sex extends Model
     protected $primaryKey = 'id';
 
     protected $fillable = [
-        'id', 'value',
+        'value',
     ];
 
     /* Eloquent Relation */

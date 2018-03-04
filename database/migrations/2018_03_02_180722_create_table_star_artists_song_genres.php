@@ -17,7 +17,7 @@ class CreateTableStarArtistsSongGenres extends Migration
             $table->charset = 'utf8';
             $table->collation = 'utf8_general_ci';
             $table->increments('id');
-            $table->string('value');
+            $table->string('value')->index();
 
             $table->timestamps();
         });

@@ -14,9 +14,10 @@ class Star_Artist_Song_Genre extends Model
         'value',
     ];
 
+
     /* Eloquent Relation */
     public function artists()
     {
-        return $this->belongsToMany(Star_Artist::class);
+        return $this->belongsToMany(Star_Artist::class, 'star_artists_star_artists_song_genres', 'song_genre_id', 'artist_id');
     }
 }
