@@ -46,9 +46,10 @@
                             </li>
 							<li>
                                 <label>남부</label>
-                                <input class="price" name="guarantee_south"
+                                <input class="price" id="guarantee_south" name="guarantee_south"
                                        placeholder="금액을 입력해주세요"
                                        value="{{old('guarantee_south')}}">
+                                  <div class="tooltip" id="error-guarantee_south" style="display: none">1자 이상 11자 이하 숫자만 입력 가능합니다.</div>
                             </li>
 						</ul>
 					</span>
@@ -171,18 +172,20 @@
                 artist_name = $('#artist_name'),
                 guarantee_concert = $('#guarantee_concert'),
                 guarantee_metropolitan = $('#guarantee_metropolitan'),
-                guarantee_central = $('#guarantee_central');
-            
+                guarantee_central = $('#guarantee_central'),
+                guarantee_south = $('#guarantee_south');
 
             $.fn.addCommas(guarantee_concert);
             $.fn.addCommas(guarantee_metropolitan);
             $.fn.addCommas(guarantee_central);
+            $.fn.addCommas(guarantee_south);
 
             $('button#confirm').click(function () {
 
                     $guarantee_concert = $.fn.removeComma(guarantee_concert.val());
                     $guarantee_metropolitan = $.fn.removeComma(guarantee_metropolitan.val());
                     $guarantee_central = $.fn.removeComma(guarantee_central.val());
+                    $guarantee_south = $.fn.removeComma(guarantee_south.val());
 
                     if (rex_name.test(artist_name.val()) != true) {
                         $("#error-artist_name").show();
@@ -195,6 +198,9 @@
                     } else if (!isNaN($guarantee_central) && rex_price.test($guarantee_central) != true) {
                         guarantee_central.val("");
                         $("#error-guarantee_central").show();
+                    } else if (!isNaN($guarantee_south) && rex_price.test($guarantee_south) != true) {
+                        guarantee_central.val("");
+                        $("#error-guarantee_south").show();
                     }
                 }
             );
