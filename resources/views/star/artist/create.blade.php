@@ -60,9 +60,12 @@
                     <input class="option" id="manager_name" name="manager_name"
                            placeholder="담당자 이름"
                            value="{{old('manager_name')}}">
+                         <div class="tooltip" id="error-manager_name" style="display: none">1자 이상 16자 이하 입력 항목입니다.</div>
                     <input class="option" id="manager_phone" name="manager_phone"
                            placeholder="담당자 연락처"
                            value="{{old('manager_phone')}}">
+                        <div class="tooltip" id="error-manager_phone"
+                             style="display: none">10자 이상 11자 이하 입력 항목입니다.</div>
 	                </span>
             </div>
             <div class="item company">
@@ -166,28 +169,32 @@
             var rex_price = /^[0-9]{0,11}$/;
             var re_email = /^([\w\.-]+)@([a-z\d\.-]+)\.([a-z\.]{2,6})$/;
             var re_url = /^(https?:\/\/)?([a-z\d\.-]+)\.([a-z\.]{2,6})([\/\w\.-]*)*\/?$/;
-            var re_tel = /^[0-9]{8,11}$/;
+            var rex_phone = /(\d{3})(\d{4})(\d{4})/;
 
             var
                 artist_name = $('#artist_name'),
                 guarantee_concert = $('#guarantee_concert'),
                 guarantee_metropolitan = $('#guarantee_metropolitan'),
                 guarantee_central = $('#guarantee_central'),
-                guarantee_south = $('#guarantee_south');
+                guarantee_south = $('#guarantee_south'),
+                manager_name = $('#manager_name'),
+                manager_phone = $('#manager_phone');
 
             $.fn.addCommas(guarantee_concert);
             $.fn.addCommas(guarantee_metropolitan);
             $.fn.addCommas(guarantee_central);
             $.fn.addCommas(guarantee_south);
+            $.fn.replaceString(manager_phone, 11);
 
             $('button#confirm').click(function () {
 
-                    $guarantee_concert = $.fn.removeComma(guarantee_concert.val());
-                    $guarantee_metropolitan = $.fn.removeComma(guarantee_metropolitan.val());
-                    $guarantee_central = $.fn.removeComma(guarantee_central.val());
-                    $guarantee_south = $.fn.removeComma(guarantee_south.val());
+                    $guarantee_concert = $.fn.removeString(guarantee_concert.val());
+                    $guarantee_metropolitan = $.fn.removeString(guarantee_metropolitan.val());
+                    $guarantee_central = $.fn.removeString(guarantee_central.val());
+                    $guarantee_south = $.fn.removeString(guarantee_south.val());
 
                     if (rex_name.test(artist_name.val()) != true) {
+                        artist_name.val("");
                         $("#error-artist_name").show();
                     } else if (!isNaN($guarantee_concert) && rex_price.test($guarantee_concert) != true) {
                         guarantee_concert.val("");
@@ -199,8 +206,14 @@
                         guarantee_central.val("");
                         $("#error-guarantee_central").show();
                     } else if (!isNaN($guarantee_south) && rex_price.test($guarantee_south) != true) {
-                        guarantee_central.val("");
+                        guarantee_south.val("");
                         $("#error-guarantee_south").show();
+                    } else if (manager_name.val().length !== 0 && rex_name.test(manager_name.val()) != true) {
+                        manager_name.val("");
+                        $("#error-manager_name").show();
+                    } else if (manager_phone.val().length !== 0 && rex_phone.test(manager_phone.val()) != true) {
+                        manager_phone.val("");
+                        $("#error-manager_phone").show();
                     }
                 }
             );
