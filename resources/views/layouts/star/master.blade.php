@@ -32,8 +32,8 @@
                     <label>장르</label>
                     <select name="group_type_song_genre">
                         <option selected="selected" value="0">전체</option>
-                        @foreach($song_generes = \Session::get('search_requirement.song_generes') as $song_genere)
-                            <?php echo '<option value="' . $song_genere->id . '">' . $song_genere->value . '</option>'; ?>
+                        @foreach($song_genres = \Session::get('search_requirement.song_genres') as $song_genre)
+                            <?php echo '<option value="' . $song_genre->id . '">' . $song_genre->value . '</option>'; ?>
                         @endforeach
                     </select>
                     <label>금액</label>

@@ -37,7 +37,7 @@ class ArtistController extends Controller
             'picture_url' => $request->picture_url,
             'group_type_number' => $request->group_type_number,
             'group_type_sex' => $request->group_type_sex,
-            'group_type_song_genre' => $request->group_type_song_genre,
+            'group_type_song_genres' => $request->group_type_song_genres,
             'comment' => $request->comment
         ));
 
@@ -77,7 +77,7 @@ class ArtistController extends Controller
         }
 
         $artist->save();
-        $artist->song_genres()->attach($request->group_type_song_genre);
+        $artist->song_genres()->attach($request->group_type_song_genres);
 
     }
 
@@ -101,7 +101,7 @@ class ArtistController extends Controller
             'company_email' => $request->company_email,
             'group_type_number' => $request->group_type_number,
             'group_type_sex' => $request->group_type_sex,
-            'group_type_song_genre' => $request->group_type_song_genre,
+            'group_type_song_genres' => $request->group_type_song_genres,
             'picture_url' => $request->picture_url,
             'comment' => $request->comment
         ));

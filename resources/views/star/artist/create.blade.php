@@ -89,10 +89,10 @@
                 </div>
                 <div class="item group_type">
                     <label>장르 선택</label>
-                    <select name="group_type_song_genre" id="group_type_song_genre">
+                    <select name="group_type_song_genres" id="group_type_song_genres">
                         <option selected="selected">장르</option>
-                        @foreach($song_generes = Session::get('search_requirement.song_generes') as $song_genere)
-                            <?php echo '<option value="' . $song_genere->id . '">' . $song_genere->value . '</option>'; ?>
+                        @foreach($song_genres = Session::get('search_requirement.song_genres') as $song_genre)
+                            <?php echo '<option value="' . $song_genre->id . '">' . $song_genre->value . '</option>'; ?>
                         @endforeach
                     </select>
                 </div>
