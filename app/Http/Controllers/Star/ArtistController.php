@@ -56,6 +56,8 @@ class ArtistController extends Controller
             'comment' => 'max:255|nullable',
         ]);
 
+        $validator->
+
         $artist = new Star_Artist();
 
         if (isset($post_data->picture_url) != null) {

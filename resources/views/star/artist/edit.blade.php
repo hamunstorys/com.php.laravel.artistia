@@ -1,10 +1,10 @@
 @extends('layouts.star.master')
 @section('content')
     <div class="result_wrap">
-        <Form action="{{route('star.artist.update',$artist->id)}}" method="post">
-            {{csrf_field()}}
-            {{--<input type="hidden" name="csrf-token" content="{{csrf_token()}}"/>--}}
-            {{--<input type="hidden" id="url" value="{{route('star.artist.update',$artist->id)}}">--}}
+        {{--<Form action="{{route('star.artist.update',$artist->id)}}" method="post">--}}
+            {{--{{csrf_field()}}--}}
+            <input type="hidden" name="csrf-token" content="{{csrf_token()}}"/>
+            <input type="hidden" id="url" value="{{route('star.artist.update',$artist->id)}}">
             <input type="hidden" id="_method" name="_method" value="PUT">
             <div class="poster"
                  {{ $errors->has('picture_url')?'has-error':'' }} style="background-image: url('{{$artist->picture_url}}')">
@@ -12,7 +12,6 @@
                 <h4>대표 이미지 업로드</h4>
                 <p>파일 형식은 jpg 또는 png로,<br>사이즈는 가로 620px, 세로 465px 이상으로 올려주세요.</p>
                 <input type="file" id="picture_url" name="picture_url">
-                {!! $errors->first('picture_url', ':message') !!}
             </div>
             <div class="info">
                 <div class="item name {{ $errors->has('artist_name')?'has-error':'' }}">
@@ -118,48 +117,48 @@
                 <button id="confirm">확인</button>
                 <button id="cancle" onclick="window.history.go(-1)">취소하기</button>
             </div>
-        </Form>
+        {{--</Form>--}}
     </div>
 @endsection
 @section('scripts')
-    {{--<script type="text/javascript">--}}
-    {{--jQuery(function () {--}}
-    {{--$('.price').filter();--}}
-    {{--});--}}
-    {{--$('button#confirm').click(function () {--}}
-    {{--if (confirm("수정하시겠습니까?") == true) {--}}
-    {{--url = $('#url').val();--}}
-    {{--data = {--}}
-    {{--_method: $('#_method').val(),--}}
-    {{--picture_url: $('#picture_url').val(),--}}
-    {{--artist_name: $('#artist_name').val(),--}}
-    {{--guarantee_concert: $('#guarantee_concert').val(),--}}
-    {{--guarantee_metropolitan: $('#guarantee_metropolitan').val(),--}}
-    {{--guarantee_central: $('#guarantee_central').val(),--}}
-    {{--manager_name: $('#manager_name').val(),--}}
-    {{--manager_phone: $('#manager_phone').val(),--}}
-    {{--company_name: $('#company_name').val(),--}}
-    {{--company_email: $('#company_email').val(),--}}
-    {{--comment: $('#comment').val()--}}
-    {{--};--}}
-    {{--$.ajaxSetup({--}}
-    {{--headers: {--}}
-    {{--'X-CSRF-TOKEN': $('input[name="csrf-token"]').attr('content')--}}
-    {{--}--}}
-    {{--});--}}
-    {{--$.ajax({--}}
-    {{--url: url,--}}
-    {{--data: data,--}}
-    {{--type: 'POST',--}}
-    {{--success: function () {--}}
-    {{--alert('수정되었습니다.');--}}
-    {{--window.history.go(-1);--}}
-    {{--},--}}
-    {{--error: function ($error) {--}}
-    {{--alert('등록에 실패하였습니다.');--}}
-    {{--}--}}
-    {{--});--}}
-    {{--}--}}
-    {{--})--}}
-    {{--</script>--}}
+    <script type="text/javascript">
+        jQuery(function () {
+            $('.price').filter();
+        });
+        $('button#confirm').click(function () {
+            if (confirm("수정하시겠습니까?") == true) {
+                url = $('#url').val();
+                data = {
+                    _method: $('#_method').val(),
+                    picture_url: $('#picture_url').val(),
+                    artist_name: $('#artist_name').val(),
+                    guarantee_concert: $('#guarantee_concert').val(),
+                    guarantee_metropolitan: $('#guarantee_metropolitan').val(),
+                    guarantee_central: $('#guarantee_central').val(),
+                    manager_name: $('#manager_name').val(),
+                    manager_phone: $('#manager_phone').val(),
+                    company_name: $('#company_name').val(),
+                    company_email: $('#company_email').val(),
+                    comment: $('#comment').val()
+                };
+                $.ajaxSetup({
+                    headers: {
+                        'X-CSRF-TOKEN': $('input[name="csrf-token"]').attr('content')
+                    }
+                });
+                $.ajax({
+                    url: url,
+                    data: data,
+                    type: 'POST',
+                    success: function () {
+                        alert('수정되었습니다.');
+                        window.history.go(-1);
+                    },
+                    error: function ($error) {
+                        alert('등록에 실패하였습니다.');
+                    }
+                });
+            }
+        })
+    </script>
 @endsection
