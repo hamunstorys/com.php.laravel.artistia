@@ -42,6 +42,7 @@
                                 <input class="price" id="guarantee_central" name="guarantee_central"
                                        placeholder="금액을 입력해주세요"
                                        value="{{old('guarantee_central')}}">
+                                  <div class="tooltip" id="error-guarantee_central" style="display: none">1자 이상 11자 이하 숫자만 입력 가능합니다.</div>
                             </li>
 							<li>
                                 <label>남부</label>
@@ -173,11 +174,13 @@
             var
                 artist_name = $('#artist_name'),
                 guarantee_concert = $('#guarantee_concert'),
-                guarantee_metropolitan = $('#guarantee_metropolitan');
+                guarantee_metropolitan = $('#guarantee_metropolitan'),
+                guarantee_central = $('#guarantee_central');
 
             $('button#confirm').click(function () {
                     $guarantee_concert = removeComma(guarantee_concert.val());
                     $guarantee_metropolitan = removeComma(guarantee_metropolitan.val());
+                    $guarantee_central = removeComma(guarantee_central.val());
 
                     if (rex_name.test(artist_name.val()) != true) {
                         $("#error-artist_name").show();
@@ -187,6 +190,9 @@
                     } else if (!isNaN($guarantee_metropolitan) && rex_price.test($guarantee_metropolitan) != true) {
                         guarantee_metropolitan.val("");
                         $("#error-guarantee_metropolitan").show();
+                    } else if (!isNaN($guarantee_central) && rex_price.test($guarantee_central) != true) {
+                        guarantee_central.val("");
+                        $("#error-guarantee_central").show();
                     }
                 }
             );
