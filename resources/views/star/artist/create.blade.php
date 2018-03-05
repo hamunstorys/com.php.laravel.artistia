@@ -74,6 +74,8 @@
                     <input class="option" id="company_name" name="company_name"
                            placeholder="소속사"
                            value="{{old('company_name')}}">
+                         <div class="tooltip" id="error-company_name"
+                              style="display: none">1자 이상 16자 이하 입력 항목입니다.</div>
                     <input class="option" id="company_email" name="company_email"
                            placeholder="소속사 이메일"
                            value="{{old('company_email')}}">
@@ -180,18 +182,20 @@
                 manager_name = $('#manager_name'),
                 manager_phone = $('#manager_phone');
 
-            $.fn.addCommas(guarantee_concert);
-            $.fn.addCommas(guarantee_metropolitan);
-            $.fn.addCommas(guarantee_central);
-            $.fn.addCommas(guarantee_south);
-            $.fn.replaceManagerPhone(manager_phone, 11);
+            $.fn.replaceName(artist_name, 16);
+            $.fn.replaceCommas(guarantee_concert, 11);
+            $.fn.replaceCommas(guarantee_metropolitan, 11);
+            $.fn.replaceCommas(guarantee_central, 11);
+            $.fn.replaceCommas(guarantee_south, 11);
+            $.fn.replaceCellphone(manager_phone, 11);
 
             $('button#confirm').click(function () {
 
-                    $guarantee_concert = $.fn.removeString(guarantee_concert.val());
-                    $guarantee_metropolitan = $.fn.removeString(guarantee_metropolitan.val());
-                    $guarantee_central = $.fn.removeString(guarantee_central.val());
-                    $guarantee_south = $.fn.removeString(guarantee_south.val());
+                    $guarantee_concert = $.fn.removeCommas(guarantee_concert.val());
+                    $guarantee_metropolitan = $.fn.removeCommas(guarantee_metropolitan.val());
+                    $guarantee_central = $.fn.removeCommas(guarantee_central.val());
+                    $guarantee_south = $.fn.removeCommas(guarantee_south.val());
+                    $manager_phone = $.fn.removeDashs(manager_phone.val());
 
                     if (rex_name.test(artist_name.val()) != true) {
                         artist_name.val("");

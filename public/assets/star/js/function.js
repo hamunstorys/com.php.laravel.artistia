@@ -1,25 +1,44 @@
 (function ($) {
-        $.fn.removeString = function (str) {
-            return parseInt(str.replace(/,/g, ""));
-        };
-        $.fn.addCommas = function (att) {
-            att.bind('keyup keypress', function () {
-                var old = $(this).val();
-                parseInt($(this).val(old.toString().replace(/,/g, "").replace(/\B(?=(\d{3})+(?!\d))/g, ",")));
-            });
-        };
-        $.fn.replaceManagerPhone = function (att, length) {
-            $length = length;
-            att.bind('keyup keypress', function () {
-                att.val().replace(/[^0-9\.]+/g, "");
-                att.val(att.val().toString().replace(/,/g, "").replace(/(\d{3})(\d{4})(\d{4})/, '$1-$2-$3'));
-                var textLength = att.val().length;
-                att.text(textLength);
-                if (textLength > $length) {
-                    att.val(att.val().substr(0, $length));
-                }
+    $.fn.replaceCommas = function (att, length) {
+        att.bind('keyup keypress', function () {
+            $.fn.limitCharacters(att, length, /,/g);
+            att.val(att.val().replace(/[^0-9\.]+/g, '').replace(/(\d)(?=(?:\d{3})+(?!\d))/g, '$1,'));
 
-            });
-        };
+        });
+    };
+    $.fn.replaceCellphone = function (att, length) {
+        att.bind('keyup keypress', function () {
+            $.fn.limitCharacters(att, length, /-/g);
+            att.val(att.val().replace(/[^0-9\.]+/g, '').replace(/(^02.{0}|^01.{1}|[0-9]{3})([0-9]+)([0-9]{4})/,"$1-$2-$3"));
+        });
+    };
+
+    $.fn.replaceName = function (att, length) {
+        att.bind('keyup keypress', function () {
+            $.fn.limitCharacters(att, length, null);
+        });
+    };
+
+    $.fn.removeCommas = function (str) {
+        return parseInt(str.replace(/,/g, ""));
+    };
+
+    $.fn.removeDashs = function (str) {
+        return parseInt(str.replace(/-/g, ""));
+    };
+
+    $.fn.limitCharacters = function (att, length, rex) {
+
+        $length = att.val().length;
+        if (rex == null) {
+            if ($length > length) {
+                att.val(att.val().substr(0, length));
+            }
+        } else {
+            $limit = length + (att.val().match(rex) || []).length;
+            if ($length > $limit) {
+                att.val(att.val().substr(0, $limit));
+            }
+        }
     }
-)(jQuery);
+})(jQuery);
