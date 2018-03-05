@@ -88,7 +88,7 @@
             <div class="item group_type">
                 <label>유형 선택</label>
                 <select name="group_type_number" id="group_type_number">
-                    <option selected="selected">인원 수</option>
+                    <option selected="selected" value="0">인원 수</option>
                     <option value="1">솔로</option>
                     <option value="2">그룹</option>
                 </select>
@@ -96,7 +96,7 @@
                      style="display: none">필수 입력 사항입니다.
                 </div>
                 <select name="group_type_sex" id="group_type_sex">
-                    <option selected="selected">성별</option>
+                    <option selected="selected" value="0">성별</option>
                     @foreach($sexes = Session::get('search_requirement.sexes') as $sex)
                         <?php echo '<option value="' . $sex->id . '">' . $sex->value . '</option>'; ?>
                     @endforeach
@@ -108,7 +108,7 @@
             <div class="item group_type">
                 <label>장르 선택</label>
                 <select name="group_type_song_genres" id="group_type_song_genres">
-                    <option selected="selected">장르</option>
+                    <option selected="selected" value="0">장르</option>
                     @foreach($song_genres = Session::get('search_requirement.song_genres') as $song_genre)
                         <?php echo '<option value="' . $song_genre->id . '">' . $song_genre->value . '</option>'; ?>
                     @endforeach
@@ -128,7 +128,7 @@
         </div>
         <div class="clearfix"></div>
         <div class="btn_wrap">
-            <button id="confirm">확인</button>
+            <button id="confirm" onclick="$.fn.validateArtist()">확인</button>
             <button id="cancle" onclick="window.history.go(-1)">취소하기</button>
         </div>
         {{--</Form>--}}
@@ -153,95 +153,107 @@
                 group_type_genres = $('#group_type_song_genres'),
                 comment = $('#comment');
 
-            $('button#confirm').click(function () {
-                if ($.fn.validateArtist() == true) {
-                    url = $('#url').val();
-                    data = {
-                        picture_url: $('#picture_url').val(),
-                        artist_name: artist_name.val(),
-                        guarantee_concert: guarantee_concert.val(),
-                        guarantee_metropolitan: guarantee_metropolitan.val(),
-                        guarantee_central: guarantee_central.val(),
-                        manager_name: manager_name.val(),
-                        manager_phone: manager_phone.val(),
-                        company_name: company_name.val(),
-                        company_email: company_email.val(),
-                        group_type_number: group_type_number.val(),
-                        group_type_sex: group_type_sex.val(),
-                        group_type_song_genre: group_type_genres.val(),
-                        comment: comment.val(),
-                    };
-                    $.ajaxSetup({
-                        headers: {
-                            'X-CSRF-TOKEN': $('input[name="csrf-token"]').attr('content')
-                        }
-                    });
-                    $.ajax({
-                        url: url,
-                        data: data,
-                        type: 'POST',
-                        success: function () {
-                            alert('등록 되었습니다.');
-                            window.location = '/star';
-                        },
-                        error: function (data) {
-                            alert('등록 실패');
-                        }
-                    });
-                }
-            });
+            $.fn.replaceName(artist_name, 255);
+            $.fn.replaceCommas(guarantee_concert, 11);
+            $.fn.replaceCommas(guarantee_metropolitan, 11);
+            $.fn.replaceCommas(guarantee_central, 11);
+            $.fn.replaceCommas(guarantee_south, 11);
+            $.fn.replaceName(manager_name, 255);
+            $.fn.replaceCellphone(manager_phone, 11);
+            $.fn.replaceName(company_name, 255);
+            $.fn.replaceEmail(company_email, 255),
+                $.fn.replaceComment(company_email, 255);
+
+            $.fn.ajax = function () {
+                url = $('#url').val();
+                data = {
+                    picture_url: $('#picture_url').val(),
+                    artist_name: artist_name.val(),
+                    guarantee_concert: guarantee_concert.val(),
+                    guarantee_metropolitan: guarantee_metropolitan.val(),
+                    guarantee_central: guarantee_central.val(),
+                    manager_name: manager_name.val(),
+                    manager_phone: manager_phone.val(),
+                    company_name: company_name.val(),
+                    company_email: company_email.val(),
+                    group_type_number: group_type_number.val(),
+                    group_type_sex: group_type_sex.val(),
+                    group_type_song_genre: group_type_genres.val(),
+                    comment: comment.val(),
+                };
+                $.ajaxSetup({
+                    headers: {
+                        'X-CSRF-TOKEN': $('input[name="csrf-token"]').attr('content')
+                    }
+                });
+                $.ajax({
+                    url: url,
+                    data: data,
+                    type: 'POST',
+                    success: function () {
+                        alert('등록 되었습니다.');
+                        window.location = '/star';
+                    },
+                    error: function (data) {
+                        alert('등록 실패');
+                    }
+                });
+            }
 
             $.fn.validateArtist = function () {
-
-                $success = false;
-
-                $.fn.replaceName(artist_name, 255);
-                $.fn.replaceCommas(guarantee_concert, 11);
-                $.fn.replaceCommas(guarantee_metropolitan, 11);
-                $.fn.replaceCommas(guarantee_central, 11);
-                $.fn.replaceCommas(guarantee_south, 11);
-                $.fn.replaceName(manager_name, 255);
-                $.fn.replaceCellphone(manager_phone, 11);
-                $.fn.replaceName(company_name, 255);
-                $.fn.replaceEmail(company_email, 255),
-                    $.fn.replaceComment(company_email, 255);
-
-                var rex_name = /^[\s\S]{1,255}$/;
+                
+                var rex_require_name = /^[\s\S]{1,255}$/;
+                var rex_name = /^[\s\S]{0,255}$/;
                 var rex_price = /^[0-9]{0,11}$/;
                 var rex_email = /^[a-zA-Z0-9.!#$%&’*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
                 var rex_url = /^(https?:\/\/)?([a-z\d\.-]+)\.([a-z\.]{2,6})([\/\w\.-]*)*\/?$/;
                 var rex_phone = /(\d{3})(\d{4})(\d{4})/;
                 var rex_comment = /^[\s\S]{1,255}$/;
 
-                $.fn.requiredValidateName(artist_name, rex_name, $('#error-artist_name'), $success);
-                $.fn.optionalValidateNumber(guarantee_concert, rex_price, $('#error-guarantee_concert'), $success);
-                $.fn.optionalValidateNumber(guarantee_metropolitan, rex_price, $('#error-guarantee_metropolitan'), $success);
-                $.fn.optionalValidateNumber(guarantee_central, rex_price, $('#error-guarantee_central'), $success);
-                $.fn.optionalValidateNumber(guarantee_south, rex_price, $('#error-guarantee_south'), $success);
-                $.fn.optionalValidateName(manager_name, rex_name, $('#error-manager_name'), $success);
+                $.fn.requiredValidateName(artist_name, rex_require_name, $('#error-artist_name'));
+
+                $.fn.optionalValidateNumber(guarantee_concert, rex_price, $('#error-guarantee_concert'));
+                $.fn.optionalValidateNumber(guarantee_metropolitan, rex_price, $('#error-guarantee_metropolitan'));
+                $.fn.optionalValidateNumber(guarantee_central, rex_price, $('#error-guarantee_central'));
+                $.fn.optionalValidateNumber(guarantee_south, rex_price, $('#error-guarantee_south'));
+
+                $.fn.optionalValidateName(manager_name, rex_name, $('#error-manager_name'));
 
                 if (manager_phone.val().length !== 0 && rex_phone.test(manager_phone.val()) != true) {
                     manager_phone.val("");
-                    $("#error-manager_phone").show();
-                    return $success = false;
+                    $("#error-manager_phone").toggle("fast");
+                    setTimeout(function () {
+                        $("#error-manager_phone").toggle("slow");
+                    }, 3000);
+                    return false;
                 }
 
-                $.fn.optionalValidateName(company_name, rex_name, $('#error-company_name'), $success);
+                $.fn.optionalValidateName(company_name, rex_name, $('#error-company_name'));
 
-                if (comment.val().length !== 0 && rex_comment.test(company_email.val()) != true) {
+                if (company_email.val().length !== 0 && rex_email.test(company_email.val()) != true) {
+                    company_email.val("");
+                    $("#error-company_email").toggle("fast");
+                    setTimeout(function () {
+                        $("#error-company_email").toggle("slow");
+                    }, 3000);
+                    return false;
+                }
+
+                if (comment.val().length !== 0 && rex_comment.test(comment.val()) != true) {
                     comment.val("");
                     $("#error-comment").toggle("fast");
                     setTimeout(function () {
                         $("#error-comment").toggle("slow");
                     }, 3000);
-                    return $success = false;
+                    return false;
                 }
-                $.fn.requiredSelectValidate(group_type_number, $('#error-group_type_number'), $success);
-                $.fn.requiredSelectValidate(group_type_sex, $('#error-group_type_sex'), $success);
-                $.fn.requiredSelectValidate(group_type_genres, $('#error-group_type_genres'), $success);
+                $.fn.requiredSelectValidate(group_type_number, $('#error-group_type_number'));
+                $.fn.requiredSelectValidate(group_type_sex, $('#error-group_type_sex'));
+                $.fn.requiredSelectValidate(group_type_genres, $('#error-group_type_genres'));
 
-                return $success;
+                return true;
             }
-        });
+        })
+        ;
     </script>
 @endsection
