@@ -184,7 +184,7 @@
             $.fn.addCommas(guarantee_metropolitan);
             $.fn.addCommas(guarantee_central);
             $.fn.addCommas(guarantee_south);
-            $.fn.replaceString(manager_phone, 11);
+            $.fn.replaceManagerPhone(manager_phone, 11);
 
             $('button#confirm').click(function () {
 
