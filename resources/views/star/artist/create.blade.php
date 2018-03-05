@@ -16,7 +16,7 @@
             <div class="item name {{ $errors->has('artist_name')?'has-error':'' }}">
                 <input id="artist_name" name="artist_name" type="text" placeholder="이름을 입력해주세요"
                        value="{{old('artist_name')}}">
-                <div class="tooltip" id="error-artist_name" style="display: none">1자 이상 16자 이하 필수 입력 항목입니다.</div>
+                <div class="tooltip" id="error-artist_name" style="display: none">1자 이상 필수 입력 항목입니다. 한글(모음,자음 제외), 영어, 숫자만 가능합니다.</div>
             </div>
 
             <div class="item pay">
@@ -60,7 +60,7 @@
                     <input class="option" id="manager_name" name="manager_name"
                            placeholder="담당자 이름"
                            value="{{old('manager_name')}}">
-                         <div class="tooltip" id="error-manager_name" style="display: none">1자 이상 16자 이하 입력 항목입니다.</div>
+                         <div class="tooltip" id="error-manager_name" style="display: none">1자 이상 입력 항목입니다.</div>
                     <input class="option" id="manager_phone" name="manager_phone"
                            placeholder="담당자 연락처"
                            value="{{old('manager_phone')}}">
@@ -75,7 +75,7 @@
                            placeholder="소속사"
                            value="{{old('company_name')}}">
                          <div class="tooltip" id="error-company_name"
-                              style="display: none">1자 이상 16자 이하 입력 항목입니다.</div>
+                              style="display: none">1자 이상 입력 항목입니다.</div>
                     <input class="option" id="company_email" name="company_email"
                            placeholder="소속사 이메일"
                            value="{{old('company_email')}}">
@@ -167,9 +167,9 @@
         //     });
         // })
         $(document).ready(function ($) {
-            var rex_name = /^[\s\S]{1,16}$/;
+            var rex_name = /^([가-힣a-zA-Z]+$){1,255}/;
             var rex_price = /^[0-9]{0,11}$/;
-            var re_email = /^([\w\.-]+)@([a-z\d\.-]+)\.([a-z\.]{2,6})$/;
+            var re_email = /^([\w\.-]+)@([a-ㄴz\d\.-]+)\.([a-z\.]{2,6})$/;
             var re_url = /^(https?:\/\/)?([a-z\d\.-]+)\.([a-z\.]{2,6})([\/\w\.-]*)*\/?$/;
             var rex_phone = /(\d{3})(\d{4})(\d{4})/;
 
@@ -180,13 +180,15 @@
                 guarantee_central = $('#guarantee_central'),
                 guarantee_south = $('#guarantee_south'),
                 manager_name = $('#manager_name'),
-                manager_phone = $('#manager_phone');
+                manager_phone = $('#manager_phone'),
+                company_name = $('#company_name');
 
             $.fn.replaceName(artist_name, 16);
             $.fn.replaceCommas(guarantee_concert, 11);
             $.fn.replaceCommas(guarantee_metropolitan, 11);
             $.fn.replaceCommas(guarantee_central, 11);
             $.fn.replaceCommas(guarantee_south, 11);
+            $.fn.replaceName(manager_name, 16);
             $.fn.replaceCellphone(manager_phone, 11);
 
             $('button#confirm').click(function () {
