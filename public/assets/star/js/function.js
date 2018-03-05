@@ -51,13 +51,48 @@
                 att.val(att.val().substr(0, $limit));
             }
         }
+    };
+
+    $.fn.optionalValidateName = function (att, rex, error, success) {
+        if (att.val().length !== 0 && rex.test(att.val()) != true) {
+            att.val("");
+            error.toggle("fast");
+            setTimeout(function () {
+                error.toggle("slow");
+            }, 3000);
+            return success = false;
+        }
     }
 
-    $.fn.requiredValidation = function () {
+    $.fn.optionalValidateNumber = function (att, rex, error, success) {
+        if (!isNaN(att.val()) && rex.test(att.val()) != true) {
+            att.val("");
+            error.toggle("fast");
+            setTimeout(function () {
+                error.toggle("slow");
+            }, 3000);
+            return success = false;
+        }
+    };
 
-    }
+    $.fn.requiredValidateName = function (att, rex, error, success) {
+        if (rex.test(att.val()) != true) {
+            att.val("");
+            error.toggle("fast");
+            setTimeout(function () {
+                error.toggle("slow");
+            }, 3000);
+            return success = false;
+        }
+    };
 
-    $.fn.Validation = function () {
-        
-    }
+    $.fn.requiredSelectValidate = function (att, error, success) {
+        if (att.val() != true) {
+            error.toggle("fast");
+            setTimeout(function () {
+                error.toggle("slow");
+            }, 3000);
+            return success = false;
+        }
+    };
 })(jQuery);

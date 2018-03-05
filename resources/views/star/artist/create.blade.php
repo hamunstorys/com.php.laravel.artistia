@@ -136,48 +136,8 @@
 @endsection
 @section('scripts')
     <script type="text/javascript">
-        // $('button#confirm').click(function () {
-        //     url = $('#url').val();
-        //     data = {
-        //         picture_url: $('#picture_url').val(),
-        //         artist_name: $('#artist_name').val(),
-        //         guarantee_concert: $('#guarantee_concert').val(),
-        //         guarantee_metropolitan: $('#guarantee_metropolitan').val(),
-        //         guarantee_central: $('#guarantee_central').val(),
-        //         manager_name: $('#manager_name').val(),
-        //         manager_phone: $('#manager_phone').val(),
-        //         company_name: $('#company_name').val(),
-        //         company_email: $('#company_email').val(),
-        //         group_type_number: $('#group_type_number').val(),
-        //         group_type_sex: $('#group_type_sex').val(),
-        //         group_type_song_genre: $('#group_type_song_genre').val(),
-        //         comment: $('#comment').val(),
-        //     };
-        //     $.ajaxSetup({
-        //         headers: {
-        //             'X-CSRF-TOKEN': $('input[name="csrf-token"]').attr('content')
-        //         }
-        //     });
-        //     $.ajax({
-        //         url: url,
-        //         data: data,
-        //         type: 'POST',
-        //         success: function () {
-        //             alert('등록 되었습니다.');
-        //             window.location = '/star';
-        //         },
-        //         error: function (data) {
-        //             alert('등록 실패');
-        //         }
-        //     });
-        // })
         $(document).ready(function ($) {
-            var rex_name = /^[\s\S]{1,255}$/;
-            var rex_price = /^[0-9]{0,11}$/;
-            var rex_email = /^[a-zA-Z0-9.!#$%&’*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
-            var rex_url = /^(https?:\/\/)?([a-z\d\.-]+)\.([a-z\.]{2,6})([\/\w\.-]*)*\/?$/;
-            var rex_phone = /(\d{3})(\d{4})(\d{4})/;
-            var rex_comment = /^[\s\S]{1,255}$/;
+
             var
                 artist_name = $('#artist_name'),
                 guarantee_concert = $('#guarantee_concert'),
@@ -193,82 +153,80 @@
                 group_type_genres = $('#group_type_song_genres'),
                 comment = $('#comment');
 
-            $.fn.replaceName(artist_name, 255);
-            $.fn.replaceCommas(guarantee_concert, 11);
-            $.fn.replaceCommas(guarantee_metropolitan, 11);
-            $.fn.replaceCommas(guarantee_central, 11);
-            $.fn.replaceCommas(guarantee_south, 11);
-            $.fn.replaceName(manager_name, 255);
-            $.fn.replaceCellphone(manager_phone, 11);
-            $.fn.replaceName(company_name, 255);
-            $.fn.replaceEmail(company_email, 255);
-            $.fn.replaceComment(company_email, 255);
-
             $('button#confirm').click(function () {
+                if ($.fn.validateArtist() == true) {
+                    url = $('#url').val();
+                    data = {
+                        picture_url: $('#picture_url').val(),
+                        artist_name: artist_name.val(),
+                        guarantee_concert: guarantee_concert.val(),
+                        guarantee_metropolitan: guarantee_metropolitan.val(),
+                        guarantee_central: guarantee_central.val(),
+                        manager_name: manager_name.val(),
+                        manager_phone: manager_phone.val(),
+                        company_name: company_name.val(),
+                        company_email: company_email.val(),
+                        group_type_number: group_type_number.val(),
+                        group_type_sex: group_type_sex.val(),
+                        group_type_song_genre: group_type_genres.val(),
+                        comment: comment.val(),
+                    };
+                    $.ajaxSetup({
+                        headers: {
+                            'X-CSRF-TOKEN': $('input[name="csrf-token"]').attr('content')
+                        }
+                    });
+                    $.ajax({
+                        url: url,
+                        data: data,
+                        type: 'POST',
+                        success: function () {
+                            alert('등록 되었습니다.');
+                            window.location = '/star';
+                        },
+                        error: function (data) {
+                            alert('등록 실패');
+                        }
+                    });
+                }
+            });
 
-                $guarantee_concert = $.fn.removeCommas(guarantee_concert.val());
-                $guarantee_metropolitan = $.fn.removeCommas(guarantee_metropolitan.val());
-                $guarantee_central = $.fn.removeCommas(guarantee_central.val());
-                $guarantee_south = $.fn.removeCommas(guarantee_south.val());
-                $manager_phone = $.fn.removeDashes(manager_phone.val());
+            $.fn.validateArtist = function () {
 
-                if (rex_name.test(artist_name.val()) != true) {
-                    artist_name.val("");
-                    $("#error-artist_name").toggle("fast");
-                    setTimeout(function () {
-                        $("#error-artist_name").toggle("slow");
-                    }, 3000);
-                }
-                if (!isNaN($guarantee_concert) && rex_price.test($guarantee_concert) != true) {
-                    guarantee_concert.val("");
-                    $("#error-guarantee_concert").show();
-                }
-                if (!isNaN($guarantee_metropolitan) && rex_price.test($guarantee_metropolitan) != true) {
-                    guarantee_metropolitan.val("");
-                    $("#error-guarantee_metropolitan").show();
-                }
-                if (!isNaN($guarantee_central) && rex_price.test($guarantee_central) != true) {
-                    guarantee_central.val("");
-                    $("#error-guarantee_central").show();
-                }
-                if (!isNaN($guarantee_south) && rex_price.test($guarantee_south) != true) {
-                    guarantee_south.val("");
-                    $("#error-guarantee_south").show();
-                }
-                if (manager_name.val().length !== 0 && rex_name.test(manager_name.val()) != true) {
-                    manager_name.val("");
-                    $("#error-manager_name").show();
-                }
+                $success = false;
+
+                $.fn.replaceName(artist_name, 255);
+                $.fn.replaceCommas(guarantee_concert, 11);
+                $.fn.replaceCommas(guarantee_metropolitan, 11);
+                $.fn.replaceCommas(guarantee_central, 11);
+                $.fn.replaceCommas(guarantee_south, 11);
+                $.fn.replaceName(manager_name, 255);
+                $.fn.replaceCellphone(manager_phone, 11);
+                $.fn.replaceName(company_name, 255);
+                $.fn.replaceEmail(company_email, 255),
+                    $.fn.replaceComment(company_email, 255);
+
+                var rex_name = /^[\s\S]{1,255}$/;
+                var rex_price = /^[0-9]{0,11}$/;
+                var rex_email = /^[a-zA-Z0-9.!#$%&’*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
+                var rex_url = /^(https?:\/\/)?([a-z\d\.-]+)\.([a-z\.]{2,6})([\/\w\.-]*)*\/?$/;
+                var rex_phone = /(\d{3})(\d{4})(\d{4})/;
+                var rex_comment = /^[\s\S]{1,255}$/;
+
+                $.fn.requiredValidateName(artist_name, rex_name, $('#error-artist_name'), $success);
+                $.fn.optionalValidateNumber(guarantee_concert, rex_price, $('#error-guarantee_concert'), $success);
+                $.fn.optionalValidateNumber(guarantee_metropolitan, rex_price, $('#error-guarantee_metropolitan'), $success);
+                $.fn.optionalValidateNumber(guarantee_central, rex_price, $('#error-guarantee_central'), $success);
+                $.fn.optionalValidateNumber(guarantee_south, rex_price, $('#error-guarantee_south'), $success);
+                $.fn.optionalValidateName(manager_name, rex_name, $('#error-manager_name'), $success);
+
                 if (manager_phone.val().length !== 0 && rex_phone.test(manager_phone.val()) != true) {
                     manager_phone.val("");
                     $("#error-manager_phone").show();
+                    return $success = false;
                 }
-                if (company_name.val().length !== 0 && rex_name.test(company_name.val()) != true) {
-                    company_name.val("");
-                    $("#error-company_name").show();
-                }
-                if (company_email.val().length !== 0 && rex_email.test(company_email.val()) != true) {
-                    company_name.val("");
-                    $("#error-company_email").show();
-                }
-                if (group_type_number.val() != true) {
-                    group_type_number.val("");
-                    $("#error-group_type_number").show();
-                }
-                if (group_type_sex.val() != true) {
-                    group_type_sex.val("");
-                    $("#error-group_type_sex").toggle("fast");
-                    setTimeout(function () {
-                        $("#error-group_type_sex").toggle("slow");
-                    }, 3000);
-                }
-                if (group_type_genres.val() != true) {
-                    group_type_genres.val("");
-                    $("#error-group_type_genres").toggle("fast");
-                    setTimeout(function () {
-                        $("#error-group_type_genres").toggle("slow");
-                    }, 3000);
-                }
+
+                $.fn.optionalValidateName(company_name, rex_name, $('#error-company_name'), $success);
 
                 if (comment.val().length !== 0 && rex_comment.test(company_email.val()) != true) {
                     comment.val("");
@@ -276,9 +234,14 @@
                     setTimeout(function () {
                         $("#error-comment").toggle("slow");
                     }, 3000);
+                    return $success = false;
                 }
+                $.fn.requiredSelectValidate(group_type_number, $('#error-group_type_number'), $success);
+                $.fn.requiredSelectValidate(group_type_sex, $('#error-group_type_sex'), $success);
+                $.fn.requiredSelectValidate(group_type_genres, $('#error-group_type_genres'), $success);
 
-            });
+                return $success;
+            }
         });
     </script>
 @endsection
