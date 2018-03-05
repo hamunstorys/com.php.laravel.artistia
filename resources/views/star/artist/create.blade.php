@@ -257,9 +257,9 @@
 
             if (manager_phone.val().length !== 0 && rex_phone.test(manager_phone.val()) != true) {
                 manager_phone.val("");
-                $("#error-manager_phone").toggle("fast");
+                $("#error-manager_phone").show("fast");
                 setTimeout(function () {
-                    $("#error-manager_phone").toggle("slow");
+                    $("#error-manager_phone").hide("slow");
                 }, 3000);
             }
 
@@ -267,17 +267,17 @@
 
             if (company_email.val().length !== 0 && rex_email.test(company_email.val()) != true) {
                 company_email.val("");
-                $("#error-company_email").toggle("fast");
+                $("#error-company_email").show("fast");
                 setTimeout(function () {
-                    $("#error-company_email").toggle("slow");
+                    $("#error-company_email").hide("slow");
                 }, 3000);
             }
 
             if (comment.val().length !== 0 && rex_comment.test(comment.val()) != true) {
                 comment.val("");
-                $("#error-comment").toggle("fast");
+                $("#error-comment").show("fast");
                 setTimeout(function () {
-                    $("#error-comment").toggle("slow");
+                    $("#error-comment").hide("slow");
                 }, 3000);
             }
             $.fn.requiredSelectValidate(group_type_number, $('#error-group_type_number'));
