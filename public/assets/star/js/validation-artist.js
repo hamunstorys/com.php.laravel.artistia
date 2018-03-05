@@ -109,32 +109,32 @@
 
 $(document).ready(function ($) {
 
-    $.fn.validate.data = {
-        artist_name: $('#artist_name'),
-        guarantee_concert: $('#guarantee_concert'),
-        guarantee_metropolitan: $('#guarantee_metropolitan'),
-        guarantee_central: $('#guarantee_central'),
-        guarantee_south: $('#guarantee_south'),
-        manager_name: $('#manager_name'),
-        manager_phone: $('#manager_phone'),
-        company_name: $('#company_name'),
-        company_email: $('#company_email'),
-        group_type_number: $('#group_type_number'),
-        group_type_sex: $('#group_type_sex'),
-        group_type_genres: $('#group_type_song_genres'),
-        comment: $('#comment')
+    data = {
+        artist_name : $('#artist_name'),
+        guarantee_concert : $('#guarantee_concert'),
+        guarantee_metropolitan : $('#guarantee_metropolitan'),
+        guarantee_central : $('#guarantee_central'),
+        guarantee_south : $('#guarantee_south'),
+        manager_name : $('#manager_name'),
+        manager_phone : $('#manager_phone'),
+        company_name : $('#company_name'),
+        company_email : $('#company_email'),
+        group_type_number : $('#group_type_number'),
+        group_type_sex : $('#group_type_sex'),
+        group_type_genres : $('#group_type_song_genres'),
+        comment : $('#comment')
     }
 
-    $.fn.validate.replaceName($.fn.validate.data.artist_name, 255);
-    $.fn.validate.replaceCommas($.fn.validate.data.guarantee_concert, 11);
-    $.fn.validate.replaceCommas($.fn.validate.data.guarantee_metropolitan, 11);
-    $.fn.validate.replaceCommas($.fn.validate.data.guarantee_central, 11);
-    $.fn.validate.replaceCommas($.fn.validate.data.guarantee_south, 11);
-    $.fn.validate.replaceName($.fn.validate.data.manager_name, 255);
-    $.fn.validate.replaceCellphone($.fn.validate.data.manager_phone, 11);
-    $.fn.validate.replaceName($.fn.validate.data.company_name, 255);
-    $.fn.validate.replaceEmail($.fn.validate.data.company_email, 255);
-    $.fn.validate.replaceComment($.fn.validate.data.company_email, 255);
+    $.fn.validate.replaceName(artist_name, 255);
+    $.fn.validate.replaceCommas(guarantee_concert, 11);
+    $.fn.validate.replaceCommas(guarantee_metropolitan, 11);
+    $.fn.validate.replaceCommas(guarantee_central, 11);
+    $.fn.validate.replaceCommas(guarantee_south, 11);
+    $.fn.validate.replaceName(manager_name, 255);
+    $.fn.validate.replaceCellphone(manager_phone, 11);
+    $.fn.validate.replaceName(company_name, 255);
+    $.fn.validate.replaceEmail(company_email, 255);
+    $.fn.validate.replaceComment(company_email, 255);
 
     $.fn.validation = function () {
 
@@ -146,46 +146,46 @@ $(document).ready(function ($) {
         var rex_phone = /(\d{3})(\d{4})(\d{4})/;
         var rex_comment = /^[\s\S]{1,255}$/;
 
-        $.fn.validate.requiredValidateName($.fn.validate.data.artist_name, rex_require_name, $('#error-artist_name'));
+        $.fn.validate.requiredValidateName(artist_name, rex_require_name, $('#error-artist_name'));
 
-        $.fn.validate.optionalValidateNumber($.fn.validate.data.guarantee_concert, rex_price, $('#error-guarantee_concert'));
-        $.fn.validate.optionalValidateNumber($.fn.validate.data.guarantee_metropolitan, rex_price, $('#error-guarantee_metropolitan'));
-        $.fn.validate.optionalValidateNumber($.fn.validate.data.guarantee_central, rex_price, $('#error-guarantee_central'));
-        $.fn.validate.optionalValidateNumber($.fn.validate.data.guarantee_south, rex_price, $('#error-guarantee_south'));
+        $.fn.validate.optionalValidateNumber(guarantee_concert, rex_price, $('#error-guarantee_concert'));
+        $.fn.validate.optionalValidateNumber(guarantee_metropolitan, rex_price, $('#error-guarantee_metropolitan'));
+        $.fn.validate.optionalValidateNumber(guarantee_central, rex_price, $('#error-guarantee_central'));
+        $.fn.validate.optionalValidateNumber(guarantee_south, rex_price, $('#error-guarantee_south'));
 
-        $.fn.validate.optionalValidateName($.fn.validate.data.manager_name, rex_name, $('#error-manager_name'));
+        $.fn.validate.optionalValidateName(manager_name, rex_name, $('#error-manager_name'));
 
-        if ($.fn.validate.data.manager_phone.val().length !== 0 && rex_phone.test($.fn.validate.data.manager_phone.val()) != true) {
-            $.fn.validate.data.manager_phone.val("");
+        if (manager_phone.val().length !== 0 && rex_phone.test(manager_phone.val()) != true) {
+            manager_phone.val("");
             $("#error-manager_phone").show("fast");
             setTimeout(function () {
                 $("#error-manager_phone").hide("slow");
             }, 3000);
         }
 
-        $.fn.validate.optionalValidateName($.fn.validate.data.company_name, rex_name, $('#error-company_name'));
+        $.fn.validate.optionalValidateName(company_name, rex_name, $('#error-company_name'));
 
-        if ($.fn.validate.data.company_email.val().length !== 0 && rex_email.test($.fn.validate.data.company_email.val()) != true) {
-            $.fn.validate.data.company_email.val("");
+        if (company_email.val().length !== 0 && rex_email.test(company_email.val()) != true) {
+            company_email.val("");
             $("#error-company_email").show("fast");
             setTimeout(function () {
                 $("#error-company_email").hide("slow");
             }, 3000);
         }
 
-        if ($.fn.validate.data.comment.val().length !== 0 && rex_comment.test($.fn.validate.data.comment.val()) != true) {
-            $.fn.validate.data.comment.val("");
+        if (comment.val().length !== 0 && rex_comment.test(comment.val()) != true) {
+            comment.val("");
             $("#error-comment").show("fast");
             setTimeout(function () {
                 $("#error-comment").hide("slow");
             }, 3000);
         }
-        $.fn.validate.requiredValidateSelect($.fn.validate.data.group_type_number, $('#error-group_type_number'));
-        $.fn.validate.requiredValidateSelect($.fn.validate.data.group_type_sex, $('#error-group_type_sex'));
-        $.fn.validate.requiredValidateSelect($.fn.validate.data.group_type_genres, $('#error-group_type_genres'));
+        $.fn.validate.requiredValidateSelect(group_type_number, $('#error-group_type_number'));
+        $.fn.validate.requiredValidateSelect(group_type_sex, $('#error-group_type_sex'));
+        $.fn.validate.requiredValidateSelect(group_type_genres, $('#error-group_type_genres'));
 
         /* 배열로 넘길 지, 객체로 넘길 지 고민*/
-        $.fn.validate.submit($.fn.validate.data);
+        $.fn.validate.submit();
     }
 })
 
