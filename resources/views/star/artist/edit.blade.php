@@ -166,7 +166,7 @@
 
         $.fn.ajax = function () {
 
-            var data = [
+            var
                 artist_name = $('#artist_name'),
                 guarantee_concert = $('#guarantee_concert'),
                 guarantee_metropolitan = $('#guarantee_metropolitan'),
@@ -180,7 +180,7 @@
                 group_type_sex = $('#group_type_sex'),
                 group_type_genres = $('#group_type_song_genres'),
                 comment = $('#comment')
-            ]
+            
 
             url = $('#url').val();
             data = {
