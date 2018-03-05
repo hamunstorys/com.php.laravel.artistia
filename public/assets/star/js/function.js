@@ -13,7 +13,6 @@
             att.bind('keyup keypress', function () {
                 att.val().replace(/[^0-9\.]+/g, "");
                 att.val(att.val().toString().replace(/,/g, "").replace(/(\d{3})(\d{4})(\d{4})/, '$1-$2-$3'));
-                // 텍스트영역의 길이를 체크
                 var textLength = att.val().length;
                 att.text(textLength);
                 if (textLength > $length) {
