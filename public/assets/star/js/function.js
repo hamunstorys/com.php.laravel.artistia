@@ -9,11 +9,22 @@
     $.fn.replaceCellphone = function (att, length) {
         att.bind('keyup keypress', function () {
             $.fn.limitCharacters(att, length, /-/g);
-            att.val(att.val().replace(/[^0-9\.]+/g, '').replace(/(^02.{0}|^01.{1}|[0-9]{3})([0-9]+)([0-9]{4})/,"$1-$2-$3"));
+            att.val(att.val().replace(/[^0-9\.]+/g, '').replace(/(^02.{0}|^01.{1}|[0-9]{3})([0-9]+)([0-9]{4})/, "$1-$2-$3"));
+        });
+    };
+    $.fn.replaceName = function (att, length) {
+        att.bind('keyup keypress', function () {
+            $.fn.limitCharacters(att, length, null);
         });
     };
 
-    $.fn.replaceName = function (att, length) {
+    $.fn.replaceEmail = function (att, length) {
+        att.bind('keyup keypress', function () {
+            $.fn.limitCharacters(att, length, null);
+        });
+    }
+
+    $.fn.replaceComment = function (att, length) {
         att.bind('keyup keypress', function () {
             $.fn.limitCharacters(att, length, null);
         });
@@ -23,7 +34,7 @@
         return parseInt(str.replace(/,/g, ""));
     };
 
-    $.fn.removeDashs = function (str) {
+    $.fn.removeDashes = function (str) {
         return parseInt(str.replace(/-/g, ""));
     };
 
@@ -40,5 +51,13 @@
                 att.val(att.val().substr(0, $limit));
             }
         }
+    }
+
+    $.fn.requiredValidation = function () {
+
+    }
+
+    $.fn.Validation = function () {
+        
     }
 })(jQuery);

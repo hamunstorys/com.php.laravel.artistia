@@ -16,7 +16,9 @@
             <div class="item name {{ $errors->has('artist_name')?'has-error':'' }}">
                 <input id="artist_name" name="artist_name" type="text" placeholder="이름을 입력해주세요"
                        value="{{old('artist_name')}}">
-                <div class="tooltip" id="error-artist_name" style="display: none">1자 이상 필수 입력 항목입니다. 한글(모음,자음 제외), 영어, 숫자만 가능합니다.</div>
+                <div class="tooltip" id="error-artist_name" style="display: none">1자 이상 필수 입력 항목입니다. 한글(모음,자음 제외), 영어,
+                    숫자만 가능합니다.
+                </div>
             </div>
 
             <div class="item pay">
@@ -65,7 +67,7 @@
                            placeholder="담당자 연락처"
                            value="{{old('manager_phone')}}">
                         <div class="tooltip" id="error-manager_phone"
-                             style="display: none">10자 이상 11자 이하 입력 항목입니다.</div>
+                             style="display: none">11자 입력 항목입니다.</div>
 	                </span>
             </div>
             <div class="item company">
@@ -79,6 +81,8 @@
                     <input class="option" id="company_email" name="company_email"
                            placeholder="소속사 이메일"
                            value="{{old('company_email')}}">
+                         <div class="tooltip" id="error-company_email"
+                              style="display: none">유효한 이메일 형식이 아닙니다.</div>
 	                </span>
             </div>
             <div class="item group_type">
@@ -88,12 +92,18 @@
                     <option value="1">솔로</option>
                     <option value="2">그룹</option>
                 </select>
+                <div class="tooltip" id="error-group_type_number"
+                     style="display: none">필수 입력 사항입니다.
+                </div>
                 <select name="group_type_sex" id="group_type_sex">
                     <option selected="selected">성별</option>
                     @foreach($sexes = Session::get('search_requirement.sexes') as $sex)
                         <?php echo '<option value="' . $sex->id . '">' . $sex->value . '</option>'; ?>
                     @endforeach
                 </select>
+                <div class="tooltip" id="error-group_type_sex"
+                     style="display: none">필수 입력 사항입니다.
+                </div>
             </div>
             <div class="item group_type">
                 <label>장르 선택</label>
@@ -103,22 +113,17 @@
                         <?php echo '<option value="' . $song_genre->id . '">' . $song_genre->value . '</option>'; ?>
                     @endforeach
                 </select>
-            </div>
-            <div class="item company">
-	                <span>
-                    <label>소속사</label>
-                    <input class="option" id="company_name" name="company_name"
-                           placeholder="소속사"
-                           value="{{old('company_name')}}">
-                    <input class="option" id="company_email" name="company_email"
-                           placeholder="소속사 이메일"
-                           value="{{old('company_email')}}">
-	                </span>
+                <div class="tooltip" id="error-group_type_genres"
+                     style="display: none">필수 입력 사항입니다.
+                </div>
             </div>
             <div class="item memo">
                 <label>참고내용</label>
                 <textarea class="memo" rows="3" id="comment" name="comment"
                           placeholder="참고사항을 입력하세요">{{old('comment')}}</textarea>
+                <div class="tooltip" id="error-comment"
+                     style="display: none">255자까지 입력 가능합니다.
+                </div>
             </div>
         </div>
         <div class="clearfix"></div>
@@ -167,12 +172,12 @@
         //     });
         // })
         $(document).ready(function ($) {
-            var rex_name = /^([가-힣a-zA-Z]+$){1,255}/;
+            var rex_name = /^[\s\S]{1,255}$/;
             var rex_price = /^[0-9]{0,11}$/;
-            var re_email = /^([\w\.-]+)@([a-ㄴz\d\.-]+)\.([a-z\.]{2,6})$/;
-            var re_url = /^(https?:\/\/)?([a-z\d\.-]+)\.([a-z\.]{2,6})([\/\w\.-]*)*\/?$/;
+            var rex_email = /^[a-zA-Z0-9.!#$%&’*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
+            var rex_url = /^(https?:\/\/)?([a-z\d\.-]+)\.([a-z\.]{2,6})([\/\w\.-]*)*\/?$/;
             var rex_phone = /(\d{3})(\d{4})(\d{4})/;
-
+            var rex_comment = /^[\s\S]{1,255}$/;
             var
                 artist_name = $('#artist_name'),
                 guarantee_concert = $('#guarantee_concert'),
@@ -181,57 +186,98 @@
                 guarantee_south = $('#guarantee_south'),
                 manager_name = $('#manager_name'),
                 manager_phone = $('#manager_phone'),
-                company_name = $('#company_name');
+                company_name = $('#company_name'),
+                company_email = $('#company_email'),
+                group_type_number = $('#group_type_number'),
+                group_type_sex = $('#group_type_sex'),
+                group_type_genres = $('#group_type_song_genres'),
+                comment = $('#comment');
 
-            $.fn.replaceName(artist_name, 16);
+            $.fn.replaceName(artist_name, 255);
             $.fn.replaceCommas(guarantee_concert, 11);
             $.fn.replaceCommas(guarantee_metropolitan, 11);
             $.fn.replaceCommas(guarantee_central, 11);
             $.fn.replaceCommas(guarantee_south, 11);
-            $.fn.replaceName(manager_name, 16);
+            $.fn.replaceName(manager_name, 255);
             $.fn.replaceCellphone(manager_phone, 11);
+            $.fn.replaceName(company_name, 255);
+            $.fn.replaceEmail(company_email, 255);
+            $.fn.replaceComment(company_email, 255);
 
             $('button#confirm').click(function () {
 
-                    $guarantee_concert = $.fn.removeCommas(guarantee_concert.val());
-                    $guarantee_metropolitan = $.fn.removeCommas(guarantee_metropolitan.val());
-                    $guarantee_central = $.fn.removeCommas(guarantee_central.val());
-                    $guarantee_south = $.fn.removeCommas(guarantee_south.val());
-                    $manager_phone = $.fn.removeDashs(manager_phone.val());
+                $guarantee_concert = $.fn.removeCommas(guarantee_concert.val());
+                $guarantee_metropolitan = $.fn.removeCommas(guarantee_metropolitan.val());
+                $guarantee_central = $.fn.removeCommas(guarantee_central.val());
+                $guarantee_south = $.fn.removeCommas(guarantee_south.val());
+                $manager_phone = $.fn.removeDashes(manager_phone.val());
 
-                    if (rex_name.test(artist_name.val()) != true) {
-                        artist_name.val("");
-                        $("#error-artist_name").show();
-                    } else if (!isNaN($guarantee_concert) && rex_price.test($guarantee_concert) != true) {
-                        guarantee_concert.val("");
-                        $("#error-guarantee_concert").show();
-                    } else if (!isNaN($guarantee_metropolitan) && rex_price.test($guarantee_metropolitan) != true) {
-                        guarantee_metropolitan.val("");
-                        $("#error-guarantee_metropolitan").show();
-                    } else if (!isNaN($guarantee_central) && rex_price.test($guarantee_central) != true) {
-                        guarantee_central.val("");
-                        $("#error-guarantee_central").show();
-                    } else if (!isNaN($guarantee_south) && rex_price.test($guarantee_south) != true) {
-                        guarantee_south.val("");
-                        $("#error-guarantee_south").show();
-                    } else if (manager_name.val().length !== 0 && rex_name.test(manager_name.val()) != true) {
-                        manager_name.val("");
-                        $("#error-manager_name").show();
-                    } else if (manager_phone.val().length !== 0 && rex_phone.test(manager_phone.val()) != true) {
-                        manager_phone.val("");
-                        $("#error-manager_phone").show();
-                    }
+                if (rex_name.test(artist_name.val()) != true) {
+                    artist_name.val("");
+                    $("#error-artist_name").toggle("fast");
+                    setTimeout(function () {
+                        $("#error-artist_name").toggle("slow");
+                    }, 3000);
                 }
-            );
+                if (!isNaN($guarantee_concert) && rex_price.test($guarantee_concert) != true) {
+                    guarantee_concert.val("");
+                    $("#error-guarantee_concert").show();
+                }
+                if (!isNaN($guarantee_metropolitan) && rex_price.test($guarantee_metropolitan) != true) {
+                    guarantee_metropolitan.val("");
+                    $("#error-guarantee_metropolitan").show();
+                }
+                if (!isNaN($guarantee_central) && rex_price.test($guarantee_central) != true) {
+                    guarantee_central.val("");
+                    $("#error-guarantee_central").show();
+                }
+                if (!isNaN($guarantee_south) && rex_price.test($guarantee_south) != true) {
+                    guarantee_south.val("");
+                    $("#error-guarantee_south").show();
+                }
+                if (manager_name.val().length !== 0 && rex_name.test(manager_name.val()) != true) {
+                    manager_name.val("");
+                    $("#error-manager_name").show();
+                }
+                if (manager_phone.val().length !== 0 && rex_phone.test(manager_phone.val()) != true) {
+                    manager_phone.val("");
+                    $("#error-manager_phone").show();
+                }
+                if (company_name.val().length !== 0 && rex_name.test(company_name.val()) != true) {
+                    company_name.val("");
+                    $("#error-company_name").show();
+                }
+                if (company_email.val().length !== 0 && rex_email.test(company_email.val()) != true) {
+                    company_name.val("");
+                    $("#error-company_email").show();
+                }
+                if (group_type_number.val() != true) {
+                    group_type_number.val("");
+                    $("#error-group_type_number").show();
+                }
+                if (group_type_sex.val() != true) {
+                    group_type_sex.val("");
+                    $("#error-group_type_sex").toggle("fast");
+                    setTimeout(function () {
+                        $("#error-group_type_sex").toggle("slow");
+                    }, 3000);
+                }
+                if (group_type_genres.val() != true) {
+                    group_type_genres.val("");
+                    $("#error-group_type_genres").toggle("fast");
+                    setTimeout(function () {
+                        $("#error-group_type_genres").toggle("slow");
+                    }, 3000);
+                }
 
-            artist_name.keyup(function () {
-                $("#error-artist_name").hide();
-            });
-            guarantee_concert.keyup(function () {
-                $("#error-guarantee_concert").hide();
-            });
-            guarantee_metropolitan.keyup(function () {
-                $("#error-guarantee_metropolitan").hide();
+                if (comment.val().length !== 0 && rex_comment.test(company_email.val()) != true) {
+                    comment.val("");
+                    $("#error-comment").toggle("fast");
+                    setTimeout(function () {
+                        $("#error-comment").toggle("slow");
+                    }, 3000);
+                }
+
             });
         });
     </script>
