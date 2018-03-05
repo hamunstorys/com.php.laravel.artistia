@@ -42,22 +42,6 @@ class ArtistController extends Controller
             'comment' => $request->comment
         ));
 
-        $validator = $this->validate($post_data, [
-            'artist_name' => 'required|max:255',
-            'guarantee_concert' => 'nullable|max:2147483647|Integer',
-            'guarantee_metropolitan' => 'nullable|max:2147483647|Integer',
-            'guarantee_central' => 'nullable|max:2147483647|Integer',
-            'guarantee_south' => 'nullable|max:2147483647|Integer',
-            'manager_name' => 'max:255|nullable',
-            'manager_phone' => 'nullable',
-            'company_name' => 'max:255|nullable',
-            'company_email' => 'max:255|nullable',
-            'picture_url' => 'image:max:2083|nullable',
-            'comment' => 'max:255|nullable',
-        ]);
-
-        $validator->
-
         $artist = new Star_Artist();
 
         if (isset($post_data->picture_url) != null) {
@@ -155,20 +139,6 @@ class ArtistController extends Controller
             'picture_url' => $request->picture_url,
             'comment' => $request->comment
         ));
-
-        $this->validate($post_data, [
-            'artist_name' => 'required|max:255',
-            'guarantee_concert' => 'nullable|max:2147483647|Integer',
-            'guarantee_metropolitan' => 'nullable|max:2147483647|Integer',
-            'guarantee_central' => 'nullable|max:2147483647|Integer',
-            'guarantee_south' => 'nullable|max:2147483647|Integer',
-            'manager_name' => 'max:255|nullable',
-            'manager_phone' => 'nullable',
-            'company_name' => 'max:255|nullable',
-            'company_email' => 'max:255|nullable',
-            'picture_url' => 'image:max:2083|nullable',
-            'comment' => 'max:255|nullable',
-        ]);
 
         $artist = Star_Artist::findOrFail($id);
 

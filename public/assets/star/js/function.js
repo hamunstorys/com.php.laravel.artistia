@@ -53,42 +53,54 @@
         }
     };
 
-    $.fn.optionalValidateName = function (att, rex, error) {
+    $.fn.optionalValidateName = function (att, rex, error, success) {
         if (att.val().length !== 0 && rex.test(att.val()) != true) {
             att.val("");
             error.toggle("fast");
             setTimeout(function () {
                 error.toggle("slow");
             }, 3000);
+            success = false;
+        } else {
+            success = true;
         }
     }
 
-    $.fn.optionalValidateNumber = function (att, rex, error) {
+    $.fn.optionalValidateNumber = function (att, rex, error, success) {
         if (!isNaN(att.val()) && rex.test(att.val()) != true) {
             att.val("");
             error.toggle("fast");
             setTimeout(function () {
                 error.toggle("slow");
             }, 3000);
+            success = false;
+        } else {
+            success = true;
         }
     };
 
-    $.fn.requiredValidateName = function (att, rex, error) {
+    $.fn.requiredValidateName = function (att, rex, error, success) {
         if (rex.test(att.val()) != true) {
             att.val("");
             error.toggle("fast");
             setTimeout(function () {
                 error.toggle("slow");
             }, 3000);
+            success = false;
+        } else {
+            success = true;
         }
     };
 
-    $.fn.requiredSelectValidate = function (att, error) {
+    $.fn.requiredSelectValidate = function (att, error, success) {
         if (att.val() == 0) {
             error.toggle("fast");
             setTimeout(function () {
                 error.toggle("slow");
             }, 3000);
+            success = false;
+        } else {
+            success = true;
         }
     };
 })(jQuery);
