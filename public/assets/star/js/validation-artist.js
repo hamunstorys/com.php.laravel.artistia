@@ -77,8 +77,9 @@
             },
             selectedOption: function (att, error) {
                 att.bind('click selected', function () {
-                    if (att.val() != 0)
+                    if (att.val() != 0) {
                         error.hide("slow");
+                    }
                 });
             },
             removeCommas: function (str) {
