@@ -126,40 +126,62 @@
             create: {
                 submit: function () {
                     url = $('#url').val();
+                    var data = new FormData();
+                    data.append("picture_url", $('#picture_url')[0].files[0]);
+                    data.append("artist_name", $('#artist_name').val());
+                    data.append("guarantee_concert", $('#guarantee_concert').val());
+                    data.append("guarantee_metropolitan", $('#guarantee_metropolitan').val());
+                    data.append("guarantee_central", $('#guarantee_central').val());
+                    data.append("guarantee_south", $('#guarantee_south').val());
+                    data.append("manager_name", $('#manager_name').val());
+                    data.append("manager_phone", $('#manager_phone').val());
+                    data.append("company_name", $('#company_name').val());
+                    data.append("company_email", $('#company_email').val());
+                    data.append("group_type_number", $('#group_type_number').val());
+                    data.append("group_type_sex", $('#group_type_sex').val());
+                    data.append("group_type_song_genres", $('#group_type_song_genres').val());
+                    data.append("comment", $('#comment').val());
+
                     $.ajaxSetup({
                         headers: {
                             'X-CSRF-TOKEN': $('input[name="csrf-token"]').attr('content')
                         }
                     });
+
                     $.ajax({
                         url: url,
-                        data: {
-                            picture_url: $('#picture_url').val(),
-                            artist_name: $('#artist_name').val(),
-                            guarantee_concert: $('#guarantee_concert').val(),
-                            guarantee_metropolitan: $('#guarantee_metropolitan').val(),
-                            guarantee_central: $('#guarantee_central').val(),
-                            guarantee_south: $('#guarantee_south').val(),
-                            manager_name: $('#manager_name').val(),
-                            manager_phone: $('#manager_phone').val(),
-                            company_name: $('#company_name').val(),
-                            company_email: $('#company_email').val(),
-                            group_type_number: $('#group_type_number').val(),
-                            group_type_sex: $('#group_type_sex').val(),
-                            group_type_song_genres: $('#group_type_song_genres').val(),
-                            comment: $('#comment').val()
-                        },
+                        processData: false,
+                        contentType: false,
+                        data: data,
                         type: 'POST',
                         success: function () {
                             alert('등록 되었습니다.');
                             window.location = '/star';
                         },
                     });
+
                 },
             },
             update: {
                 submit: function () {
                     url = $('#url').val();
+                    var data = new FormData();
+                    data.append("picture_url", $('#picture_url')[0].files[0]);
+                    data.append("artist_name", $('#artist_name').val());
+                    data.append("guarantee_concert", $('#guarantee_concert').val());
+                    data.append("guarantee_metropolitan", $('#guarantee_metropolitan').val());
+                    data.append("guarantee_central", $('#guarantee_central').val());
+                    data.append("guarantee_south", $('#guarantee_south').val());
+                    data.append("manager_name", $('#manager_name').val());
+                    data.append("manager_phone", $('#manager_phone').val());
+                    data.append("company_name", $('#company_name').val());
+                    data.append("company_email", $('#company_email').val());
+                    data.append("group_type_number", $('#group_type_number').val());
+                    data.append("group_type_sex", $('#group_type_sex').val());
+                    data.append("group_type_song_genres", $('#group_type_song_genres').val());
+                    data.append("comment", $('#comment').val());
+                    data.append("_method", $('input[name="_method"]').val());
+
                     $.ajaxSetup({
                         headers: {
                             'X-CSRF-TOKEN': $('input[name="csrf-token"]').attr('content')
@@ -167,24 +189,11 @@
                     });
                     $.ajax({
                         url: url,
-                        data: {
-                            picture_url: $('#picture_url').val(),
-                            artist_name: $('#artist_name').val(),
-                            guarantee_concert: $('#guarantee_concert').val(),
-                            guarantee_metropolitan: $('#guarantee_metropolitan').val(),
-                            guarantee_central: $('#guarantee_central').val(),
-                            guarantee_south: $('#guarantee_south').val(),
-                            manager_name: $('#manager_name').val(),
-                            manager_phone: $('#manager_phone').val(),
-                            company_name: $('#company_name').val(),
-                            company_email: $('#company_email').val(),
-                            group_type_number: $('#group_type_number').val(),
-                            group_type_sex: $('#group_type_sex').val(),
-                            group_type_song_genres: $('#group_type_song_genres').val(),
-                            comment: $('#comment').val(),
-                            _method: $('input[name="_method"]').val()
-                        },
+                        data: data,
                         type: 'POST',
+
+                        processData: false,
+                        contentType: false,
                         success: function () {
                             alert('수정 되었습니다.');
                             window.history.go(-1)
@@ -192,7 +201,7 @@
                     });
                 },
             },
-            validation: function () {
+            validation: function (callback) {
 
                 var rex_require_name = /^[\s\S]{1,255}$/;
                 var rex_name = /^[\s\S]{0,255}$/;
@@ -232,6 +241,10 @@
                 $.fn.validate.requiredValidateSelect($.fn.validate.data.group_type_sex, $.fn.validate.error.group_type_sex);
 
                 $.fn.validate.requiredValidateSelect($.fn.validate.data.group_type_song_genres, $.fn.validate.error.group_type_song_genres);
+
+                if (typeof callback === "function") {
+                    callback();
+                }
             }
         }
     }
@@ -241,7 +254,7 @@ $(document).ready(function ($) {
 
     $.fn.validate.replaceName($.fn.validate.data.artist_name, 255, $.fn.validate.error.artist_name);
 
-    $.fn.validate.replaceCommas($.fn.validate.data.guarantee_concert, 11, $.fn.validate.guarantee_concert);
+    $.fn.validate.replaceCommas($.fn.validate.data.guarantee_concert, 11, $.fn.validate.error.guarantee_concert);
     $.fn.validate.replaceCommas($.fn.validate.data.guarantee_metropolitan, 11, $.fn.validate.error.guarantee_metropolitan);
     $.fn.validate.replaceCommas($.fn.validate.data.guarantee_central, 11, $.fn.validate.error.guarantee_central);
     $.fn.validate.replaceCommas($.fn.validate.data.guarantee_south, 11, $.fn.validate.error.guarantee_south);
@@ -262,16 +275,10 @@ $(document).ready(function ($) {
 });
 
 $.fn.validate.create.validation = function () {
-
-    $.fn.validate.validation();
-    $.fn.validate.create.submit();
-
+    $.fn.validate.validation($.fn.validate.create.submit());
 };
 
 $.fn.validate.update.validation = function () {
-
-    $.fn.validate.validation();
-    $.fn.validate.update.submit();
-
+    $.fn.validate.validation($.fn.validate.update.submit());
 };
 

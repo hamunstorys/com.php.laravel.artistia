@@ -52,11 +52,11 @@
                         </div>
                         <div class="item memo">
                             <label>그룹 유형(성별)</label>
-                            <span>{{\App\Models\Star\Star_Artist_Sex::where('id', $artist->group_type_sex)->first()->value}}</span>
+                            <span>{{\App\Models\Star\Star_Artist_Sex::where('id',"=",$artist->group_type_sex)->first()->value}}</span>
                         </div>
                         <div class="item memo">
                             <label>그룹 유형(장르)</label>
-                            <span>{{\App\Models\Star\Star_Artist_Song_Genre::where('id', $artist->group_type_sex)->first()->value}}</span>
+                            <span></span>
                         </div>
                         <div class="item memo">
                             <label>참고내용</label>

@@ -46,7 +46,7 @@ class ArtistController extends Controller
 
         if (isset($post_data->picture_url) != null) {
             $manager = new ImageManager();
-            $image = $post_data->picture_url;
+            $image = $request->file('picture_url');
             $savePath = 'assets/star/uploads/artist/thumbnails/';
             $filename = time() . '.' . $image->getClientOriginalExtension();
             $manager->make($image)->save($savePath . $filename, 60);
