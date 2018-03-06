@@ -1,5 +1,6 @@
 @charset "utf-8";
 @import url('https://fonts.googleapis.com/css?family=Roboto:100,300,400,500,700');
+@import url('https://fonts.googleapis.com/css?family=Fugaz+One|Quantico:400,400i,700,700i');
 @import url(http://fonts.googleapis.com/earlyaccess/notosanskr.css);
 @import url(https://use.fontawesome.com/releases/v5.0.6/css/all.css);
 @import url('https://fonts.googleapis.com/icon?family=Material+Icons');
@@ -52,7 +53,30 @@ form {
 	margin: 0;
 	padding: 0;
 }
-
+.divider {
+ overflow: hidden;
+ text-align: center;
+ margin: 20px 0;
+ font-size: 12px;
+}
+.divider:before,
+.divider:after {
+ background-color: #e6e6e6;
+ content: "";
+ display: inline-block;
+ height: 1px;
+ position: relative;
+ vertical-align: middle;
+ width: 50%;
+}
+.divider:before {
+ right: 1em;
+ margin-left: -50%;
+}
+.divider:after {
+ left: 1em;
+ margin-right: -50%;
+}
 /***** HEADER *****/
 header {
 	background: #fff;
@@ -66,8 +90,6 @@ header .top {
 	flex: 1;
 	padding: 0;
 	margin: 10px 0;
-}
-header .logo {
 }
 header .logo span {
 	font-size: 18px;
@@ -133,6 +155,7 @@ button {
     display: inline-block;
     background-color: #494949;
     color: #fff;
+    font-size: 14px;
     text-align: center;
     padding: 5px 15px;
     border: none;
@@ -142,6 +165,12 @@ button {
 }
 button:hover {
     opacity: 1;
+}
+.btn_login {
+	background: skyblue;
+}
+.btn_join {
+	
 }
 /***** SEARCH PAGE *****/
 .search_header {
@@ -531,10 +560,48 @@ footer {
     width: 400px;
     text-align: center;
 }
-
 .login_wrap > img {
     height: 100px;
     margin-bottom: 20px;
+}
+.login_wrap .logo {
+	font-family: 'Fugaz One';
+	display: inline-block;
+    font-size: 56px;
+    color: skyblue;
+    letter-spacing: 1px;
+    margin-bottom: 0px;
+    text-shadow: 5px 10px 0 rgba(0,0,0,0.05);
+    position: relative;
+}
+.login_wrap .star {
+	display: inline-block;
+	position: absolute;
+	top: 4px;
+	left: 34px;
+	color: #ff001b;
+	text-shadow: none;	
+}
+/* .login_wrap .logo:before {
+	content: "";
+	display: inline-block;
+	width: 30px;
+	height: 30px;
+	background: url('../img/star.png')no-repeat center center;
+	background-size: 18px auto;
+	position: absolute;
+	top: -3px;
+	left: 30px;
+}
+*/
+.login_wrap .logo span {
+	color: #1081be;
+	display: block;
+	font-size: 22px;
+	font-weight: 900;
+	margin-bottom: -40px;
+	text-shadow: none;
+	letter-spacing: 8px;
 }
 
 .login_box {
@@ -543,6 +610,7 @@ footer {
     padding: 20px;
     border-radius: 4px;
     box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.1);
+    background: #fff;
 }
 
 .login_box h1 {
@@ -550,14 +618,7 @@ footer {
     margin-top: 0;
     margin-bottom: 20px;
 }
-
-.login_box label {
-    display: block;
-    font-size: 14px;
-    margin-bottom: 5px;
-}
-
-.login_box input {
+.login_box input[type=text] {
     width: 100%;
     border: 1px solid #ddd;
     padding: 10px;
@@ -566,16 +627,48 @@ footer {
     font-weight: 100;
     margin-bottom: 20px;
 }
-
+.login_box input[type=password] {
+    width: 100%;
+    border: 1px solid #ddd;
+    padding: 10px;
+    color: #494949;
+    font-size: 13px;
+    font-weight: 100;
+    margin-bottom: 5px;
+}
 .login_box button {
     width: 100%;
     height: 40px;
 }
+.login_box input[id=check] {
+	display: none;
+}
+.login_box input[id=check] + label {
+	display: inline-block;
+	cursor: pointer;
+	font-size: 12px;
+	margin-bottom: 20px;
+}
+.login_box input[id=check] + label:before {
+	content: "";
+	display: inline-block;
+	border: 1px solid #dedede;
+	width: 14px;
+	height: 14px;
+	margin-right: 7px;
+	margin-bottom: -3px;
 
+}
+.login_box input[id=check]:checked + label:before {
+	content: '\2714';
+	font-size: 10px;
+	text-align: center;
+
+}
 .copyright {
     margin-top: 20px;
-    font-weight: 300;
+    font-weight: 100;
     font-size: 12px;
-    color: #ddd;
+    color: #494949;
 }
 

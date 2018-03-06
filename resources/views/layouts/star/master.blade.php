@@ -44,25 +44,7 @@
         </Form>
     </div>
 </div>
-<script>
-    /*dropdown-mypage dropdown feature*/
-    $(window).on('load', function () {
-        if ($('#dropdown-mypage').css("display") != "none") {
-            $('#dropdown-mypage').hide();
-        }
-
-        $('#dropdown-mypage-show').click(function (e) {
-            e.stopPropagation();
-            $('#dropdown-mypage').slideToggle();
-        });
-
-        $(document).click(function () {
-            if ($('#dropdown-mypage').css("display") != "none") {
-                $('#dropdown-mypage').slideUp();
-            }
-        })
-    });
-</script>
+<script src="{{asset('assets/star/js/function.js')}}"></script>
 @yield('content')
 @yield('scripts')
 @include('layouts.star.footer')
