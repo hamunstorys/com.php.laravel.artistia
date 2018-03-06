@@ -104,23 +104,28 @@
                 if (rex.test(att.val()) != true) {
                     att.val("");
                     error.show("fast");
+                    return false;
                 }
             },
             requiredValidateSelect: function (att, error) {
+                ($("#selectBox option:selected").val());
                 if (att.val() == 0) {
                     error.show("fast");
+                    return false;
                 }
             },
             optionalValidateName: function (att, rex, error) {
                 if (att.val().length !== 0 && rex.test(att.val()) != true) {
                     att.val("");
                     error.show("fast");
+                    return false;
                 }
             },
             optionalValidateNumber: function (att, rex, error) {
                 if (!isNaN(att.val()) && rex.test(att.val()) != true) {
                     att.val("");
                     error.show("fast");
+                    return false;
                 }
             },
             create: {
@@ -223,6 +228,7 @@
                 if ($.fn.validate.data.manager_phone.val().length !== 0 && rex_phone.test($.fn.validate.data.manager_phone.val()) != true) {
                     $.fn.validate.data.manager_phone.val("");
                     $("#error-manager_phone").show("fast");
+                    return false;
                 }
 
                 $.fn.validate.optionalValidateName($.fn.validate.data.company_name, rex_name, $('#error-company_name'));
@@ -230,11 +236,13 @@
                 if ($.fn.validate.data.company_email.val().length !== 0 && rex_email.test($.fn.validate.data.company_email.val()) != true) {
                     $.fn.validate.data.company_email.val("");
                     $("#error-company_email").show("fast");
+                    return false;
                 }
 
                 if ($.fn.validate.data.comment.val().length !== 0 && rex_comment.test($.fn.validate.data.comment.val()) != true) {
                     $.fn.validate.data.comment.val("");
                     $("#error-comment").show("fast");
+                    return false;
                 }
 
                 $.fn.validate.requiredValidateSelect($.fn.validate.data.group_type_number, $.fn.validate.error.group_type_number);
