@@ -27,7 +27,7 @@ class StarUserTableSeeder extends Seeder
             'password' => bcrypt('000000'),
         ]);
         $user->save();
-        
+
 //        $authority = new Authority;
 //        $authority->fill(['administrator' => 1,
 //            'articles_creatable' => 1, 'articles_updatable' => 1, 'articles_deletable' => 1,
