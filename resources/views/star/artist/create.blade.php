@@ -1,3 +1,4 @@
+<?php ini_set("display_errors", 1) ?>
 @extends('layouts.star.master')
 @section('content')
     <div class="result_wrap">
@@ -5,8 +6,7 @@
         {{--{{csrf_field()}}--}}
         <input type="hidden" name="csrf-token" content="{{csrf_token()}}"/>
         <input type="hidden" id="url" value="{{route('star.artist.store')}}">
-        <div class="poster"
-             {{ $errors->has('picture_url')?'has-error':'' }} style="background-image: url('{{old('picture_url')}}')">
+        <div class="poster">
             <i class="far fa-file-image"></i>
             <h4>대표 이미지 업로드</h4>
             <p>파일 형식은 jpg 또는 png로,<br>사이즈는 가로 620px, 세로 465px 이상으로 올려주세요.</p>
@@ -133,7 +133,9 @@
         </div>
         <div class="clearfix"></div>
         <div class="btn_wrap">
-            <button id="confirm" onclick="$.fn.validation()">확인</button>
+            <button id="confirm" onclick="$.fn.validate.create.validation()">확인</button>
+
+
             <button id="cancle" onclick="window.history.go(-1)">취소하기</button>
         </div>
         {{--</Form>--}}
