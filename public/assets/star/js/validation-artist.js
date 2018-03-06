@@ -76,7 +76,7 @@
                 });
             },
             selectedOption: function (att, error) {
-                att.click(function () {
+                att.bind('click selected', function () {
                     if (att.val() != 0)
                         error.hide("slow");
                 });
