@@ -1,14 +1,13 @@
-$(window).on('load', function () {
-    $('#dropdown-mypage').hide();
-    
-    $('#dropdown-mypage-show').click(function (e) {
-        e.stopPropagation();
-        $('#dropdown-mypage').slideToggle();
-    });
+$(document).ready(function () {
+    if ($('#dropdown-mypage').css("display") != "none") {
+        $('#dropdown-mypage').slideUp();
+    }
 
-    $(document).click(function () {
+    $('#dropdown-mypage-show').click(function () {
         if ($('#dropdown-mypage').css("display") != "none") {
             $('#dropdown-mypage').slideUp();
+        } else {
+            $('#dropdown-mypage').slideDown();
         }
-    })
-});
+    });
+})
