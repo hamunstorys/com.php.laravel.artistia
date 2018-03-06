@@ -110,7 +110,6 @@
                 if (att.val() == 0) {
                     error.show("fast");
                 }
-
             },
             optionalValidateName: function (att, rex, error) {
                 if (att.val().length !== 0 && rex.test(att.val()) != true) {

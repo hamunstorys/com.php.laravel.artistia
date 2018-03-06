@@ -12,6 +12,7 @@ class SearchController extends Controller
     public $helper;
     public $message;
     public $data;
+    public $alert;
 
     public function __construct()
     {
@@ -29,9 +30,15 @@ class SearchController extends Controller
         $this->setData($query);
         $this->setMessage($query);
         $helper = $this->getHelper();
-
-
         return view('star.search.show', ['data' => $this->data, 'helper' => $helper, 'message' => $this->message, 'query' => $query]);
+    }
+
+    public function showAll()
+    {
+        $this->data = DB::table('star_artists')->orWhere(DB::raw("CONCAT_WS('|',artist_name,manager_name,manager_phone,company_name,company_email,comment)"), 'LIKE', "%%")->get();
+        $helper = $this->getHelper();
+
+        return view('star.search.show', ['data' => $this->data, 'helper' => $helper]);
     }
 
     public function getHelper()
@@ -46,7 +53,7 @@ class SearchController extends Controller
     public function setMessage($query)
     {
         if ($query == null) {
-            $this->message = "<div class=\"search_result_title\">검색어를 입력해 주십시오.</div>";
+            $this->message = "<div class=\"search_result_title\">검색어를 입력 해주십시오.</div></div>";
         } else {
             $this->message = '<div class="search_result_title"><span class="total">"' . $query . '"</span>에 대해 <span>' . $this->data->count() . '</span>건이 검색되었습니다."</div>';
         }

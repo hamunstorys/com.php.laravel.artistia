@@ -174,6 +174,7 @@ class ArtistController extends Controller
             File::delete(public_path($path));
         }
         $artist->delete();
+        return redirect()->back();
     }
 
     public
