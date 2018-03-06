@@ -112,7 +112,7 @@
                         <?php echo $group_type_song_genre ?>
                     @endforeach
                 </select>
-                <div class="tooltip" id="error-group_type_genres"
+                <div class="tooltip" id="error-group_type_song_genres"
                      style="display: none">필수 입력 사항입니다.
                 </div>
             </div>

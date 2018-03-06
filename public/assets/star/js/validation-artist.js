@@ -230,6 +230,7 @@
 
                 $.fn.validate.requiredValidateSelect($.fn.validate.data.group_type_number, $.fn.validate.error.group_type_number);
                 $.fn.validate.requiredValidateSelect($.fn.validate.data.group_type_sex, $.fn.validate.error.group_type_sex);
+
                 $.fn.validate.requiredValidateSelect($.fn.validate.data.group_type_song_genres, $.fn.validate.error.group_type_song_genres);
             }
         }

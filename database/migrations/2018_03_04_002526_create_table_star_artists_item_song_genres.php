@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateTableStarArtistsStarArtistsSongGenres extends Migration
+class CreateTableStarArtistsItemSongGenres extends Migration
 {
     /**
      * Run the migrations.
@@ -13,7 +13,7 @@ class CreateTableStarArtistsStarArtistsSongGenres extends Migration
      */
     public function up()
     {
-        Schema::create('star_artists_star_artists_song_genres', function (Blueprint $table) {
+        Schema::create('star_artists_item_song_genres', function (Blueprint $table) {
             $table->charset = 'utf8';
             $table->collation = 'utf8_general_ci';
             $table->increments('id');
@@ -37,6 +37,6 @@ class CreateTableStarArtistsStarArtistsSongGenres extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('star_artists_star_artists_song_genres');
+        Schema::dropIfExists('star_artists_item_song_genres');
     }
 }
