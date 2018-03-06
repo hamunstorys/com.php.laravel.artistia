@@ -35,6 +35,6 @@ class Star_Artist extends Model
 
     public function song_genres()
     {
-        return $this->belongsToMany(Star_Artist_Song_Genre::class, 'star_artists_star_artists_song_genres', 'artist_id', 'song_genre_id');
+        return $this->belongsToMany(Star_Artist_Song_Genre::class, 'star_artists_item_song_genres', 'artist_id', 'song_genre_id');
     }
 }

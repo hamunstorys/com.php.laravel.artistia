@@ -55,7 +55,7 @@ class SearchController extends Controller
     public function setData($query)
     {
         if ($query != null) {
-            $this->data = DB::table('star_artists')->orWhere(DB::raw("CONCAT_WS('|',artist_name,manager_name,manager_phone,company_name,company_email,comment)"), 'LIKE', "%" . $query . "%")->get();
+            $this->data = DB::table('star_artists')->orWhere(DB::raw("CONCAT_WS('|',artist_name,manager_name,manager_phone,company_name,company_email,comment)"), 'LIKE', "%" . $query . "%")-get();
         }
     }
 

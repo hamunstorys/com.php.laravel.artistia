@@ -31,7 +31,6 @@
             </div>
         </div>
     </div>
-    -
 </div>
 <!-- All marshall js files -->
 <script type="text/javascript" src="https://pixiefy.com/themes/marshall/html/v24/js/jquery-3.1.1.min.js"></script>

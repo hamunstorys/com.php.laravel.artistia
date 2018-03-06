@@ -23,7 +23,7 @@ class StarUserTableSeeder extends Seeder
     {
         $user = new \App\Models\Star\Star_User();
         $user->fill([
-            'email' => 'admin@sjculture.co.kr',
+            'email' => 'admin',
             'password' => bcrypt('000000'),
         ]);
         $user->save();
