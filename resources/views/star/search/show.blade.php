@@ -56,7 +56,9 @@
                         </div>
                         <div class="item memo">
                             <label>그룹 유형(장르)</label>
-                            <span></span>
+                            @foreach(\App\Models\Star\Star_Artist::find($artist->id)->song_genres()->get() as $song_genre)
+                                <span>{{$song_genre->value}}</span>
+                            @endforeach
                         </div>
                         <div class="item memo">
                             <label>참고내용</label>
