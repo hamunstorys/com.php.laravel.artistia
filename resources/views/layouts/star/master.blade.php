@@ -44,7 +44,6 @@
         </Form>
     </div>
 </div>
-<script src="{{asset('assets/star/js/function.js')}}"></script>
 @yield('content')
 @yield('scripts')
 @include('layouts.star.footer')

@@ -22,6 +22,5 @@
         </div>
     </div>
 </div>
-<script src="{{asset('assets/star/js/session.js')}}"></script>
 </body>
 </html>
