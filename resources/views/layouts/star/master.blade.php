@@ -45,7 +45,6 @@
     </div>
 </div>
 @yield('content')
-<script src="{{asset('assets/star/js/function.js')}}" }></script>
 @yield('scripts')
 @include('layouts.star.footer')
 </body>
