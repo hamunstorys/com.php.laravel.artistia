@@ -12,9 +12,12 @@ use App\Http\Controllers\Controller;
 
 class ArtistController extends Controller
 {
+
+    var $path;
+
     public function __construct()
     {
-        $this->middleware('auth');
+//        $this->middleware('auth');
         $this->middleware('flush_query');
     }
 
@@ -164,7 +167,7 @@ class ArtistController extends Controller
     }
 
     public
-    function destroy(Request $request, $id)
+    function destroy($id)
     {
         $artist = Star_Artist::findOrFail($id);
         $path = $this->getPath($artist->picture_url);
@@ -176,8 +179,9 @@ class ArtistController extends Controller
     }
 
     public
-    function getPath($url)
+    function setPath($url)
     {
-        return str_replace(url('/') . '/', "", $url);
+        $this->path = str_replace(url('/') . '/', "", $url);
     }
+
 }

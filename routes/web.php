@@ -58,12 +58,6 @@ Route::prefix('star')->group(function () {
         'uses' => 'Star\ArtistController@store'
     ]);
 
-    Route::post('/artist/register/confirm', [
-        'as' => 'star.artist.confirmStore',
-        'uses' => 'Star\ArtistController@confirmStore'
-    ]);
-
-
     Route::delete('/artist/{artist}', [
         'as' => 'star.artist.destroy',
         'uses' => 'Star\ArtistController@destroy'
@@ -74,8 +68,8 @@ Route::prefix('star')->group(function () {
         'uses' => 'Star\SearchController@search'
     ]);
 
-    Route::get('/search/all}', [
-        'as' => 'star.search.showAll',
-        'uses' => 'Star\SearchController@showAll'
+    Route::get('/search/results', [
+        'as' => 'star.search.show',
+        'uses' => 'Star\SearchController@show'
     ]);
 });

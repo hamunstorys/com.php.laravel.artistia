@@ -14,34 +14,53 @@
                 @endif
                 <button type="submit" class="btn_search" id="btn_search"></button>
             </div>
-        </Form>
             <div class="search_option_wrap">
                 <div class="search_option">
-                    <a href="{{route('star.search.showAll')}}">
-                        <button class="btn_all">전체목록<span
-                                    class="all_num">{{\App\Models\Star\Star_Artist::count()}}</span></button>
-                    </a>
+                    {{--<a href="{{route('star.search.show')}}">--}}
+                    {{--<button class="btn_all">전체목록<span--}}
+                    {{--class="all_num">{{\App\Models\Star\Star_Artist::count()}}</span></button>--}}
+                    {{--</a>--}}
                     <label>유형</label>
                     <select name="group_type_number">
-                        <option selected="selected" value="0">전체</option>
-                        <option value="1">솔로</option>
-                        <option value="2">그룹</option>
+                        @if(isset($group_type_number))
+                            @foreach($group_type_number as $value)
+                                <?php echo $value ?>
+                            @endforeach
+                        @else
+                            <option selected="selected" value="0">전체</option>
+                            <option value="1">솔로</option>
+                            <option value="2">그룹</option>
+                        @endif
                     </select>
                     <select name="group_type_sex">
-                        <option selected="selected" value="0">전체</option>
-                        @foreach($sexes = \Session::get('search_requirement.sexes') as $sex)
-                            <?php echo '<option value="' . $sex->id . '">' . $sex->value . '</option>'; ?>
-                        @endforeach
+                        @if(isset($group_type_sex))
+                            @foreach($group_type_sex as $value)
+                                <?php echo $value ?>
+                            @endforeach
+                        @else
+                            <option selected="selected" value="0">전체</option>
+                            @foreach($sexes = \Session::get('search_requirement.sexes') as $sex)
+                                <?php echo '<option value="' . $sex->id . '">' . $sex->value . '</option>'; ?>
+                            @endforeach
+                        @endif
                     </select>
                     <label>장르</label>
                     <select name="group_type_song_genre">
-                        <option selected="selected" value="0">전체</option>
-                        @foreach($song_genres = \Session::get('search_requirement.song_genres') as $song_genre)
-                            <?php echo '<option value="' . $song_genre->id . '">' . $song_genre->value . '</option>'; ?>
-                        @endforeach
+                        @if(isset($group_type_song_genre))
+                            @foreach($group_type_song_genre as $value)
+                                <?php echo $value ?>
+                            @endforeach
+                        @else
+                            <option selected="selected" value="0">전체</option>
+                            @foreach($song_genres = \Session::get('search_requirement.song_genres') as $song_genre)
+                                <?php echo '<option value="' . $song_genre->id . '">' . $song_genre->value . '</option>'; ?>
+                            @endforeach
+                        @endif
                     </select>
                     <label>금액</label>
-                    <input type="text"><span class="dash">~</span><input type="text">
+                    <input type="text" name="guarantee_min" value="{{old('guarantee_min')}}"><span
+                            class="dash">~</span><input type="text" name="guarantee_min"
+                                                        value="{{old('guarantee_max')}}">
                     <button type="submit" class="btn_price">검색</button>
                 </div>
             </div>
