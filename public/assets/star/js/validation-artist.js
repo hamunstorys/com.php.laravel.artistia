@@ -42,7 +42,7 @@
                 comment: /^[\s\S]{0,255}$/,
             },
             replaceCommas: function (att, length, error) {
-                att.bind('keyup keyon keydown keypress', function () {
+                att.bind('keyup keypress keydown', function () {
                     if (error.css("display") != "none") {
                         error.hide("slow");
                     }
@@ -53,7 +53,7 @@
                 });
             },
             replaceCellphone: function (att, length, error) {
-                att.bind('keyup keyon keydown keypress', function () {
+                att.bind('keyup keypress keydown', function () {
                     if (error.css("display") != "none") {
                         error.hide("slow");
                     }
@@ -65,7 +65,7 @@
                 });
             },
             replaceGeneral: function (att, length, error) {
-                att.bind('keyup keyon keydown keypress', function () {
+                att.bind('keyup keypress keydown', function () {
                     if (error.css("display") != "none") {
                         error.hide("slow");
                     }
@@ -76,7 +76,7 @@
                 });
             },
             selectedOption: function (att, error) {
-                att.bind('click selected', function () {
+                att.bind('click select', function () {
                     if (att.val() != 0) {
                         error.hide("slow");
                     }
