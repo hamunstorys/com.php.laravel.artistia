@@ -36,7 +36,7 @@
                 require_name: /^[\s\S]{1,255}$/,
                 name: /^[\s\S]{0,255}$/,
                 price: /^\d+(,\d+)*,{0,11}$/,
-                email: /^((([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))){0,255}$/,
+                email: /^((([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,})){0,255})$/,
                 url: /^(https?:\/\/)?([a-z\d\.-]+)\.([a-z\.]{2,6})([\/\w\.-]*)*\/?$/,
                 phone: /(\d{0,3})(\d{0,4})(\d{0,4})/,
                 comment: /^[\s\S]{0,255}$/,
@@ -46,18 +46,21 @@
                     if (error.css("display") != "none") {
                         error.hide("slow");
                     }
-                    $.fn.validate.setLimitCharacters(att, length, /,/g);
-                    att.val(att.val().replace(/[^0-9\.]+/g, '').replace(/(\d)(?=(?:\d{3})+(?!\d))/g, '$1,'));
+                    att.each(function () {
+                        $.fn.validate.setLimitCharacters(att, length, /,/g);
+                        att.val(att.val().replace(/[^0-9\.]+/g, '').replace(/(\d)(?=(?:\d{3})+(?!\d))/g, '$1,'));
+                    })
                 });
             },
             replaceCellphone: function (att, length, error) {
-                att.bind('keyup keypress', function () {
+                att.bind('keyup keyon keydown keypress', function () {
                     if (error.css("display") != "none") {
                         error.hide("slow");
-                        return false;
                     }
-                    $.fn.validate.setLimitCharacters(att, length, /-/g);
-                    att.val(att.val().replace(/[^0-9\.]+/g, '').replace(/(^02.{0}|^01.{1}|[0-9]{3})([0-9]+)([0-9]{4})/, "$1-$2-$3"));
+                    att.each(function () {
+                        $.fn.validate.setLimitCharacters(att, length, /-/g);
+                        att.val(att.val().replace(/[^0-9\.]+/g, '').replace(/(^02.{0}|^01.{1}|[0-9]{3})([0-9]+)([0-9]{4})/, "$1-$2-$3"));
+                    })
 
                 });
             },
@@ -65,16 +68,17 @@
                 att.bind('keyup keypress', function () {
                     if (error.css("display") != "none") {
                         error.hide("slow");
-                        return false;
                     }
-                    $.fn.validate.setLimitCharacters(att, length, null);
+                    att.each(function () {
+                        $.fn.validate.setLimitCharacters(att, length, null);
+                    })
+
                 });
             },
             selectedOption: function (att, error) {
                 att.bind('click selected', function () {
                     if (att.val() != 0) {
                         error.hide("slow");
-                        return false;
                     }
                 });
             },
@@ -91,7 +95,7 @@
                         att.val(att.val().substr(0, length));
                     }
                 } else {
-                    $limit = length + (att.val().match(rex) || []).length;
+                    $limit = length + (att.val().match(rex) || []).length - 1;
                     if ($length > $limit) {
                         att.val(att.val().substr(0, $limit));
                     }
@@ -99,9 +103,9 @@
             },
 
             generalValidation: function (required, flush, att, rex, error) {
-                if (typeof required === "boolean" || required === true) {
+                if (typeof "boolean" === required || required === true) {
                     if (rex.test(att.val()) != true) {
-                        if (typeof flush == "boolean" || flush === true) {
+                        if (typeof "boolean" === flush || flush === true) {
                             att.val("");
                         }
                         error.show("fast");
@@ -122,25 +126,47 @@
                 }
             },
             validation: function () {
-
-                $.fn.validate.generalValidation(true, false, $.fn.validate.data.artist_name, $.fn.validate.rex.require_name, $.fn.validate.error.artist_name);
-
-                $.fn.validate.generalValidation(false, false, $.fn.validate.data.guarantee_concert, $.fn.validate.rex.price, $.fn.validate.error.guarantee_concert);
-                $.fn.validate.generalValidation(false, false, $.fn.validate.data.guarantee_metropolitan, $.fn.validate.rex.price, $.fn.validate.error.guarantee_metropolitan);
-                $.fn.validate.generalValidation(false, false, $.fn.validate.data.guarantee_central, $.fn.validate.rex.price, $.fn.validate.error.guarantee_central);
-                $.fn.validate.generalValidation(false, false, $.fn.validate.data.guarantee_south, $.fn.validate.rex.price, $.fn.validate.error.guarantee_south);
-
-                $.fn.validate.generalValidation(false, false, $.fn.validate.data.manager_name, $.fn.validate.rex.name, $.fn.validate.error.manager_name);
-                $.fn.validate.generalValidation(false, false, $.fn.validate.data.manager_phone, $.fn.validate.rex.phone, $.fn.validate.error.manager_phone);
-                $.fn.validate.generalValidation(false, false, $.fn.validate.data.company_name, $.fn.validate.rex.name, $.fn.validate.error.manager_phone);
-
-                $.fn.validate.generalValidation(false, false, $.fn.validate.data.company_name, $.fn.validate.rex.name, $.fn.validate.error.company_name);
-                $.fn.validate.generalValidation(false, false, $.fn.validate.data.company_email, $.fn.validate.rex.email, $.fn.validate.error.company_email);
-                $.fn.validate.generalValidation(false, false, $.fn.validate.data.comment, $.fn.validate.rex.comment, $.fn.validate.error.comment);
-
-                $.fn.validate.selectValidation($.fn.validate.data.group_type_number, $.fn.validate.error.group_type_number);
-                $.fn.validate.selectValidation($.fn.validate.data.group_type_sex, $.fn.validate.error.group_type_sex);
-                $.fn.validate.selectValidation($.fn.validate.data.group_type_song_genres, $.fn.validate.error.group_type_song_genres);
+                if ($.fn.validate.generalValidation(true, false, $.fn.validate.data.artist_name, $.fn.validate.rex.require_name, $.fn.validate.error.artist_name) === false
+                ) {
+                    return false;
+                }
+                if ($.fn.validate.generalValidation(false, false, $.fn.validate.data.guarantee_concert, $.fn.validate.rex.price, $.fn.validate.error.guarantee_concert) === false) {
+                    return false;
+                }
+                if ($.fn.validate.generalValidation(false, false, $.fn.validate.data.guarantee_metropolitan, $.fn.validate.rex.price, $.fn.validate.error.guarantee_metropolitan) === false) {
+                    return false;
+                }
+                if ($.fn.validate.generalValidation(false, false, $.fn.validate.data.guarantee_central, $.fn.validate.rex.price, $.fn.validate.error.guarantee_central) === false) {
+                    return false;
+                }
+                if ($.fn.validate.generalValidation(false, false, $.fn.validate.data.guarantee_south, $.fn.validate.rex.price, $.fn.validate.error.guarantee_south) === false) {
+                    return false;
+                }
+                if ($.fn.validate.generalValidation(false, false, $.fn.validate.data.manager_name, $.fn.validate.rex.name, $.fn.validate.error.manager_name) === false) {
+                    return false;
+                }
+                if ($.fn.validate.generalValidation(false, false, $.fn.validate.data.manager_phone, $.fn.validate.rex.phone, $.fn.validate.error.manager_phone) === false) {
+                    return false;
+                }
+                if ($.fn.validate.generalValidation(false, false, $.fn.validate.data.company_name, $.fn.validate.rex.name, $.fn.validate.error.manager_phone) === false) {
+                    return false;
+                }
+                if ($.fn.validate.generalValidation(false, false, $.fn.validate.data.company_email, $.fn.validate.rex.email, $.fn.validate.error.company_email) === false) {
+                    return false;
+                }
+                if ($.fn.validate.generalValidation(false, false, $.fn.validate.data.comment, $.fn.validate.rex.comment, $.fn.validate.error.comment) === false) {
+                    return false;
+                }
+                if ($.fn.validate.selectValidation($.fn.validate.data.group_type_number, $.fn.validate.error.group_type_number) === false) {
+                    return false;
+                }
+                if ($.fn.validate.selectValidation($.fn.validate.data.group_type_sex, $.fn.validate.error.group_type_sex) === false) {
+                    return false;
+                }
+                if ($.fn.validate.selectValidation($.fn.validate.data.group_type_song_genres, $.fn.validate.error.group_type_song_genres) === false) {
+                    return false;
+                }
+                return true;
             },
         }
     }

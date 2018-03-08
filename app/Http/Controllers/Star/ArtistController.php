@@ -25,7 +25,7 @@ class ArtistController extends Controller
 
     public function store(Request $request)
     {
-        $post_data = $request->replace(array(
+        $request->replace(array(
             'artist_name' => $request->artist_name,
             'guarantee_concert' => (int)preg_replace("/[^\d]/", "", $request->guarantee_concert),
             'guarantee_metropolitan' => (int)preg_replace("/[^\d]/", "", $request->guarantee_metropolitan),
@@ -44,7 +44,7 @@ class ArtistController extends Controller
 
         $artist = new Star_Artist();
 
-        if (isset($post_data->picture_url) != null) {
+        if ($request->hasFile('picture_url')) {
             $manager = new ImageManager();
             $image = $request->file('picture_url');
             $savePath = 'assets/star/uploads/artist/thumbnails/';
@@ -54,17 +54,16 @@ class ArtistController extends Controller
             $artist->fill([
                 'picture_url' => url('/') . '/' . $savePath . $filename
             ]);
-            $artist->fill($post_data->except('picture_url'));
+            $artist->fill($request->except('picture_url'));
 
         } else {
             $artist->fill([
                 'picture_url' => url('/') . '/assets/star/img/icon_singer.svg'
             ]);
-            $artist->fill($post_data->except('picture_url'));
+            $artist->fill($request->except('picture_url'));
         }
 
         $artist->save();
-        Star_Artist_Sex::find($request->group_type_sex)->artist()->save($artist);
         $artist->song_genres()->sync($request->group_type_song_genres);
     }
 
@@ -144,13 +143,13 @@ class ArtistController extends Controller
 
         $serverUrl = url('/');
 
-        if ($post_data->hasFile('picture_url')) {
+        if ($request->hasFile('picture_url')) {
             $path = $this->getPath($artist->picture_url);
             if (file_exists($path) && public_path($path) != public_path('assets/star/img/icon_singer.svg')) {
                 File::delete(public_path($path));
             }
             $manager = new ImageManager();
-            $image = $post_data->picture_url;
+            $image = $request->picture_url;
             $path = 'assets/star/uploads/artist/thumbnails/';
             $filename = time() . '.' . $image->getClientOriginalExtension();
             $manager->make($image)->save($path . $filename, 60);
@@ -161,7 +160,6 @@ class ArtistController extends Controller
         }
         $artist->fill($post_data->except('picture_url'));
         $artist->update();
-        Star_Artist_Sex::find($request->group_type_sex)->artist()->save($artist);
         $artist->song_genres()->sync($request->group_type_song_genres);
     }
 

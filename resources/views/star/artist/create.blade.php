@@ -163,40 +163,40 @@
 
         $(document).on('click', 'button#confirm', function (e) {
             e.preventDefault();
-            $.fn.validate.validation();
+            if ($.fn.validate.validation() === true) {
+                var data = new FormData();
+                data.append("picture_url", $('#picture_url')[0].files[0]);
+                data.append("artist_name", $('#artist_name').val());
+                data.append("guarantee_concert", $('#guarantee_concert').val());
+                data.append("guarantee_metropolitan", $('#guarantee_metropolitan').val());
+                data.append("guarantee_central", $('#guarantee_central').val());
+                data.append("guarantee_south", $('#guarantee_south').val());
+                data.append("manager_name", $('#manager_name').val());
+                data.append("manager_phone", $('#manager_phone').val());
+                data.append("company_name", $('#company_name').val());
+                data.append("company_email", $('#company_email').val());
+                data.append("group_type_number", $('#group_type_number').val());
+                data.append("group_type_sex", $('#group_type_sex').val());
+                data.append("group_type_song_genres", $('#group_type_song_genres').val());
+                data.append("comment", $('#comment').val());
 
-            var data = new FormData();
-            data.append("picture_url", $('#picture_url')[0].files[0]);
-            data.append("artist_name", $('#artist_name').val());
-            data.append("guarantee_concert", $('#guarantee_concert').val());
-            data.append("guarantee_metropolitan", $('#guarantee_metropolitan').val());
-            data.append("guarantee_central", $('#guarantee_central').val());
-            data.append("guarantee_south", $('#guarantee_south').val());
-            data.append("manager_name", $('#manager_name').val());
-            data.append("manager_phone", $('#manager_phone').val());
-            data.append("company_name", $('#company_name').val());
-            data.append("company_email", $('#company_email').val());
-            data.append("group_type_number", $('#group_type_number').val());
-            data.append("group_type_sex", $('#group_type_sex').val());
-            data.append("group_type_song_genres", $('#group_type_song_genres').val());
-            data.append("comment", $('#comment').val());
-
-            $.ajaxSetup({
-                headers: {
-                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                }
-            });
-            $.ajax({
-                url: '{{route('star.artist.store')}}',
-                type: 'POST',
-                data: data,
-                cache: false,
-                contentType: false,
-                processData: false,
-                success: function () {
-                    alert('등록 되었습니다.');
-                }
-            });
+                $.ajaxSetup({
+                    headers: {
+                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                    }
+                });
+                $.ajax({
+                    url: '{{route('star.artist.store')}}',
+                    type: 'POST',
+                    data: data,
+                    cache: false,
+                    contentType: false,
+                    processData: false,
+                    success: function () {
+                        alert('등록 되었습니다.');
+                    }
+                });
+            }
         });
     </script>
 
