@@ -36,11 +36,11 @@ class SearchController extends Controller
         }
         return redirect(route('star.search.show', [
                     'query' => $query,
-                    'group_type_number' => $group_type_number,
-                    'group_type_sex' => $group_type_sex,
-                    'group_type_song_genre' => $group_type_song_genre,
-                    'guarantee_min' => $guarantee_min,
-                    'guarantee_max' => $guarantee_max,
+                    'requirement_group_type_number' => $group_type_number,
+                    'requirement_group_type_sex' => $group_type_sex,
+                    'requirement_group_type_song_genre' => $group_type_song_genre,
+                    'requirement_guarantee_min' => $guarantee_min,
+                    'requirement_guarantee_max' => $guarantee_max,
                 ]
             )
         );
@@ -55,18 +55,18 @@ class SearchController extends Controller
         $group_type_sex = $this->setGrouptypeSexes((int)$request->get('group_type_sex'));
         $group_type_song_genre = $this->setGrouptypeSongGenres((int)$request->get('group_type_song_genre'));
 
-        $guarantee_min = $request->get('guarantee_min');
-        $guarantee_max = $request->get('guarantee_max');
+        $guarantee_min = $request->get('requirement_guarantee_min');
+        $guarantee_max = $request->get('requirement_guarantee_max');
 
         return view('star.search.show',
             ['data' => $this->data,
                 'message' => $this->message,
                 'query' => $request->get('query'),
-                'group_type_number' => $group_type_number,
-                'group_type_sex' => $group_type_sex,
-                'group_type_song_genre' => $group_type_song_genre,
-                'guarantee_min' => $guarantee_min,
-                'guarantee_max' => $guarantee_max,
+                'requirement_group_type_number' => $group_type_number,
+                'requirement_group_type_sex' => $group_type_sex,
+                'requirement_group_type_song_genre' => $group_type_song_genre,
+                'requirement_guarantee_min' => $guarantee_min,
+                'requirement_guarantee_max' => $guarantee_max,
             ]
         );
     }

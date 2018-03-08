@@ -22,8 +22,8 @@
                     {{--</a>--}}
                     <label>유형</label>
                     <select name="group_type_number">
-                        @if(isset($group_type_number))
-                            @foreach($group_type_number as $value)
+                        @if(isset($requirement_group_type_number))
+                            @foreach($requirement_group_type_number as $value)
                                 <?php echo $value ?>
                             @endforeach
                         @else
@@ -33,8 +33,8 @@
                         @endif
                     </select>
                     <select name="group_type_sex">
-                        @if(isset($group_type_sex))
-                            @foreach($group_type_sex as $value)
+                        @if(isset($requirement_group_type_sex))
+                            @foreach($requirement_group_type_sex as $value)
                                 <?php echo $value ?>
                             @endforeach
                         @else
@@ -46,8 +46,8 @@
                     </select>
                     <label>장르</label>
                     <select name="group_type_song_genre">
-                        @if(isset($group_type_song_genre))
-                            @foreach($group_type_song_genre as $value)
+                        @if(isset($requirement_group_type_song_genre))
+                            @foreach($requirement_group_type_song_genre as $value)
                                 <?php echo $value ?>
                             @endforeach
                         @else
@@ -58,15 +58,15 @@
                         @endif
                     </select>
                     <label>금액</label>
-                    @if(isset($guarantee_min))
-                        <input type="number" name="guarantee_min" value="{{$guarantee_min}}">
+                    @if(isset($requirement_guarantee_min))
+                        <input type="number" name="guarantee_min" value="{{$requirement_guarantee_min}}">
                     @else
                         <input type="number" name="guarantee_min" value="{{old('guarantee_min')}}">
                     @endif
                     <span class="dash">~</span>
-                    @if(isset($guarantee_max))
+                    @if(isset($requirement_guarantee_max))
                         <input type="number" name="guarantee_max"
-                               value="{{$guarantee_max}}">
+                               value="{{$requirement_guarantee_max}}">
                     @else
                         <input type="number" name="guarantee_max" value="{{old('guarantee_max')}}">
                     @endif
