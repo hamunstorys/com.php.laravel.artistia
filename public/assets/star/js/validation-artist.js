@@ -32,12 +32,21 @@
                 group_type_song_genres: $('#error-group_type_song_genres'),
                 comment: $('#error-comment')
             },
+            rex: {
+                require_name: /^[\s\S]{1,255}$/,
+                name: /^[\s\S]{0,255}$/,
+                price: /^\d+(,\d+)*,{0,11}$/,
+                email: /^((([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))){0,255}$/,
+                url: /^(https?:\/\/)?([a-z\d\.-]+)\.([a-z\.]{2,6})([\/\w\.-]*)*\/?$/,
+                phone: /(\d{0,3})(\d{0,4})(\d{0,4})/,
+                comment: /^[\s\S]{0,255}$/,
+            },
             replaceCommas: function (att, length, error) {
-                att.bind('keyup keypress', function () {
+                att.bind('keyup keyon keydown keypress', function () {
                     if (error.css("display") != "none") {
                         error.hide("slow");
                     }
-                    $.fn.validate.limitCharacters(att, length, /,/g);
+                    $.fn.validate.setLimitCharacters(att, length, /,/g);
                     att.val(att.val().replace(/[^0-9\.]+/g, '').replace(/(\d)(?=(?:\d{3})+(?!\d))/g, '$1,'));
                 });
             },
@@ -45,40 +54,27 @@
                 att.bind('keyup keypress', function () {
                     if (error.css("display") != "none") {
                         error.hide("slow");
+                        return false;
                     }
-                    $.fn.validate.limitCharacters(att, length, /-/g);
+                    $.fn.validate.setLimitCharacters(att, length, /-/g);
                     att.val(att.val().replace(/[^0-9\.]+/g, '').replace(/(^02.{0}|^01.{1}|[0-9]{3})([0-9]+)([0-9]{4})/, "$1-$2-$3"));
 
                 });
             },
-            replaceName: function (att, length, error) {
+            replaceGeneral: function (att, length, error) {
                 att.bind('keyup keypress', function () {
                     if (error.css("display") != "none") {
                         error.hide("slow");
+                        return false;
                     }
-                    $.fn.validate.limitCharacters(att, length, null);
-                });
-            },
-            replaceEmail: function (att, length, error) {
-                att.bind('keyup keypress', function () {
-                    if (error.css("display") != "none") {
-                        error.hide("slow");
-                    }
-                    $.fn.validate.limitCharacters(att, length, null);
-                });
-            },
-            replaceComment: function (att, length, error) {
-                att.bind('keyup keypress', function () {
-                    if (error.css("display") != "none") {
-                        error.hide("slow");
-                    }
-                    $.fn.validate.limitCharacters(att, length, null);
+                    $.fn.validate.setLimitCharacters(att, length, null);
                 });
             },
             selectedOption: function (att, error) {
                 att.bind('click selected', function () {
                     if (att.val() != 0) {
                         error.hide("slow");
+                        return false;
                     }
                 });
             },
@@ -88,7 +84,7 @@
             removeDashes: function (str) {
                 return parseInt(str.replace(/-/g, ""));
             },
-            limitCharacters: function (att, length, rex) {
+            setLimitCharacters: function (att, length, rex) {
                 $length = att.val().length;
                 if (rex == null) {
                     if ($length > length) {
@@ -101,193 +97,51 @@
                     }
                 }
             },
-            requiredValidateName: function (att, rex, error) {
-                if (rex.test(att.val()) != true) {
-                    att.val("");
-                    error.show("fast");
-                    return false;
+
+            generalValidation: function (required, flush, att, rex, error) {
+                if (typeof required === "boolean" || required === true) {
+                    if (rex.test(att.val()) != true) {
+                        if (typeof flush == "boolean" || flush === true) {
+                            att.val("");
+                        }
+                        error.show("fast");
+                        return false;
+                    }
+                } else {
+                    if (att.val().length !== 0 && rex.test(att.val()) != true) {
+                        att.val("");
+                        error.show("fast");
+                        return false;
+                    }
                 }
             },
-            requiredValidateSelect: function (att, error) {
-                ($("#selectBox option:selected").val());
+            selectValidation: function (att, error) {
                 if (att.val() == 0) {
                     error.show("fast");
                     return false;
                 }
             },
-            optionalValidateName: function (att, rex, error) {
-                if (att.val().length !== 0 && rex.test(att.val()) != true) {
-                    att.val("");
-                    error.show("fast");
-                    return false;
-                }
+            validation: function () {
+
+                $.fn.validate.generalValidation(true, false, $.fn.validate.data.artist_name, $.fn.validate.rex.require_name, $.fn.validate.error.artist_name);
+
+                $.fn.validate.generalValidation(false, false, $.fn.validate.data.guarantee_concert, $.fn.validate.rex.price, $.fn.validate.error.guarantee_concert);
+                $.fn.validate.generalValidation(false, false, $.fn.validate.data.guarantee_metropolitan, $.fn.validate.rex.price, $.fn.validate.error.guarantee_metropolitan);
+                $.fn.validate.generalValidation(false, false, $.fn.validate.data.guarantee_central, $.fn.validate.rex.price, $.fn.validate.error.guarantee_central);
+                $.fn.validate.generalValidation(false, false, $.fn.validate.data.guarantee_south, $.fn.validate.rex.price, $.fn.validate.error.guarantee_south);
+
+                $.fn.validate.generalValidation(false, false, $.fn.validate.data.manager_name, $.fn.validate.rex.name, $.fn.validate.error.manager_name);
+                $.fn.validate.generalValidation(false, false, $.fn.validate.data.manager_phone, $.fn.validate.rex.phone, $.fn.validate.error.manager_phone);
+                $.fn.validate.generalValidation(false, false, $.fn.validate.data.company_name, $.fn.validate.rex.name, $.fn.validate.error.manager_phone);
+
+                $.fn.validate.generalValidation(false, false, $.fn.validate.data.company_name, $.fn.validate.rex.name, $.fn.validate.error.company_name);
+                $.fn.validate.generalValidation(false, false, $.fn.validate.data.company_email, $.fn.validate.rex.email, $.fn.validate.error.company_email);
+                $.fn.validate.generalValidation(false, false, $.fn.validate.data.comment, $.fn.validate.rex.comment, $.fn.validate.error.comment);
+
+                $.fn.validate.selectValidation($.fn.validate.data.group_type_number, $.fn.validate.error.group_type_number);
+                $.fn.validate.selectValidation($.fn.validate.data.group_type_sex, $.fn.validate.error.group_type_sex);
+                $.fn.validate.selectValidation($.fn.validate.data.group_type_song_genres, $.fn.validate.error.group_type_song_genres);
             },
-            optionalValidateNumber: function (att, rex, error) {
-                if (!isNaN(att.val()) && rex.test(att.val()) != true) {
-                    att.val("");
-                    error.show("fast");
-                    return false;
-                }
-            },
-            create: {
-                submit: function () {
-                    url = $('#url').val();
-                    var data = new FormData();
-                    data.append("picture_url", $('#picture_url')[0].files[0]);
-                    data.append("artist_name", $('#artist_name').val());
-                    data.append("guarantee_concert", $('#guarantee_concert').val());
-                    data.append("guarantee_metropolitan", $('#guarantee_metropolitan').val());
-                    data.append("guarantee_central", $('#guarantee_central').val());
-                    data.append("guarantee_south", $('#guarantee_south').val());
-                    data.append("manager_name", $('#manager_name').val());
-                    data.append("manager_phone", $('#manager_phone').val());
-                    data.append("company_name", $('#company_name').val());
-                    data.append("company_email", $('#company_email').val());
-                    data.append("group_type_number", $('#group_type_number').val());
-                    data.append("group_type_sex", $('#group_type_sex').val());
-                    data.append("group_type_song_genres", $('#group_type_song_genres').val());
-                    data.append("comment", $('#comment').val());
-
-                    $.ajaxSetup({
-                        headers: {
-                            'X-CSRF-TOKEN': $('input[name="csrf-token"]').attr('content')
-                        }
-                    });
-
-                    $.ajax({
-                        url: url,
-                        processData: false,
-                        contentType: false,
-                        data: data,
-                        type: 'POST',
-                        success: function () {
-                            alert('등록 되었습니다.');
-                            window.location = '/star';
-                        },
-                    });
-
-                },
-            },
-            update: {
-                submit: function () {
-                    url = $('#url').val();
-                    var data = new FormData();
-                    data.append("picture_url", $('#picture_url')[0].files[0]);
-                    data.append("artist_name", $('#artist_name').val());
-                    data.append("guarantee_concert", $('#guarantee_concert').val());
-                    data.append("guarantee_metropolitan", $('#guarantee_metropolitan').val());
-                    data.append("guarantee_central", $('#guarantee_central').val());
-                    data.append("guarantee_south", $('#guarantee_south').val());
-                    data.append("manager_name", $('#manager_name').val());
-                    data.append("manager_phone", $('#manager_phone').val());
-                    data.append("company_name", $('#company_name').val());
-                    data.append("company_email", $('#company_email').val());
-                    data.append("group_type_number", $('#group_type_number').val());
-                    data.append("group_type_sex", $('#group_type_sex').val());
-                    data.append("group_type_song_genres", $('#group_type_song_genres').val());
-                    data.append("comment", $('#comment').val());
-                    data.append("_method", $('input[name="_method"]').val());
-
-                    $.ajaxSetup({
-                        headers: {
-                            'X-CSRF-TOKEN': $('input[name="csrf-token"]').attr('content')
-                        }
-                    });
-                    $.ajax({
-                        url: url,
-                        data: data,
-                        type: 'POST',
-
-                        processData: false,
-                        contentType: false,
-                        success: function () {
-                            alert('수정 되었습니다.');
-                            window.history.go(-1)
-                        },
-                    });
-                },
-            },
-            validation: function (callback) {
-
-                var rex_require_name = /^[\s\S]{1,255}$/;
-                var rex_name = /^[\s\S]{0,255}$/;
-                var rex_price = /^[0-9]{0,11}$/;
-                var rex_email = /^[a-zA-Z0-9.!#$%&’*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
-                var rex_url = /^(https?:\/\/)?([a-z\d\.-]+)\.([a-z\.]{2,6})([\/\w\.-]*)*\/?$/;
-                var rex_phone = /(\d{3})(\d{4})(\d{4})/;
-                var rex_comment = /^[\s\S]{1,255}$/;
-
-                $.fn.validate.requiredValidateName($.fn.validate.data.artist_name, rex_require_name, $.fn.validate.error.artist_name);
-
-                $.fn.validate.optionalValidateNumber($.fn.validate.data.guarantee_concert, rex_price, $.fn.validate.error.guarantee_concert);
-                $.fn.validate.optionalValidateNumber($.fn.validate.data.guarantee_metropolitan, rex_price, $.fn.validate.error.guarantee_metropolitan);
-                $.fn.validate.optionalValidateNumber($.fn.validate.data.guarantee_central, rex_price, $.fn.validate.error.guarantee_central);
-                $.fn.validate.optionalValidateNumber($.fn.validate.data.guarantee_south, rex_price, $.fn.validate.error.guarantee_south);
-
-                $.fn.validate.optionalValidateName($.fn.validate.data.manager_name, rex_name, $.fn.validate.error.manager_name);
-
-                if ($.fn.validate.data.manager_phone.val().length !== 0 && rex_phone.test($.fn.validate.data.manager_phone.val()) != true) {
-                    $.fn.validate.data.manager_phone.val("");
-                    $("#error-manager_phone").show("fast");
-                    return false;
-                }
-
-                $.fn.validate.optionalValidateName($.fn.validate.data.company_name, rex_name, $('#error-company_name'));
-
-                if ($.fn.validate.data.company_email.val().length !== 0 && rex_email.test($.fn.validate.data.company_email.val()) != true) {
-                    $.fn.validate.data.company_email.val("");
-                    $("#error-company_email").show("fast");
-                    return false;
-                }
-
-                if ($.fn.validate.data.comment.val().length !== 0 && rex_comment.test($.fn.validate.data.comment.val()) != true) {
-                    $.fn.validate.data.comment.val("");
-                    $("#error-comment").show("fast");
-                    return false;
-                }
-
-                $.fn.validate.requiredValidateSelect($.fn.validate.data.group_type_number, $.fn.validate.error.group_type_number);
-                $.fn.validate.requiredValidateSelect($.fn.validate.data.group_type_sex, $.fn.validate.error.group_type_sex);
-
-                $.fn.validate.requiredValidateSelect($.fn.validate.data.group_type_song_genres, $.fn.validate.error.group_type_song_genres);
-
-                if (typeof callback === "function") {
-                    callback();
-                }
-            }
         }
     }
 )(jQuery);
-
-$(document).ready(function ($) {
-
-    $.fn.validate.replaceName($.fn.validate.data.artist_name, 255, $.fn.validate.error.artist_name);
-
-    $.fn.validate.replaceCommas($.fn.validate.data.guarantee_concert, 11, $.fn.validate.error.guarantee_concert);
-    $.fn.validate.replaceCommas($.fn.validate.data.guarantee_metropolitan, 11, $.fn.validate.error.guarantee_metropolitan);
-    $.fn.validate.replaceCommas($.fn.validate.data.guarantee_central, 11, $.fn.validate.error.guarantee_central);
-    $.fn.validate.replaceCommas($.fn.validate.data.guarantee_south, 11, $.fn.validate.error.guarantee_south);
-
-    $.fn.validate.replaceName($.fn.validate.data.manager_name, 255, $.fn.validate.error.manager_name);
-    $.fn.validate.replaceCellphone($.fn.validate.data.manager_phone, 11, $.fn.validate.error.manager_phone);
-
-    $.fn.validate.replaceName($.fn.validate.data.company_name, 255, $.fn.validate.error.company_name);
-    $.fn.validate.replaceEmail($.fn.validate.data.company_email, 255, $.fn.validate.error.company_email);
-
-    $.fn.validate.selectedOption($.fn.validate.data.group_type_number, $.fn.validate.error.group_type_number);
-    $.fn.validate.selectedOption($.fn.validate.data.group_type_sex, $.fn.validate.error.group_type_sex);
-    $.fn.validate.selectedOption($.fn.validate.data.group_type_song_genres, $.fn.validate.error.group_type_song_genres);
-
-    $.fn.validate.replaceComment($.fn.validate.data.comment, 255, $.fn.validate.error.comment);
-
-
-});
-
-$.fn.validate.create.validation = function () {
-    $.fn.validate.validation($.fn.validate.create.submit());
-};
-
-$.fn.validate.update.validation = function () {
-    $.fn.validate.validation($.fn.validate.update.submit());
-};
-
