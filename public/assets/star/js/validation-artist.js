@@ -65,7 +65,7 @@
                 });
             },
             replaceGeneral: function (att, length, error) {
-                att.bind('keyup keypress', function () {
+                att.bind('keyup keyon keydown keypress', function () {
                     if (error.css("display") != "none") {
                         error.hide("slow");
                     }
