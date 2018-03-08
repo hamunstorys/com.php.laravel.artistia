@@ -194,32 +194,10 @@
                     processData: false,
                     success: function () {
                         alert('등록 되었습니다.');
+                        window.location = "/star"
                     }
                 });
             }
         });
     </script>
-
-    $.ajaxSetup({
-    headers: {
-    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-    }
-    });
-
-    $.ajax({
-    url: $('#url').val(),
-    processData: false,
-    contentType: false,
-    cache: false,
-    data: {
-    // picture_url: $('#picture_url')[0].files[0],
-    artist_name: $('#artist_name').val(),
-    guarantee_concert: $('#guarantee_concert').val(),
-    },
-    type: 'POST',
-    success: function () {
-    alert('등록 되었습니다.');
-    window.location = '/star';
-    }
-    })
 @endsection
