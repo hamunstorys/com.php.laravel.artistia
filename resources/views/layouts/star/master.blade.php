@@ -58,9 +58,18 @@
                         @endif
                     </select>
                     <label>금액</label>
-                    <input type="text" name="guarantee_min" value="{{old('guarantee_min')}}"><span
-                            class="dash">~</span><input type="text" name="guarantee_min"
-                                                        value="{{old('guarantee_max')}}">
+                    @if(isset($guarantee_min))
+                        <input type="number" name="guarantee_min" value="{{$guarantee_min}}">
+                    @else
+                        <input type="number" name="guarantee_min" value="{{old('guarantee_min')}}">
+                    @endif
+                    <span class="dash">~</span>
+                    @if(isset($guarantee_max))
+                        <input type="number" name="guarantee_max"
+                               value="{{$guarantee_max}}">
+                    @else
+                        <input type="number" name="guarantee_max" value="{{old('guarantee_max')}}">
+                    @endif
                     <button type="submit" class="btn_price">검색</button>
                 </div>
             </div>

@@ -12,10 +12,8 @@ use App\Helpers\Helper;
 
 class SearchController extends Controller
 {
-    public $helper;
     public $message;
     public $data;
-    public $alert;
 
     public function __construct()
     {
@@ -28,21 +26,49 @@ class SearchController extends Controller
         $query = null;
         if ($request->has('query')) {
             $query = $request->get('query');
+
             $group_type_number = $request->get('group_type_number');
             $group_type_sex = $request->get('group_type_sex');
             $group_type_song_genre = $request->get('group_type_song_genre');
+
+            $guarantee_min = $request->get('guarantee_min');
+            $guarantee_max = $request->get('guarantee_max');
         }
-        return redirect(route('star.search.show', ['query' => $query, 'group_type_number' => $group_type_number, 'group_type_sex' => $group_type_sex, 'group_type_song_genre' => $group_type_song_genre]));
+        return redirect(route('star.search.show', [
+                    'query' => $query,
+                    'group_type_number' => $group_type_number,
+                    'group_type_sex' => $group_type_sex,
+                    'group_type_song_genre' => $group_type_song_genre,
+                    'guarantee_min' => $guarantee_min,
+                    'guarantee_max' => $guarantee_max,
+                ]
+            )
+        );
     }
 
     public function show(Request $request)
     {
         $this->setData($request->get('query'));
         $this->setMessage($request->get('query'));
+
         $group_type_number = $this->setGrouptypeNumbers((int)$request->get('group_type_number'));
         $group_type_sex = $this->setGrouptypeSexes((int)$request->get('group_type_sex'));
         $group_type_song_genre = $this->setGrouptypeSongGenres((int)$request->get('group_type_song_genre'));
-        return view('star.search.show', ['data' => $this->data, 'message' => $this->message, 'query' => $request->get('query'), 'group_type_number' => $group_type_number, 'group_type_sex' => $group_type_sex, 'group_type_song_genre' => $group_type_song_genre]);
+
+        $guarantee_min = $request->get('guarantee_min');
+        $guarantee_max = $request->get('guarantee_max');
+
+        return view('star.search.show',
+            ['data' => $this->data,
+                'message' => $this->message,
+                'query' => $request->get('query'),
+                'group_type_number' => $group_type_number,
+                'group_type_sex' => $group_type_sex,
+                'group_type_song_genre' => $group_type_song_genre,
+                'guarantee_min' => $guarantee_min,
+                'guarantee_max' => $guarantee_max,
+            ]
+        );
     }
 
     public function setMessage($query)
@@ -135,6 +161,11 @@ class SearchController extends Controller
             }
         }
         return $group_type_song_genres_temp;
+    }
+
+    public function setGrouptypeGuaranteeMetropolitan()
+    {
+
     }
 
     public function getMesage()
