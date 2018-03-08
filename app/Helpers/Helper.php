@@ -10,12 +10,4 @@ class Helper
 
     }
 
-    public function NumberNullCheck($data)
-    {
-        if ($data == null) {
-            return '0';
-        } else {
-            return number_format($data);
-        }
-    }
 }

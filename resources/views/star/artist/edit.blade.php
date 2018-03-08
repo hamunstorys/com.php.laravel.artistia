@@ -26,28 +26,28 @@
                                 <label>콘서트</label>
                                 <input class="price" id="guarantee_concert" name="guarantee_concert"
                                        placeholder="금액을 입력해주세요"
-                                       value="{{$artist->guarantee_concert}}">
+                                       value="{{number_format($artist->guarantee_concert)}}">
                                   <div class="tooltip" id="error-guarantee_concert" style="display: none">1자 이상 11자 이하 숫자만 입력 가능합니다.</div>
                             </li>
 							<li>
                                 <label>서울/경기</label>
                                 <input class="price" id="guarantee_metropolitan" name="guarantee_metropolitan"
                                        placeholder="금액을 입력해주세요"
-                                       value="{{$artist->guarantee_metropolitan}}">
+                                       value="{{number_format($artist->guarantee_metropolitan)}}">
                                     <div class="tooltip" id="error-guarantee_metropolitan" style="display: none">1자 이상 11자 이하 숫자만 입력 가능합니다.</div>
                             </li>
 							<li>
                                 <label>중부</label>
                                 <input class="price" id="guarantee_central" name="guarantee_central"
                                        placeholder="금액을 입력해주세요"
-                                       value="{{$artist->guarantee_central}}">
+                                       value="{{number_format($artist->guarantee_central)}}">
                                   <div class="tooltip" id="error-guarantee_central" style="display: none">1자 이상 11자 이하 숫자만 입력 가능합니다.</div>
                             </li>
 							<li>
                                 <label>남부</label>
                                 <input class="price" id="guarantee_south" name="guarantee_south"
                                        placeholder="금액을 입력해주세요"
-                                       value="{{$artist->guarantee_south}}">
+                                       value="{{number_format($artist->guarantee_south)}}">
                                   <div class="tooltip" id="error-guarantee_south" style="display: none">1자 이상 11자 이하 숫자만 입력 가능합니다.</div>
                             </li>
 						</ul>
@@ -188,6 +188,7 @@
                     processData: false,
                     success: function () {
                         alert('수정 되었습니다.');
+                        window.history.back();
                     }
                 });
             }

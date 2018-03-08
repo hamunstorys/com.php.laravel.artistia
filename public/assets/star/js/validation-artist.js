@@ -38,11 +38,11 @@
                 price: /^\d+(,\d+)*,{0,11}$/,
                 email: /^((([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,})){0,255})$/,
                 url: /^(https?:\/\/)?([a-z\d\.-]+)\.([a-z\.]{2,6})([\/\w\.-]*)*\/?$/,
-                phone: /(\d{0,3})(\d{0,4})(\d{0,4})/,
+                phone: /(\d{3})(\d{1,4})(\d{1,4})/,
                 comment: /^[\s\S]{0,255}$/,
             },
             replaceCommas: function (att, length, error) {
-                att.bind('keyup keypress keydown', function () {
+                att.bind('keyup keypress keydown focusout', function () {
                     if (error.css("display") != "none") {
                         error.hide("slow");
                     }
@@ -53,19 +53,19 @@
                 });
             },
             replaceCellphone: function (att, length, error) {
-                att.bind('keyup keypress keydown', function () {
+                att.bind('keyup keypress keydown focusout', function () {
                     if (error.css("display") != "none") {
                         error.hide("slow");
                     }
                     att.each(function () {
                         $.fn.validate.setLimitCharacters(att, length, /-/g);
-                        att.val(att.val().replace(/[^0-9\.]+/g, '').replace(/(^02.{0}|^01.{1}|[0-9]{3})([0-9]+)([0-9]{4})/, "$1-$2-$3"));
+                        att.val(att.val().replace(/[^0-9\.]+/g, '').replace(/(\d{3})(\d{1,4})(\d{1,4})/, "$1-$2-$3"));
                     })
 
                 });
             },
             replaceGeneral: function (att, length, error) {
-                att.bind('keyup keypress keydown', function () {
+                att.bind('keyup keypress keydown focusout', function () {
                     if (error.css("display") != "none") {
                         error.hide("slow");
                     }
@@ -76,7 +76,7 @@
                 });
             },
             selectedOption: function (att, error) {
-                att.bind('click select', function () {
+                att.bind('select', function () {
                     if (att.val() != 0) {
                         error.hide("slow");
                     }
@@ -95,7 +95,7 @@
                         att.val(att.val().substr(0, length));
                     }
                 } else {
-                    $limit = length + (att.val().match(rex) || []).length - 1;
+                    $limit = length + (att.val().match(rex) || []).length;
                     if ($length > $limit) {
                         att.val(att.val().substr(0, $limit));
                     }
@@ -113,7 +113,9 @@
                     }
                 } else {
                     if (att.val().length !== 0 && rex.test(att.val()) != true) {
-                        att.val("");
+                        if (typeof "boolean" === flush || flush === true) {
+                            att.val("");
+                        }
                         error.show("fast");
                         return false;
                     }

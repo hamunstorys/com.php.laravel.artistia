@@ -122,7 +122,7 @@ class ArtistController extends Controller
 
     public function update(Request $request, $id)
     {
-        $post_data = $request->replace(array(
+        $request->replace(array(
             'artist_name' => $request->artist_name,
             'guarantee_concert' => (int)preg_replace("/[^\d]/", "", $request->guarantee_concert),
             'guarantee_metropolitan' => (int)preg_replace("/[^\d]/", "", $request->guarantee_metropolitan),
@@ -156,9 +156,9 @@ class ArtistController extends Controller
             $artist->fill([
                 'picture_url' => $serverUrl . '/' . $path . $filename
             ]);
-            $artist->fill($post_data->except('picture_url'));
+            $artist->fill($request->except('picture_url'));
         }
-        $artist->fill($post_data->except('picture_url'));
+        $artist->fill($request->except('picture_url'));
         $artist->update();
         $artist->song_genres()->sync($request->group_type_song_genres);
     }
