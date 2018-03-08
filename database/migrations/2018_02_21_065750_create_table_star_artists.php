@@ -19,10 +19,10 @@ class CreateTableStarArtists extends Migration
             $table->collation = 'utf8_general_ci';
             $table->increments('id');
             $table->string('artist_name')->comment('이름');
-            $table->integer('guarantee_concert')->nullable();
-            $table->integer('guarantee_metropolitan')->nullable();
-            $table->integer('guarantee_central')->nullable();
-            $table->integer('guarantee_south')->nullable();
+            $table->bigInteger('guarantee_concert')->nullable();
+            $table->bigInteger('guarantee_metropolitan')->nullable();
+            $table->bigInteger('guarantee_central')->nullable();
+            $table->bigInteger('guarantee_south')->nullable();
             $table->string('manager_name')->nullable();
             $table->string('manager_phone')->nullable();
             $table->string('company_name')->nullable();
