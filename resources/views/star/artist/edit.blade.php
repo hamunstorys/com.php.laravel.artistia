@@ -186,9 +186,12 @@
                     cache: false,
                     contentType: false,
                     processData: false,
-                    success: function () {
+                    success: function (data) {
                         alert('수정 되었습니다.');
-                        window.history.back();
+                        window.location = '/star';
+                    },
+                    after: function () {
+
                     }
                 });
             }

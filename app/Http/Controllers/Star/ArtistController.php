@@ -164,6 +164,8 @@ class ArtistController extends Controller
         $artist->fill($request->except('picture_url'));
         $artist->update();
         $artist->song_genres()->sync($request->group_type_song_genres);
+        $redirect_url = url()->previous();
+        return ['redirect_url' => $redirect_url];
     }
 
     public

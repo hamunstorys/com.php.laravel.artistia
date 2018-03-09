@@ -46,7 +46,14 @@ class SearchController extends Controller
 
     public function show(Request $request)
     {
-        $this->setData($request->get('query'), $request->get('group_type_number'), $request->get('group_type_sex'), $request->get('group_type_song_genre'), $request->get('guarantee_min'), $request->get('guarantee_min'));
+        $this->setData(
+            $request->get('query'),
+            $request->get('group_type_number'),
+            $request->get('group_type_sex'),
+            $request->get('group_type_song_genre'),
+            $request->get('guarantee_min'),
+            $request->get('guarantee_min')
+        );
         $this->setMessage($request->get('query'), true);
 
         $group_type_number = $this->setGrouptypeNumbers($request->group_type_number);
@@ -114,7 +121,7 @@ class SearchController extends Controller
 
         if ($query == null) {
 
-            return $this->data = Star_Artist::where(DB::raw("CONCAT_WS(' | ',artist_name,manager_name,manager_phone,company_name,company_email,comment)"), 'LIKE', "%%")
+            return $this->data = Star_Artist::where(DB::raw("CONCAT_WS(' | ',artist_name,manager_name,manager_phone,company_name,company_email,comment)"), 'LIKE', "%" . $query . "%")
                 ->whereRaw($query_grouptypeNumber)
                 ->whereRaw($query_grouptypeSex)
                 ->join('star_artists_item_song_genres', 'star_artists.id', '=', 'star_artists_item_song_genres.artist_id')
@@ -122,8 +129,7 @@ class SearchController extends Controller
                 ->whereRaw('guarantee_concert|guarantee_metropolitan|guarantee_central|guarantee_south BETWEEN ' . $guarantee_min . ' AND ' . $guarantee_max)
                 ->get();
         } else {
-            return $this->data = Star_Artist::where(DB::raw("CONCAT_WS(' | ',artist_name,manager_name,manager_phone,company_name,company_email,comment)"), 'LIKE', "%" . $query . "%")->
-            where('group_type_number', "=", $group_type_number)
+            return $this->data = Star_Artist::where(DB::raw("CONCAT_WS(' | ',artist_name,manager_name,manager_phone,company_name,company_email,comment)"), 'LIKE', "%" . $query . "%")
                 ->whereRaw($query_grouptypeNumber)
                 ->whereRaw($query_grouptypeSex)
                 ->join('star_artists_item_song_genres', 'star_artists.id', '=', 'star_artists_item_song_genres.artist_id')
@@ -190,7 +196,7 @@ class SearchController extends Controller
         if ($song_genre == 0) {
             array_push($group_type_song_genres_temp, '<option selected = "selected" value = "0" > 전체</option > ');
         } else {
-            array_push($group_type_song_genres_temp, '<option value = "0" > 전체</option > ');
+            array_push($group_type_song_genres_temp, '<option value = "0" >전체</option > ');
         }
         for ($i = 1; $i <= $group_type_song_genres->count(); $i++) {
             if ($i == $song_genre) {
@@ -203,7 +209,7 @@ class SearchController extends Controller
         return $group_type_song_genres_temp;
     }
 
-    public function getMesage()
+    public function getMessage()
     {
         return $this->message;
     }

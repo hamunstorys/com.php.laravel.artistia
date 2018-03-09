@@ -14,7 +14,7 @@
                         <div class="item name">
                             {{$artist->artist_name}}
                             <div class="item_del">
-                                <form action="{{route('star.artist.destroy',$artist->id)}}" method="post">
+                                <form action="{{route('star.artist.destroy',$artist->artist_id)}}" method="post">
                                     {{csrf_field()}}
                                     <input type="hidden" name="_method" value="delete">
                                     <button type="submit" class="icon_del"><i class="fas fa-trash-alt"></i></button>
@@ -73,10 +73,7 @@
                             <span>{{$artist->updated_at}}</span>
                         </div>
                         <div class="btn_wrap">
-                            <Form action="{{route('star.artist.edit',$artist->id)}}" method="get">
-                                {{csrf_field()}}
-                                <button>수정하기</button>
-                            </Form>
+                            <a href="{{route('star.artist.edit',$artist->artist_id)}}">  <button>수정하기</button></a>
                         </div>
                     </div>
                     <div class="clearfix"></div>
