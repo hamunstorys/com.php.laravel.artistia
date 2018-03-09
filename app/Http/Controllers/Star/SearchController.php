@@ -99,6 +99,11 @@ class SearchController extends Controller
         } else {
             $query_grouptypeSex = 'group_type_sex = ' . $group_type_sex;
         }
+        if ($group_type_song_genre == 0) {
+            $query_grouptypeSongGenre = 'song_genre_id BETWEEN 1 AND ' . Star_Artist_Song_Genre::count();
+        } else {
+            $query_grouptypeSongGenre = 'song_genre_id =' . $group_type_song_genre;
+        }
 
         if ($query == null) {
 
@@ -106,14 +111,15 @@ class SearchController extends Controller
                 ->whereRaw($query_grouptypeNumber)
                 ->whereRaw($query_grouptypeSex)
                 ->join('star_artists_item_song_genres', 'star_artists.id', '=', 'star_artists_item_song_genres.artist_id')
+                ->whereRaw($query_grouptypeSongGenre)
                 ->get();
         } else {
             return $this->data = Star_Artist::where(DB::raw("CONCAT_WS(' | ',artist_name,manager_name,manager_phone,company_name,company_email,comment)"), 'LIKE', "%" . $query . "%")->
             where('group_type_number', "=", $group_type_number)
                 ->whereRaw($query_grouptypeNumber)
                 ->whereRaw($query_grouptypeSex)
-                ->join('star_artists_item_song_genres')
-                ->whereRaw('id = artist_id AND song_genre_id ='.$group_type_song_genre)
+                ->join('star_artists_item_song_genres', 'star_artists.id', '=', 'star_artists_item_song_genres.artist_id')
+                ->whereRaw($query_grouptypeSongGenre)
                 ->get();
         }
     }
