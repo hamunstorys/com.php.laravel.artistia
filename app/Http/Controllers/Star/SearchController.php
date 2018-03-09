@@ -115,16 +115,15 @@ class SearchController extends Controller
         if ($guarantee_min >= $guarantee_max) {
             $guarantee_min = $guarantee_max;
         }
-
-
+        
         if ($query == null) {
 
-            return $this->data = Star_Artist::orWhere(DB::raw("CONCAT_WS(' | ',artist_name,manager_name,manager_phone,company_name,company_email,comment)"), 'LIKE', "%%")
+            return $this->data = Star_Artist::where(DB::raw("CONCAT_WS(' | ',artist_name,manager_name,manager_phone,company_name,company_email,comment)"), 'LIKE', "%%")
                 ->whereRaw($query_grouptypeNumber)
                 ->whereRaw($query_grouptypeSex)
                 ->join('star_artists_item_song_genres', 'star_artists.id', '=', 'star_artists_item_song_genres.artist_id')
                 ->whereRaw($query_grouptypeSongGenre)
-                ->whereRaw('guarantee_concert||guarantee_metropolitan||guarantee_central||guarantee_south BETWEEN ' . $guarantee_min . ' AND ' . $guarantee_max)
+                ->whereRaw('guarantee_concert|guarantee_metropolitan|guarantee_central|guarantee_south BETWEEN ' . $guarantee_min . ' AND ' . $guarantee_max)
                 ->get();
         } else {
             return $this->data = Star_Artist::where(DB::raw("CONCAT_WS(' | ',artist_name,manager_name,manager_phone,company_name,company_email,comment)"), 'LIKE', "%" . $query . "%")->
@@ -133,7 +132,7 @@ class SearchController extends Controller
                 ->whereRaw($query_grouptypeSex)
                 ->join('star_artists_item_song_genres', 'star_artists.id', '=', 'star_artists_item_song_genres.artist_id')
                 ->whereRaw($query_grouptypeSongGenre)
-                ->whereRaw('guarantee_concert||guarantee_metropolitan||guarantee_central||guarantee_south BETWEEN ' . $guarantee_min . ' AND ' . $guarantee_max)
+                ->whereRaw('guarantee_concert|guarantee_metropolitan|guarantee_central|guarantee_south BETWEEN ' . $guarantee_min . ' AND ' . $guarantee_max)
                 ->get();
         }
     }
