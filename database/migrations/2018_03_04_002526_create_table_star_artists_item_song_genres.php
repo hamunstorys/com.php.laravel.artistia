@@ -20,8 +20,6 @@ class CreateTableStarArtistsItemSongGenres extends Migration
             $table->integer('artist_id')->unsigned();
             $table->integer('song_genre_id')->unsigned();
 
-            $table->timestamps();
-
             $table->foreign('artist_id')->references('id')
                 ->on('star_artists')->onUpdate('cascade')->onDelete('cascade');
 

@@ -48,7 +48,7 @@
                     }
                     att.each(function () {
                         $.fn.validate.setLimitCharacters(att, length, /,/g);
-                        att.val(att.val().replace(/[^0-9\.]+/g, '').replace(/(\d)(?=(?:\d{3})+(?!\d))/g, '$1,'));
+                        att.val(att.val().replace(/^([1-9])0-9\.]+/g, '').replace(/(\d)(?=(?:\d{3})+(?!\d))/g, '$1,'));
                     })
                 });
             },

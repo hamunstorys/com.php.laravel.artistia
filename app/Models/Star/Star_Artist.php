@@ -18,14 +18,12 @@ class Star_Artist extends Model
         'group_type_number', 'group_type_sex',
     ];
 
-    protected $dates = [
-        'created_at', 'updated_at'
-    ];
-
     /* Don't get data */
     protected $hidden = [
 
     ];
+
+    public $timestamps = true;
 
     /* Eloquent Relation */
     public function sex()

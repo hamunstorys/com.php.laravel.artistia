@@ -73,7 +73,9 @@
                             <span>{{$artist->updated_at}}</span>
                         </div>
                         <div class="btn_wrap">
-                            <a href="{{route('star.artist.edit',$artist->artist_id)}}">  <button>수정하기</button></a>
+                            <a href="{{route('star.artist.edit',$artist->artist_id)}}">
+                                <button>수정하기</button>
+                            </a>
                         </div>
                     </div>
                     <div class="clearfix"></div>
