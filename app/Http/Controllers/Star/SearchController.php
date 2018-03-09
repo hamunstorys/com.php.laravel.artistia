@@ -109,13 +109,9 @@ class SearchController extends Controller
         }
 
         if ($guarantee_max == null) {
-            $guarantee_max = 0;
+            $guarantee_max = PHP_INT_MAX;
         }
 
-        if ($guarantee_min >= $guarantee_max) {
-            $guarantee_min = $guarantee_max;
-        }
-        
         if ($query == null) {
 
             return $this->data = Star_Artist::where(DB::raw("CONCAT_WS(' | ',artist_name,manager_name,manager_phone,company_name,company_email,comment)"), 'LIKE', "%%")
