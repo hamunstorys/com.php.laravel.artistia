@@ -59,12 +59,12 @@
                     <input class="option" id="manager_name" name="manager_name"
                            placeholder="담당자 이름"
                            value="{{$artist->manager_name}}">
-                         <div class="tooltip" id="error-manager_name" style="display: none">1자 이상 입력 항목입니다.</div>
+                         <div class="tooltip" id="error-manager_name" style="display: none">담당자의 1자 이상 선택 입력 항목입니다.</div>
                     <input class="option" id="manager_phone" name="manager_phone"
                            placeholder="담당자 연락처"
                            value="{{$artist->manager_phone}}">
                         <div class="tooltip" id="error-manager_phone"
-                             style="display: none">11자 입력 항목입니다.</div>
+                             style="display: none">담당자의 연락처는 11자 선택 입력 항목입니다.</div>
 	                </span>
             </div>
             <div class="item company">
@@ -186,7 +186,7 @@
                     cache: false,
                     contentType: false,
                     processData: false,
-                    success: function (data) {
+                    success: function () {
                         alert('수정 되었습니다.');
                         window.location = '/star';
                     },
