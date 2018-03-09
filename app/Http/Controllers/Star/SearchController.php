@@ -46,7 +46,7 @@ class SearchController extends Controller
 
     public function show(Request $request)
     {
-        return $this->setData($request->get('query'), $request->get('group_type_number'), $request->get('group_type_sex'), $request->get('group_type_song_genre'), $request->get('guarantee_min'), $request->get('guarantee_min'));
+        $this->setData($request->get('query'), $request->get('group_type_number'), $request->get('group_type_sex'), $request->get('group_type_song_genre'), $request->get('guarantee_min'), $request->get('guarantee_min'));
         $this->setMessage($request->get('query'), true);
 
         $group_type_number = $this->setGrouptypeNumbers($request->group_type_number);
