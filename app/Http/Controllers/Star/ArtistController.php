@@ -147,7 +147,7 @@ class ArtistController extends Controller
         $serverUrl = url('/');
 
         if ($request->hasFile('picture_url')) {
-            $path = $this->getPath($artist->picture_url);
+            $path = $this->setPath($artist->picture_url);
             if (file_exists($path) && public_path($path) != public_path('assets/star/img/icon_singer.svg')) {
                 File::delete(public_path($path));
             }
@@ -170,7 +170,7 @@ class ArtistController extends Controller
     function destroy($id)
     {
         $artist = Star_Artist::findOrFail($id);
-        $path = $this->getPath($artist->picture_url);
+        $path = $this->setPath($artist->picture_url);
         if (file_exists($path) && public_path($path) != public_path('assets/star/img/icon_singer.svg')) {
             File::delete(public_path($path));
         }

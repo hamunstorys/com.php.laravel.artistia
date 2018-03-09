@@ -27,7 +27,7 @@ class SearchController extends Controller
         if ($request->has('query')) {
             $query = $request->get('query');
 
-            $group_type_number = $request->get('group_type_number');
+            $group_type_number = $request->get('group_type_nmber');
             $group_type_sex = $request->get('group_type_sex');
             $group_type_song_genre = $request->get('group_type_song_genre');
 
@@ -46,7 +46,7 @@ class SearchController extends Controller
 
     public function show(Request $request)
     {
-        return $this->setData($request->get('query'), $request->get('group_type_number'), $request->get('group_type_sex'), $request->get('group_type_song_genre'));
+        $this->setData($request->get('query'), $request->get('group_type_number'), $request->get('group_type_sex'), $request->get('group_type_song_genre'));
         $this->setMessage($request->get('query'), true);
 
         $group_type_number = $this->setGrouptypeNumbers($request->group_type_number);
@@ -87,33 +87,21 @@ class SearchController extends Controller
         }
     }
 
-    public function setData($query, $group_type_number, $group_type_sex, $group_type_song_genre)
+    public function setData($query, $group_type_number, $group_type_sex)
     {
-        if ($group_type_number == 0) {
-            $query_grouptypeNumber = 'group_type_number BETWEEN 1 AND 2';
-        } else {
-            $query_grouptypeNumber = 'group_type_number = ' . $group_type_number;
-        }
-        if ($group_type_sex == 0) {
-            $query_grouptypeSex = 'group_type_sex BETWEEN 1 AND ' . Star_Artist_Sex::count();
-        } else {
-            $query_grouptypeSex = 'group_type_sex = ' . $group_type_sex;
-        }
-
         if ($query == null) {
 
-            return $this->data = Star_Artist::orWhere(DB::raw("CONCAT_WS(' | ',artist_name,manager_name,manager_phone,company_name,company_email,comment)"), 'LIKE', "%%")
-                ->whereRaw($query_grouptypeNumber)
-                ->whereRaw($query_grouptypeSex)
+            return $this->data = Star_Artist::orWhere(DB::raw("CONCAT_WS('|',artist_name,manager_name,manager_phone,company_name,company_email,comment)"), 'LIKE', "%%")
+                ->whereRaw("IF ('group_type_number'=")
+                'group_type_number', "=", $group_type_number)
+                ->where('group_type_sex', "=", $group_type_sex)
                 ->join('star_artists_item_song_genres', 'star_artists.id', '=', 'star_artists_item_song_genres.artist_id')
                 ->get();
         } else {
-            return $this->data = Star_Artist::where(DB::raw("CONCAT_WS(' | ',artist_name,manager_name,manager_phone,company_name,company_email,comment)"), 'LIKE', "%" . $query . "%")->
+            return $this->data = Star_Artist::where(DB::raw("CONCAT_WS('|',artist_name,manager_name,manager_phone,company_name,company_email,comment)"), 'LIKE', "%" . $query . "%")->
             where('group_type_number', "=", $group_type_number)
-                ->whereRaw($query_grouptypeNumber)
-                ->whereRaw($query_grouptypeSex)
-                ->join('star_artists_item_song_genres')
-                ->whereRaw('id = artist_id AND song_genre_id ='.$group_type_song_genre)
+                ->where('group_type_sex', "=", $group_type_sex)
+                ->join('star_artists_item_song_genres', 'star_artists.id', '=', 'star_artists_item_song_genres.artist_id')
                 ->get();
         }
     }
@@ -128,22 +116,22 @@ class SearchController extends Controller
         switch ($group_type_number) {
             case 0:
                 return array(
-                    ' <option selected = "selected" value = "0" > 전체</option > ',
-                    '<option value = "1" > 솔로</option > ',
-                    '<option value = "2" > 그룹</option > '
+                    '<option selected="selected" value="0">전체</option>',
+                    '<option value="1">솔로</option>',
+                    '<option value="2">그룹</option>'
                 );
             case 1:
                 return array(
-                    '<option value = "0" > 전체</option > ',
-                    '<option selected = "selected" value = "1" > 솔로</option > ',
-                    '<option value = "2" > 그룹</option > '
+                    '<option value="0">전체</option>',
+                    '<option selected="selected" value="1">솔로</option>',
+                    '<option value="2">그룹</option>'
                 );
                 break;
             case 2:
                 return array(
-                    '<option value = "0" > 전체</option > ',
-                    '<option value = "1" > 솔로</option > ',
-                    '<option selected = "selected" value = "2" > 그룹</option > '
+                    '<option value="0">전체</option>',
+                    '<option value="1">솔로</option>',
+                    '<option selected="selected" value="2">그룹</option>'
                 );
         }
     }
@@ -153,16 +141,16 @@ class SearchController extends Controller
         $group_type_sex = Star_Artist_Sex::all();
         $group_type_sex_temp = array();
         if ($sex == 0) {
-            array_push($group_type_sex_temp, '<option selected = "selected" value = "0" > 전체</option > ');
+            array_push($group_type_sex_temp, '<option selected="selected" value="0">전체</option>');
         } else {
-            array_push($group_type_sex_temp, '<option value = "0" > 전체</option > ');
+            array_push($group_type_sex_temp, '<option value="0">전체</option>');
         }
         for ($i = 1; $i <= $group_type_sex->count(); $i++) {
             if ($i == $sex) {
-                array_push($group_type_sex_temp, '<option selected = "selected" value = "' . $i . '" > ' . $group_type_sex->find($i)->value . '</option > ');
+                array_push($group_type_sex_temp, '<option selected="selected" value="' . $i . '">' . $group_type_sex->find($i)->value . '</option>');
                 continue;
             } else {
-                array_push($group_type_sex_temp, '<option value = "' . $i . '" > ' . $group_type_sex->find($i)->value . '</option > ');
+                array_push($group_type_sex_temp, '<option value="' . $i . '">' . $group_type_sex->find($i)->value . '</option>');
             }
         }
         return $group_type_sex_temp;
@@ -173,16 +161,16 @@ class SearchController extends Controller
         $group_type_song_genres = Star_Artist_Song_Genre::all();
         $group_type_song_genres_temp = array();
         if ($song_genre == 0) {
-            array_push($group_type_song_genres_temp, '<option selected = "selected" value = "0" > 전체</option > ');
+            array_push($group_type_song_genres_temp, '<option selected="selected" value="0">전체</option>');
         } else {
-            array_push($group_type_song_genres_temp, '<option value = "0" > 전체</option > ');
+            array_push($group_type_song_genres_temp, '<option value="0">전체</option>');
         }
         for ($i = 1; $i <= $group_type_song_genres->count(); $i++) {
             if ($i == $song_genre) {
-                array_push($group_type_song_genres_temp, '<option selected = "selected" value = "' . $i . '" > ' . $group_type_song_genres->find($i)->value . '</option > ');
+                array_push($group_type_song_genres_temp, '<option selected="selected" value="' . $i . '">' . $group_type_song_genres->find($i)->value . '</option>');
                 continue;
             } else {
-                array_push($group_type_song_genres_temp, '<option value = "' . $i . '" > ' . $group_type_song_genres->find($i)->value . '</option > ');
+                array_push($group_type_song_genres_temp, '<option value="' . $i . '">' . $group_type_song_genres->find($i)->value . '</option>');
             }
         }
         return $group_type_song_genres_temp;
