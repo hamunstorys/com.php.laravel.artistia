@@ -35,6 +35,10 @@ class CreateTableStarArtistsItemSongGenres extends Migration
      */
     public function down()
     {
+        Schema::table('star_artists_item_song_genres', function (Blueprint $table) {
+            $table->dropForeign('star_artists_item_song_genres_artist_id_foreign');
+            $table->dropForeign('star_artists_item_song_genres_song_genre_id_foreign');
+        });
         Schema::dropIfExists('star_artists_item_song_genres');
     }
 }

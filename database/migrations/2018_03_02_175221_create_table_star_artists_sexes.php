@@ -35,6 +35,10 @@ class CreateTableStarArtistsSexes extends Migration
      */
     public function down()
     {
+        Schema::table('star_artists', function (Blueprint $table) {
+            $table->dropForeign('star_artists_group_type_sex_foreign');
+
+        });
         Schema::dropIfExists('star_artists_sexes');
     }
 }
