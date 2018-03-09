@@ -46,7 +46,7 @@ class SearchController extends Controller
 
     public function show(Request $request)
     {
-        return $this->setData($request->get('query'), $request->get('group_type_number'), $request->get('group_type_sex'), $request->get('group_type_song_genre'));
+        return $this->setData($request->get('query'), $request->get('group_type_number'), $request->get('group_type_sex'), $request->get('group_type_song_genre'), $request->get('guarantee_min'), $request->get('guarantee_min'));
         $this->setMessage($request->get('query'), true);
 
         $group_type_number = $this->setGrouptypeNumbers($request->group_type_number);
@@ -87,7 +87,7 @@ class SearchController extends Controller
         }
     }
 
-    public function setData($query, $group_type_number, $group_type_sex, $group_type_song_genre)
+    public function setData($query, $group_type_number, $group_type_sex, $group_type_song_genre, $guarantee_min, $guarantee_max)
     {
         if ($group_type_number == 0) {
             $query_grouptypeNumber = 'group_type_number BETWEEN 1 AND 2';
@@ -104,6 +104,18 @@ class SearchController extends Controller
         } else {
             $query_grouptypeSongGenre = 'song_genre_id =' . $group_type_song_genre;
         }
+        if ($guarantee_min == null) {
+            $guarantee_min = 0;
+        }
+
+        if ($guarantee_max == null) {
+            $guarantee_max = 0;
+        }
+
+        if ($guarantee_min >= $guarantee_max) {
+            $guarantee_min = $guarantee_max;
+        }
+
 
         if ($query == null) {
 
@@ -112,6 +124,7 @@ class SearchController extends Controller
                 ->whereRaw($query_grouptypeSex)
                 ->join('star_artists_item_song_genres', 'star_artists.id', '=', 'star_artists_item_song_genres.artist_id')
                 ->whereRaw($query_grouptypeSongGenre)
+                ->whereRaw('guarantee_concert||guarantee_metropolitan||guarantee_central||guarantee_south BETWEEN ' . $guarantee_min . ' AND ' . $guarantee_max)
                 ->get();
         } else {
             return $this->data = Star_Artist::where(DB::raw("CONCAT_WS(' | ',artist_name,manager_name,manager_phone,company_name,company_email,comment)"), 'LIKE', "%" . $query . "%")->
@@ -120,6 +133,7 @@ class SearchController extends Controller
                 ->whereRaw($query_grouptypeSex)
                 ->join('star_artists_item_song_genres', 'star_artists.id', '=', 'star_artists_item_song_genres.artist_id')
                 ->whereRaw($query_grouptypeSongGenre)
+                ->whereRaw('guarantee_concert||guarantee_metropolitan||guarantee_central||guarantee_south BETWEEN ' . $guarantee_min . ' AND ' . $guarantee_max)
                 ->get();
         }
     }
@@ -134,22 +148,22 @@ class SearchController extends Controller
         switch ($group_type_number) {
             case 0:
                 return array(
-                    ' <option selected = "selected" value = "0" > 전체</option > ',
-                    '<option value = "1" > 솔로</option > ',
-                    '<option value = "2" > 그룹</option > '
+                    ' <option selected="selected" value = "0" > 전체</option > ',
+                    '<option value="1" >솔로</option>',
+                    '<option value= "2" >그룹</option>'
                 );
             case 1:
                 return array(
-                    '<option value = "0" > 전체</option > ',
-                    '<option selected = "selected" value = "1" > 솔로</option > ',
-                    '<option value = "2" > 그룹</option > '
+                    '<option value = "0" >전체</option >',
+                    '<option selected = "selected" value = "1" >솔로</option >',
+                    '<option value = "2" >그룹</option >'
                 );
                 break;
             case 2:
                 return array(
-                    '<option value = "0" > 전체</option > ',
-                    '<option value = "1" > 솔로</option > ',
-                    '<option selected = "selected" value = "2" > 그룹</option > '
+                    '<option value = "0" >전체</option >',
+                    '<option value = "1" >솔로</option >',
+                    '<option selected = "selected" value = "2" >그룹</option >'
                 );
         }
     }
