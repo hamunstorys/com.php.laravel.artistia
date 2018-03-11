@@ -68,9 +68,15 @@ Route::prefix('star')->group(function () {
         'uses' => 'Star\SearchController@search'
     ]);
 
-    Route::get('/search/results',
+    Route::get('/search',
         [
             'as' => 'star.search.show',
             'uses' => 'Star\SearchController@show'
+        ]);
+
+    Route::get('/search/All',
+        [
+            'as' => 'star.search.showAll',
+            'uses' => 'Star\SearchController@showAll'
         ]);
 });

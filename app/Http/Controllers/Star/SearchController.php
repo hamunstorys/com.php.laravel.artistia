@@ -8,7 +8,6 @@ use App\Models\Star\Star_Artist_Song_Genre;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\DB;
-use App\Helpers\Helper;
 
 class SearchController extends Controller
 {
@@ -18,7 +17,6 @@ class SearchController extends Controller
     public function __construct()
     {
 //        $this->middleware('auth');
-
     }
 
     public function search(Request $request)
@@ -26,21 +24,19 @@ class SearchController extends Controller
         $query = null;
         if ($request->has('query')) {
             $query = $request->get('query');
-
-            $group_type_number = $request->get('group_type_number');
-            $group_type_sex = $request->get('group_type_sex');
-            $group_type_song_genre = $request->get('group_type_song_genre');
-
-            $guarantee_min = $request->get('guarantee_min');
-            $guarantee_max = $request->get('guarantee_max');
+            $group_type_number = $request->get('search_group_type_number');
+            $group_type_sex = $request->get('search_group_type_sex');
+            $group_type_song_genre = $request->get('search_group_type_song_genre');
+            $guarantee_min = $request->get('search_guarantee_min');
+            $guarantee_max = $request->get('search_guarantee_max');
         }
         return redirect()->route('star.search.show', [
             'query' => $query,
-            'group_type_number' => $group_type_number,
-            'group_type_sex' => $group_type_sex,
-            'group_type_song_genre' => $group_type_song_genre,
-            'guarantee_min' => $guarantee_min,
-            'guarantee_max' => $guarantee_max,
+            'search_group_type_number' => $group_type_number,
+            'search_group_type_sex' => $group_type_sex,
+            'search_group_type_song_genre' => $group_type_song_genre,
+            'search_guarantee_min' => $guarantee_min,
+            'search_guarantee_max' => $guarantee_max,
         ]);
     }
 
@@ -48,50 +44,48 @@ class SearchController extends Controller
     {
         $this->setData(
             $request->get('query'),
-            $request->get('group_type_number'),
-            $request->get('group_type_sex'),
-            $request->get('group_type_song_genre'),
-            $request->get('guarantee_min'),
-            $request->get('guarantee_min')
+            $request->get('search_group_type_number'),
+            $request->get('search_group_type_sex'),
+            $request->get('search_group_type_song_genre'),
+            (int)$request->get('search_guarantee_min'),
+            (int)$request->get('search_guarantee_max')
         );
         $this->setMessage($request->get('query'), true);
-
-        $group_type_number = $this->setGrouptypeNumbers($request->group_type_number);
-        $group_type_sex = $this->setGrouptypeSexes($request->group_type_sex);
-        $group_type_song_genre = $this->setGrouptypeSongGenres($request->group_type_song_genre);
-
-        $guarantee_min = $request->get('guarantee_min');
-        $guarantee_max = $request->get('guarantee_max');
-
+        $group_type_number = $this->setGrouptypeNumbers($request->search_group_type_number);
+        $group_type_sex = $this->setGrouptypeSexes($request->search_group_type_sex);
+        $group_type_song_genre = $this->setGrouptypeSongGenres($request->search_group_type_song_genre);
+        $guarantee_min = $request->get('search_guarantee_min');
+        $guarantee_max = $request->get('search_guarantee_max');
         return view('star.search.show',
-            ['data' => $this->data,
+            [
+                'data' => $this->data,
                 'message' => $this->message,
                 'query' => $request->get('query'),
-                'requirement_group_type_number' => $group_type_number,
-                'requirement_group_type_sex' => $group_type_sex,
-                'requirement_group_type_song_genre' => $group_type_song_genre,
-                'requirement_guarantee_min' => $guarantee_min,
-                'requirement_guarantee_max' => $guarantee_max,
+                'search_group_type_number' => $group_type_number,
+                'search_group_type_sex' => $group_type_sex,
+                'search_group_type_song_genre' => $group_type_song_genre,
+                'search_guarantee_min' => $guarantee_min,
+                'search_guarantee_max' => $guarantee_max,
             ]
         );
     }
 
-    public function showAll(Request $request)
+    public function showAll()
     {
+        $this->setData(
+            null,
+            0,
+            0,
+            0,
+            null,
+            null
+        );
 
-    }
-
-    public function setMessage($query, $message)
-    {
-        if ($query === null && $message === true) {
-            $this->message = "<div class=\"search_result_title\">검색어를 입력 해주십시오.</div></div>";
-        } else {
-            if ($this->data->count() == null && $message === true) {
-                $this->message = '<div class="search_result_title"><span class="total">"' . $query . '"</span>에 대해 <span> 검색된 것이 없습니다."</div>';
-            } else {
-                $this->message = '<div class="search_result_title"><span class="total">"' . $query . '"</span>에 대해 ' . $this->data->count() . '건이 <span> 검색 되었습니다."</div>';
-            }
-        }
+        return view('star.search.show',
+            [
+                'data' => $this->data,
+            ]
+        );
     }
 
     public function setData($query, $group_type_number, $group_type_sex, $group_type_song_genre, $guarantee_min, $guarantee_max)
@@ -114,37 +108,42 @@ class SearchController extends Controller
         if ($guarantee_min == null) {
             $guarantee_min = 0;
         }
-
         if ($guarantee_max == null) {
             $guarantee_max = PHP_INT_MAX;
         }
+        if ($guarantee_min >= $guarantee_max) {
+            $guarantee_min = $guarantee_max;
+        }
+
 
         if ($query == null) {
-
-            return $this->data = Star_Artist::where(DB::raw("CONCAT_WS(' | ',artist_name,manager_name,manager_phone,company_name,company_email,comment)"), 'LIKE', "%" . $query . "%")
+            return $this->data = Star_Artist::Where(DB::raw("CONCAT_WS(' | ',artist_name,manager_name,manager_phone,company_name,company_email,comment)"), 'LIKE', "%%");
                 ->whereRaw($query_grouptypeNumber)
                 ->whereRaw($query_grouptypeSex)
                 ->join('star_artists_item_song_genres', 'star_artists.id', '=', 'star_artists_item_song_genres.artist_id')
                 ->whereRaw($query_grouptypeSongGenre)
-                ->whereRaw('guarantee_concert|guarantee_metropolitan|guarantee_central|guarantee_south BETWEEN ' . $guarantee_min . ' AND ' . $guarantee_max)
                 ->get();
         } else {
-            return $this->data = Star_Artist::where(DB::raw("CONCAT_WS(' | ',artist_name,manager_name,manager_phone,company_name,company_email,comment)"), 'LIKE', "%" . $query . "%")
+            return $this->data = Star_Artist::Where(DB::raw("CONCAT_WS(' | ',artist_name,manager_name,manager_phone,company_name,company_email,comment)"), 'LIKE', "%".$query."%");
                 ->whereRaw($query_grouptypeNumber)
                 ->whereRaw($query_grouptypeSex)
                 ->join('star_artists_item_song_genres', 'star_artists.id', '=', 'star_artists_item_song_genres.artist_id')
                 ->whereRaw($query_grouptypeSongGenre)
-                ->whereRaw('guarantee_concert|guarantee_metropolitan|guarantee_central|guarantee_south BETWEEN ' . $guarantee_min . ' AND ' . $guarantee_max)
                 ->get();
         }
     }
 
-    public function getData()
+    public function setMessage($query, $message)
     {
-        return $this->data;
+        if ($this->data->count() == null && $message === true) {
+            $this->message = '<div class="search_result_title"><span class="total">"' . $query . '"</span>에 대해 <span> 검색된 것이 없습니다."</div>';
+        } else if ($query != null) {
+            $this->message = '<div class="search_result_title"><span class="total">"' . $query . '"</span>에 대해 ' . $this->data->count() . '건이 <span> 검색 되었습니다."</div>';
+        }
     }
 
-    public function setGrouptypeNumbers($group_type_number)
+    public
+    function setGrouptypeNumbers($group_type_number)
     {
         switch ($group_type_number) {
             case 0:
@@ -169,7 +168,9 @@ class SearchController extends Controller
         }
     }
 
-    public function setGrouptypeSexes($sex)
+
+    public
+    function setGrouptypeSexes($sex)
     {
         $group_type_sex = Star_Artist_Sex::all();
         $group_type_sex_temp = array();
@@ -196,7 +197,7 @@ class SearchController extends Controller
         if ($song_genre == 0) {
             array_push($group_type_song_genres_temp, '<option selected = "selected" value = "0" > 전체</option > ');
         } else {
-            array_push($group_type_song_genres_temp, '<option value = "0" >전체</option > ');
+            array_push($group_type_song_genres_temp, '<option value = "0" > 전체</option > ');
         }
         for ($i = 1; $i <= $group_type_song_genres->count(); $i++) {
             if ($i == $song_genre) {
@@ -209,7 +210,15 @@ class SearchController extends Controller
         return $group_type_song_genres_temp;
     }
 
-    public function getMessage()
+
+    public
+    function getData()
+    {
+        return $this->data;
+    }
+
+
+    public function getMesage()
     {
         return $this->message;
     }

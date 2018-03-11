@@ -155,6 +155,7 @@
         })
 
         $(document).on('click', 'button#confirm', function (e) {
+            $('#button#confirm').attr('disabled', true);
             e.preventDefault();
             if ($.fn.validate.validation() === true) {
                 var data = new FormData();
@@ -190,8 +191,8 @@
                         alert('수정 되었습니다.');
                         window.location = '/star';
                     },
-                    after: function () {
-
+                    error: function() {
+                        $('#button#confirm').attr('disabled', false);
                     }
                 });
             }

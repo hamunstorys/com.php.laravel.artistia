@@ -6,7 +6,7 @@ use Closure;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Session;
 
-class SearchRequirement
+class SetArtistCategories
 {
     /**
      * Handle an incoming request.
@@ -21,18 +21,18 @@ class SearchRequirement
         if (Session::has('search_requirement')) {
             return $next($request);
         } else
-            $this->setDefaultSearchRequirement('song_genres', $this->getSearchRequirement('star_artists_song_genres'));
-            $this->setDefaultSearchRequirement('sexes', $this->getSearchRequirement('star_artists_sexes'));
+            $this->setDefaultArtistCategory('song_genres', $this->getDefaultArtistCategory('star_artists_song_genres'));
+            $this->setDefaultArtistCategory('sexes', $this->getDefaultArtistCategory('star_artists_sexes'));
         return $next($request);
     }
 
-    public function getSearchRequirement($table)
+    public function getDefaultArtistCategory($table)
     {
         return DB::table($table)->select('id', 'value')->get();
     }
 
-    public function setDefaultSearchRequirement($requirement, $data)
+    public function setDefaultArtistCategory($requirement, $data)
     {
-        Session::put('search_requirement.' . $requirement, $data);
+        Session::put('artist.category.' . $requirement, $data);
     }
 }

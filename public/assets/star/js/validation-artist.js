@@ -42,42 +42,40 @@
                 comment: /^[\s\S]{0,255}$/,
             },
             replaceCommas: function (att, length, error) {
-                att.bind('keyup keypress keydown focusout', function () {
-                    if (error.css("display") != "none") {
+                att.focusout(function () {
+                    $.fn.validate.setLimitCharacters(att, length, /,/g);
+                    att.val(att.val().replace(/[^0-9]+/g, '').replace(/(\d)(?=(?:\d{3})+(?!\d))/g, '$1,').replace(/^0/, ''));
+                });
+                att.bind('keyup keypress keydown', function () {
+                    if (error !== null && error.css("display") != "none") {
                         error.hide("slow");
                     }
-                    att.each(function () {
-                        $.fn.validate.setLimitCharacters(att, length, /,/g);
-                        att.val(att.val().replace(/^([1-9])0-9\.]+/g, '').replace(/(\d)(?=(?:\d{3})+(?!\d))/g, '$1,'));
-                    })
                 });
             },
             replaceCellphone: function (att, length, error) {
-                att.bind('keyup keypress keydown focusout', function () {
-                    if (error.css("display") != "none") {
+                att.focusout(function () {
+                    $.fn.validate.setLimitCharacters(att, length, /-/g);
+                    att.val(att.val().replace(/[^0-9]+/g, '').replace(/(\d{3})(\d{1,4})(\d{1,4})/, "$1-$2-$3"));
+                });
+                att.bind('keyup keypress keydown', function () {
+                    if (error !== null && error.css("display") != "none") {
                         error.hide("slow");
                     }
-                    att.each(function () {
-                        $.fn.validate.setLimitCharacters(att, length, /-/g);
-                        att.val(att.val().replace(/[^0-9\.]+/g, '').replace(/(\d{3})(\d{1,4})(\d{1,4})/, "$1-$2-$3"));
-                    })
-
                 });
             },
             replaceGeneral: function (att, length, error) {
-                att.bind('keyup keypress keydown focusout', function () {
-                    if (error.css("display") != "none") {
+                att.focusout(function () {
+                    $.fn.validate.setLimitCharacters(att, length, null);
+                });
+                att.bind('keyup keypress keydown', function () {
+                    if (error !== null && error.css("display") != "none") {
                         error.hide("slow");
                     }
-                    att.each(function () {
-                        $.fn.validate.setLimitCharacters(att, length, null);
-                    })
-
-                });
+                })
             },
             selectedOption: function (att, error) {
                 att.bind('select', function () {
-                    if (att.val() != 0) {
+                    if (error != null & att.val() != 0) {
                         error.hide("slow");
                     }
                 });

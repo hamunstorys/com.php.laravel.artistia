@@ -98,7 +98,7 @@
                 </div>
                 <select name="group_type_sex" id="group_type_sex">
                     <option selected="selected" value="0">성별</option>
-                    @foreach($sexes = Session::get('search_requirement.sexes') as $sex)
+                    @foreach($sexes = Session::get('artist.category.sexes') as $sex)
                         <?php echo '<option value="' . $sex->id . '">' . $sex->value . '</option>'; ?>
                     @endforeach
                 </select>
@@ -110,7 +110,7 @@
                 <label>장르 선택</label>
                 <select name="group_type_song_genres" id="group_type_song_genres">
                     <option selected="selected" value="0">장르</option>
-                    @foreach($song_genres = Session::get('search_requirement.song_genres') as $song_genre)
+                    @foreach($song_genres = Session::get('artist.category.song_genres') as $song_genre)
                         <?php echo '<option value="' . $song_genre->id . '">' . $song_genre->value . '</option>'; ?>
                     @endforeach
                 </select>
@@ -162,6 +162,7 @@
         })
 
         $(document).on('click', 'button#confirm', function (e) {
+            $('#button#confirm').attr('disabled', true);
             e.preventDefault();
             if ($.fn.validate.validation() === true) {
                 var data = new FormData();
@@ -195,6 +196,8 @@
                     success: function () {
                         alert('등록 되었습니다.');
                         window.location = "/star"
+                    }, error: function () {
+                        $('#button#confirm').attr('disabled', false);
                     }
                 });
             }

@@ -9,7 +9,7 @@ class IndexController extends Controller
     public function __construct()
     {
         $this->middleware('flush_query');
-        $this->middleware('search_requirement');
+        $this->middleware('artist.categories');
     }
 
     public function index()

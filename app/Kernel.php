@@ -4,7 +4,7 @@ namespace App\Http;
 
 
 use App\Http\Middleware\ForceSSL;
-use App\Http\Middleware\Star\SearchRequirement;
+use App\Http\Middleware\Star\SetArtistCategories;
 use App\Http\Middleware\Star\FlushQuery;
 use Illuminate\Foundation\Http\Kernel as HttpKernel;
 
@@ -65,6 +65,6 @@ class Kernel extends HttpKernel
 
         /*Star Custom routeMiddleware*/
         'flush_query' => FlushQuery::class,
-        'search_requirement' => SearchRequirement::class,
+        'artist.categories' => SetArtistCategories::class,
     ];
 }
