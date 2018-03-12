@@ -44,7 +44,7 @@
                         </div>
                         <div class="item memo">
                             <label>그룹 유형(인원)</label>
-                            @if($artist->group_type_number)
+                            @if($artist->group_type_number == 1)
                                 <span>솔로</span>
                             @else
                                 <span>그룹</span>
