@@ -9,5 +9,4 @@
     <link href="{{asset('assets/star/css/style.css')}}" rel="stylesheet" type="text/css">
     <script type="text/javascript" src="{{asset('assets/star/js/jquery-3.3.1.min.js')}}"></script>
     <script defer src="https://use.fontawesome.com/releases/v5.0.6/js/all.js"></script>
-    <script src="{{asset('assets/star/js/function.js')}}" }></script>
 </head>

@@ -81,41 +81,8 @@
 </div>
 </div>
 @yield('content')
-<script src="{{asset('assets/star/js/validation-artist.js')}}" type="text/javascript"></script>
-{{--<script src="{{asset('assets/star/js/ajax-artist.js')}}"></script>--}}
-<script>
-    $(document).ready(function ($) {
-
-        $.fn.validate.replaceCommas($('#search_guarantee_min'), 11, null);
-        $.fn.validate.replaceCommas($('#search_guarantee_max'), 11, null);
-
-        $('button#btn_search').click(function (e) {
-            e.preventDefault();
-            if (!$('#query').val() &&
-                $('#search_group_type_number').val() == 0 &&
-                $('#search_group_type_sex').val() == 0 &&
-                $('#search_group_type_song_genre').val() == 0 &&
-                !parseInt($('#search_guarantee_min').val()) &&
-                !parseInt($('#search_guarantee_max').val())
-            ) {
-                alert('검색어 혹은 검색 필터 조건을 유효하게 입력해주십시오.');
-            }
-            else {
-                $("#target").submit();
-            }
-        });
-        $('button#btn_reset_search').click(function (e) {
-            e.preventDefault();
-            $('#query').val(null);
-            $('#search_group_type_number').val(0);
-            $('#search_group_type_sex').val(0);
-            $('#search_group_type_song_genre').val(0);
-            $('#search_guarantee_min').val(null);
-            $('#search_guarantee_max').val(null);
-        })
-
-    })
-</script>
+<script src="{{asset('assets/star/js/jQuery-js-library-1.0/js-validation-1.0.js')}}" type="text/javascript"></script>
+<script src="{{asset('assets/star/js/function.js')}}"></script>
 @yield('scripts')
 @include('layouts.star.footer')
 </body>

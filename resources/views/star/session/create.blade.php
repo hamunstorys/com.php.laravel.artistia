@@ -8,7 +8,7 @@
             <h1>LOGIN</h1>
             <Form action="javascript:$.fn.session.create()">
                 <input type="hidden" name="csrf-token" content="{{csrf_token()}}"/>
-                <input type="hidden" id="url" value="{{route('star.session.store')}}">
+                <input type="hidden" id="url-session-create" value="{{route('star.session.store')}}">
                 <input type="text" name="email" placeholder="이메일을 입력해주세요" value="{{old('email')}}">
                 <input type="password" name="password" placeholder="비밀번호를 입력해주세요" value="{{old('password')}}">
                 <input type="checkbox" id="check"/><label for="check">아이디 저장</label>
@@ -22,6 +22,6 @@
         </div>
     </div>
 </div>
-<script src="{{asset('assets/star/js/session.js')}}"></script>
+<script src="{{asset('assets/star/js/session/create.js')}}"></script>
 </body>
 </html>

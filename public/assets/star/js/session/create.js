@@ -1,7 +1,7 @@
 (function ($) {
     $.fn.session = {
         create: function () {
-            url = $('#url').val();
+            url = $('#url-session-create').val();
             $.ajaxSetup({
                 headers: {
                     'X-CSRF-TOKEN': $('input[name="csrf-token"]').attr('content')
