@@ -17,8 +17,8 @@
                 <div class="search_option">
                     <label>유형</label>
                     <select id="search_group_type_number" name="search_group_type_number">
-                        @if(isset($search_group_type_number))
-                            @foreach($search_group_type_number as $value)
+                        @if(isset($search_group_type_numbers))
+                            @foreach($search_group_type_numbers as $value)
                                 <?php echo $value ?>
                             @endforeach
                         @else
@@ -28,8 +28,8 @@
                         @endif
                     </select>
                     <select id="search_group_type_sex" name="search_group_type_sex">
-                        @if(isset($search_group_type_sex))
-                            @foreach($search_group_type_sex as $value)
+                        @if(isset($search_group_type_sexes))
+                            @foreach($search_group_type_sexes as $value)
                                 <?php echo $value ?>
                             @endforeach
                         @else
@@ -41,8 +41,8 @@
                     </select>
                     <label>장르</label>
                     <select id="search_group_type_song_genre" name="search_group_type_song_genre">
-                        @if(isset($search_group_type_song_genre))
-                            @foreach($search_group_type_song_genre as $value)
+                        @if(isset($search_group_type_song_genres))
+                            @foreach($search_group_type_song_genres as $value)
                                 <?php echo $value ?>
                             @endforeach
                         @else

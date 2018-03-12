@@ -74,7 +74,7 @@
                 })
             },
             selectedOption: function (att, error) {
-                att.bind('select', function () {
+                att.bind('click', function () {
                     if (error != null & att.val() != 0) {
                         error.hide("slow");
                     }

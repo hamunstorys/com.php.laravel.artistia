@@ -11,8 +11,17 @@ use Illuminate\Support\Facades\DB;
 
 class SearchController extends Controller
 {
+    public $query;
+    public $group_type_number;
+    public $group_type_sex;
+    public $group_type_song_genre;
+    public $group_type_numbers;
+    public $group_type_sexes;
+    public $group_type_song_genres;
     public $message;
     public $data;
+    public $guarantee_min;
+    public $guarantee_max;
 
     public function __construct()
     {
@@ -21,27 +30,60 @@ class SearchController extends Controller
 
     public function search(Request $request)
     {
-        $query = null;
         if ($request->has('query')) {
-            $query = $request->get('query');
-            $group_type_number = $request->get('search_group_type_number');
-            $group_type_sex = $request->get('search_group_type_sex');
-            $group_type_song_genre = $request->get('search_group_type_song_genre');
-            $guarantee_min = $request->get('search_guarantee_min');
-            $guarantee_max = $request->get('search_guarantee_max');
+            $request->replace([
+                "query" => $request->get('query'),
+                "search_group_type_number" => $request->get('search_group_type_number'),
+                "search_group_type_sex" => $request->get('search_group_type_sex'),
+                "search_group_type_song_genre" => $request->get('search_group_type_song_genre'),
+                "search_guarantee_min" => (int)preg_replace("/[^\d]/", "", $request->get('search_guarantee_min')),
+                "search_guarantee_max" => (int)preg_replace("/[^\d]/", "", $request->get('search_guarantee_max'))
+            ]);
+
+            $this->setQuery($request->get('query'));
+            $this->setGrouptypeNumber($request->get('search_group_type_number'));
+            $this->setGrouptypeSex($request->get('search_group_type_sex'));
+            $this->setGrouptypeSongGenre($request->get('search_group_type_song_genre'));
+            $this->setGuaranteeMin($request->get('search_guarantee_min'));
+            $this->setGuaranteeMax($request->get('search_guarantee_max'));
         }
         return redirect()->route('star.search.show', [
-            'query' => $query,
-            'search_group_type_number' => $group_type_number,
-            'search_group_type_sex' => $group_type_sex,
-            'search_group_type_song_genre' => $group_type_song_genre,
-            'search_guarantee_min' => $guarantee_min,
-            'search_guarantee_max' => $guarantee_max,
+            'query' => $this->getQuery(),
+            'search_group_type_number' => $this->getGrouptypeNumber(),
+            'search_group_type_sex' => $this->getGrouptypeSex(),
+            'search_group_type_song_genre' => $this->getGrouptypeSongGenre(),
+            'search_guarantee_min' => $this->getGuaranteeMin(),
+            'search_guarantee_max' => $this->getGuaranteeMax(),
         ]);
     }
 
+
     public function show(Request $request)
     {
+        //완료
+        $this->setQuery($request->get('query'));
+        
+        $this->setGrouptypeNumber($request->get('search_group_type_number'));
+        
+        //완료
+        $this->setGrouptypeSex($request->get('search_group_type_sex'));
+
+
+        //완료
+        $this->setGrouptypeSongGenre($request->get('search_group_type_song_genre'));
+
+        //완료
+        $this->setGuaranteeMin($request->get('search_guarantee_min'));
+        $this->setGuaranteeMax($request->get('search_guarantee_max'));
+
+        $this->setGrouptypeNumbers($this->getGrouptypeNumber());
+        
+        //완료
+        $this->setGrouptypeSexes($this->getGrouptypeSex());
+        
+        //완료
+        $this->setGrouptypeSongGenres($this->getGrouptypeSongGenre());
+
         $this->setData(
             $request->get('query'),
             $request->get('search_group_type_number'),
@@ -50,22 +92,18 @@ class SearchController extends Controller
             (int)$request->get('search_guarantee_min'),
             (int)$request->get('search_guarantee_max')
         );
+
         $this->setMessage($request->get('query'), true);
-        $group_type_number = $this->setGrouptypeNumbers($request->search_group_type_number);
-        $group_type_sex = $this->setGrouptypeSexes($request->search_group_type_sex);
-        $group_type_song_genre = $this->setGrouptypeSongGenres($request->search_group_type_song_genre);
-        $guarantee_min = $request->get('search_guarantee_min');
-        $guarantee_max = $request->get('search_guarantee_max');
         return view('star.search.show',
             [
-                'data' => $this->data,
-                'message' => $this->message,
-                'query' => $request->get('query'),
-                'search_group_type_number' => $group_type_number,
-                'search_group_type_sex' => $group_type_sex,
-                'search_group_type_song_genre' => $group_type_song_genre,
-                'search_guarantee_min' => $guarantee_min,
-                'search_guarantee_max' => $guarantee_max,
+                'data' => $this->getData(),
+                'message' => $this->getMesage(),
+                'query' => $this->getQuery(),
+                'search_group_type_numbers' => $this->getGrouptypeNumbers(),
+                'search_group_type_sexes' => $this->getGrouptypeSexes(),
+                'search_group_type_song_genres' => $this->getGrouptypeSongGenres(),
+                'search_guarantee_min' => $this->getGuaranteeMin(),
+                'search_guarantee_max' => $this->getGuaranteeMax(),
             ]
         );
     }
@@ -81,12 +119,23 @@ class SearchController extends Controller
             null
         );
 
+        $group_type_number = $this->setGrouptypeNumbers(0);
+        $group_type_sex = $this->setGrouptypeSexes(0);
+        $group_type_song_genre = $this->setGrouptypeSongGenres(0);
+
         return view('star.search.show',
             [
                 'data' => $this->data,
+                'query' => null,
+                'search_group_type_number' => $group_type_number,
+                'search_group_type_sex' => $group_type_sex,
+                'search_group_type_song_genre' => $group_type_song_genre,
+                'search_guarantee_min' => null,
+                'search_guarantee_max' => null
             ]
         );
     }
+
 
     public function setData($query, $group_type_number, $group_type_sex, $group_type_song_genre, $guarantee_min, $guarantee_max)
     {
@@ -112,25 +161,24 @@ class SearchController extends Controller
             $guarantee_max = PHP_INT_MAX;
         }
         if ($guarantee_min >= $guarantee_max) {
-            $guarantee_min = $guarantee_max;
+            $guarantee_max = $guarantee_min;
         }
 
-
         if ($query == null) {
-            return $this->data = Star_Artist::Where(DB::raw("CONCAT_WS(' | ',artist_name,manager_name,manager_phone,company_name,company_email,comment)"), 'LIKE', "%%")
+            $this->data = Star_Artist::where(DB::raw("CONCAT_WS(' | ',artist_name,manager_name,manager_phone,company_name,company_email,comment)"), 'LIKE', "%" . $query . "%")
                 ->whereRaw($query_grouptypeNumber)
                 ->whereRaw($query_grouptypeSex)
                 ->join('star_artists_item_song_genres', 'star_artists.id', '=', 'star_artists_item_song_genres.artist_id')
                 ->whereRaw($query_grouptypeSongGenre)
-//                ->whereBetween('guarantee_concert', [$guarantee_min, $guarantee_max])
+                ->whereRaw('guarantee_concert&guarantee_metropolitan&guarantee_central&guarantee_south BETWEEN ' . $guarantee_min . ' AND ' . $guarantee_max)
                 ->get();
         } else {
-            return $this->data = Star_Artist::Where(DB::raw("CONCAT_WS(' | ',artist_name,manager_name,manager_phone,company_name,company_email,comment)"), 'LIKE', "%" . $query . "%")
+            $this->data = Star_Artist::where(DB::raw("CONCAT_WS(' | ',artist_name,manager_name,manager_phone,company_name,company_email,comment)"), 'LIKE', "%" . $query . "%")
                 ->whereRaw($query_grouptypeNumber)
                 ->whereRaw($query_grouptypeSex)
                 ->join('star_artists_item_song_genres', 'star_artists.id', '=', 'star_artists_item_song_genres.artist_id')
                 ->whereRaw($query_grouptypeSongGenre)
-//                ->whereBetween('guarantee_concert', [$guarantee_min, $guarantee_max])
+                ->whereRaw('guarantee_concert&guarantee_metropolitan&guarantee_central&guarantee_south BETWEEN ' . $guarantee_min . ' AND ' . $guarantee_max)
                 ->get();
         }
     }
@@ -149,27 +197,30 @@ class SearchController extends Controller
     {
         switch ($group_type_number) {
             case 0:
-                return array(
-                    ' <option selected="selected" value = "0" > 전체</option > ',
-                    '<option value="1" >솔로</option>',
-                    '<option value= "2" >그룹</option>'
+                $this->group_type_numbers = array(
+                    '<option selected="selected" value="0">전체</option > ',
+                    '<option value="1">솔로</option>',
+                    '<option value="2">그룹</option>'
                 );
             case 1:
-                return array(
-                    '<option value = "0" >전체</option >',
-                    '<option selected = "selected" value = "1" >솔로</option >',
-                    '<option value = "2" >그룹</option >'
+                $this->group_type_numbers = array(
+                    '<option value="0">전체</option >',
+                    '<option selected="selected" value="1">솔로</option >',
+                    '<option value="2">그룹</option >'
                 );
                 break;
             case 2:
-                return array(
-                    '<option value = "0" >전체</option >',
-                    '<option value = "1" >솔로</option >',
-                    '<option selected = "selected" value = "2" >그룹</option >'
+                $this->group_type_numbers = array(
+                    '<option value="0">전체</option >',
+                    '<option value="1">솔로</option >',
+                    '<option selected="selected" value="2" >그룹</option >'
                 );
         }
     }
 
+    public function getGrouptypeNumbers() {
+        return $this->group_type_numbers;
+    }
 
     public
     function setGrouptypeSexes($sex)
@@ -189,7 +240,12 @@ class SearchController extends Controller
                 array_push($group_type_sex_temp, '<option value = "' . $i . '" > ' . $group_type_sex->find($i)->value . '</option > ');
             }
         }
-        return $group_type_sex_temp;
+        $this->group_type_sexes = $group_type_sex_temp;
+    }
+
+    public function getGrouptypeSexes()
+    {
+        return $this->group_type_sexes;
     }
 
     public function setGrouptypeSongGenres($song_genre)
@@ -212,6 +268,11 @@ class SearchController extends Controller
         return $group_type_song_genres_temp;
     }
 
+    public function getGrouptypeSongGenres()
+    {
+        return $this->group_type_song_genres;
+    }
+
 
     public
     function getData()
@@ -223,5 +284,65 @@ class SearchController extends Controller
     public function getMesage()
     {
         return $this->message;
+    }
+
+    public function setQuery($query)
+    {
+        $this->query = $query;
+    }
+
+    public function getQuery()
+    {
+        return $this->query;
+    }
+
+    public function setGrouptypeNumber($group_type_number)
+    {
+        $this->group_type_number = $group_type_number;
+    }
+
+    public function getGrouptypeNumber()
+    {
+        return $this->group_type_number;
+    }
+
+    public function setGrouptypeSex($group_type_xex)
+    {
+        $this->group_type_sex = $group_type_xex;
+    }
+
+    public function getGrouptypeSex()
+    {
+        return $this->group_type_sex;
+    }
+
+    public function setGrouptypeSongGenre($group_type_song_genre)
+    {
+        $this->group_type_song_genre = $group_type_song_genre;
+    }
+
+    public function getGrouptypeSongGenre()
+    {
+        return $this->group_type_song_genre;
+    }
+
+    public function setGuaranteeMin($guarantee_min)
+    {
+        $this->guarantee_min = $guarantee_min;
+    }
+
+    public function getGuaranteeMin()
+    {
+        return $this->guarantee_min;
+    }
+
+    public function setGuaranteeMax($guarantee_max)
+    {
+        $this->guarantee_max = $guarantee_max;
+    }
+
+    public function getGuaranteeMax()
+    {
+        return $this->guarantee_max;
     }
 }
