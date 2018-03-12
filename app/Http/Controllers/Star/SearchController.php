@@ -67,7 +67,8 @@ class SearchController extends Controller
         $guarantee_max = $request->get('search_guarantee_max');
 
         return view('star.search.show', [
-            'data'=> $this->getData(),
+            'data' => $this->getData(),
+            'message' => $this->getMessage(),
             'query' => $request->get('query'),
             'search_group_type_numbers' => $group_type_numbers,
             'search_group_type_sexes' => $group_type_sexes,
@@ -132,6 +133,7 @@ class SearchController extends Controller
             $this->message = '<div class="search_result_title"><span class="total">"' . $query . '"</span>에 대해 ' . $this->data->count() . '건이 <span> 검색 되었습니다."</div>';
         }
     }
+
 
     public
     function setGrouptypeNumbers($group_type_number)
@@ -208,8 +210,7 @@ class SearchController extends Controller
         return $this->data;
     }
 
-
-    public function getMesage()
+    public function getMessage()
     {
         return $this->message;
     }
