@@ -117,18 +117,20 @@ class SearchController extends Controller
 
 
         if ($query == null) {
-            return $this->data = Star_Artist::Where(DB::raw("CONCAT_WS(' | ',artist_name,manager_name,manager_phone,company_name,company_email,comment)"), 'LIKE', "%%");
+            return $this->data = Star_Artist::Where(DB::raw("CONCAT_WS(' | ',artist_name,manager_name,manager_phone,company_name,company_email,comment)"), 'LIKE', "%%")
                 ->whereRaw($query_grouptypeNumber)
                 ->whereRaw($query_grouptypeSex)
                 ->join('star_artists_item_song_genres', 'star_artists.id', '=', 'star_artists_item_song_genres.artist_id')
                 ->whereRaw($query_grouptypeSongGenre)
+                ->whereBetween('guarantee_concert', [$guarantee_min, $guarantee_max])
                 ->get();
         } else {
-            return $this->data = Star_Artist::Where(DB::raw("CONCAT_WS(' | ',artist_name,manager_name,manager_phone,company_name,company_email,comment)"), 'LIKE', "%".$query."%");
+            return $this->data = Star_Artist::Where(DB::raw("CONCAT_WS(' | ',artist_name,manager_name,manager_phone,company_name,company_email,comment)"), 'LIKE', "%" . $query . "%")
                 ->whereRaw($query_grouptypeNumber)
                 ->whereRaw($query_grouptypeSex)
                 ->join('star_artists_item_song_genres', 'star_artists.id', '=', 'star_artists_item_song_genres.artist_id')
                 ->whereRaw($query_grouptypeSongGenre)
+                ->whereBetween('guarantee_concert', [$guarantee_min, $guarantee_max])
                 ->get();
         }
     }
