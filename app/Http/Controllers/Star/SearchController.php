@@ -60,54 +60,23 @@ class SearchController extends Controller
             (int)$request->get('search_guarantee_max')
         );
         $this->setMessage($request->get('query'), true);
-        $group_type_number = $this->setGrouptypeNumbers($request->search_group_type_number);
-        $group_type_sex = $this->setGrouptypeSexes($request->search_group_type_sex);
-        $group_type_song_genre = $this->setGrouptypeSongGenres($request->search_group_type_song_genre);
+        $group_type_numbers = $this->setGrouptypeNumbers($request->get('search_group_type_number'));
+        $group_type_sexes = $this->setGrouptypeSexes($request->get('search_group_type_sex'));
+        $group_type_song_genres = $this->setGrouptypeSongGenres($request->get('search_group_type_song_genre'));
         $guarantee_min = $request->get('search_guarantee_min');
         $guarantee_max = $request->get('search_guarantee_max');
-        
-        return view('star.search.show',
-            [
-                'data' => $this->data,
-                'message' => $this->message,
-                'query' => $request->get('query'),
-                'search_group_type_number' => $group_type_number,
-                'search_group_type_sex' => $group_type_sex,
-                'search_group_type_song_genre' => $group_type_song_genre,
-                'search_guarantee_min' => $guarantee_min,
-                'search_guarantee_max' => $guarantee_max,
-            ]
-        );
+
+        return view('star.search.show', [
+            'data'=> $this->getData(),
+            'query' => $request->get('query'),
+            'search_group_type_numbers' => $group_type_numbers,
+            'search_group_type_sexes' => $group_type_sexes,
+            'search_group_type_song_genres' => $group_type_song_genres,
+            'search_guarantee_min' => $guarantee_min,
+            'search_guarantee_max' => $guarantee_max,
+        ]);
+
     }
-
-    public function showAll()
-    {
-        $this->setData(
-            null,
-            0,
-            0,
-            0,
-            null,
-            null
-        );
-
-        $group_type_number = $this->setGrouptypeNumbers(0);
-        $group_type_sex = $this->setGrouptypeSexes(0);
-        $group_type_song_genre = $this->setGrouptypeSongGenres(0);
-
-        return view('star.search.show',
-            [
-                'data' => $this->data,
-                'query' => null,
-                'search_group_type_number' => $group_type_number,
-                'search_group_type_sex' => $group_type_sex,
-                'search_group_type_song_genre' => $group_type_song_genre,
-                'search_guarantee_min' => null,
-                'search_guarantee_max' => null
-            ]
-        );
-    }
-
 
     public function setData($query, $group_type_number, $group_type_sex, $group_type_song_genre, $guarantee_min, $guarantee_max)
     {
