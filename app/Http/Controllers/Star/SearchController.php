@@ -30,26 +30,24 @@ class SearchController extends Controller
             "search_guarantee_max" => (int)preg_replace("/[^\d]/", "", $request->get('search_guarantee_max'))
         ]);
 
-        $query = null;
-        if ($request->has('query')) {
-            $query = $request->get('query');
-            $group_type_number = $request->get('search_group_type_number');
-            $group_type_sex = $request->get('search_group_type_sex');
-            $group_type_song_genre = $request->get('search_group_type_song_genre');
-            $guarantee_min = $request->get('search_guarantee_min');
-            $guarantee_max = $request->get('search_guarantee_max');
+        $query = $request->get('query');
+        $group_type_number = $request->get('search_group_type_number');
+        $group_type_sex = $request->get('search_group_type_sex');
+        $group_type_song_genre = $request->get('search_group_type_song_genre');
+        $guarantee_min = $request->get('search_guarantee_min');
+        $guarantee_max = $request->get('search_guarantee_max');
 
-            if ($guarantee_min == null) {
-                $guarantee_min = 0;
-            }
-            if ($guarantee_max == null) {
-                $guarantee_max = PHP_INT_MAX;
-            }
-
-            if ($guarantee_max <= $guarantee_min) {
-                $guarantee_max = $guarantee_min + 1;
-            }
+        if ($guarantee_min == null) {
+            $guarantee_min = 0;
         }
+        if ($guarantee_max == null) {
+            $guarantee_max = PHP_INT_MAX;
+        }
+
+        if ($guarantee_max <= $guarantee_min) {
+            $guarantee_max = $guarantee_min + 1;
+        }
+
         return redirect()->route('star.search.show', [
             'query' => $query,
             'search_group_type_number' => $group_type_number,
@@ -62,7 +60,7 @@ class SearchController extends Controller
 
     public function show(Request $request)
     {
-        $this->setData(
+       $this->setData(
             $request->get('query'),
             $request->get('search_group_type_number'),
             $request->get('search_group_type_sex'),
@@ -98,8 +96,8 @@ class SearchController extends Controller
             'search_group_type_number' => 0,
             'search_group_type_sex' => 0,
             'search_group_type_song_genre' => 0,
-            'search_guarantee_min' => null,
-            'search_guarantee_max' => null
+            'search_guarantee_min' => 0,
+            'search_guarantee_max' => PHP_INT_MAX,
         ]);
     }
 
@@ -120,31 +118,44 @@ class SearchController extends Controller
         } else {
             $query_grouptypeSongGenre = 'song_genre_id =' . $group_type_song_genre;
         }
-
-        $this->data = Star_Artist::where(function ($q) use ($query) {
-            $q->orWhere('artist_name', 'LIKE', '%' . $query . '%');
-            $q->orWhere('manager_name', 'LIKE', '%' . $query . '%');
-            $q->orWhere('manager_phone', 'LIKE', '%' . $query . '%');
-            $q->orWhere('company_name', 'LIKE', '%' . $query . '%');
-        })
-            ->whereRaw($query_grouptypeNumber)
-            ->whereRaw($query_grouptypeSex)
-            ->join('star_artists_item_song_genres', 'star_artists.id', '=', 'star_artists_item_song_genres.artist_id')
-            ->whereRaw($query_grouptypeSongGenre)
-            ->where(function ($q) use ($guarantee_min, $guarantee_max) {
-                $q->orWhereBetween('guarantee_concert', [(int)$guarantee_min, (int)$guarantee_max]);
-                $q->orWhereBetween('guarantee_metropolitan', [(int)$guarantee_min, (int)$guarantee_max]);
-                $q->orWhereBetween('guarantee_central', [(int)$guarantee_min, (int)$guarantee_max]);
-                $q->orWhereBetween('guarantee_south', [(int)$guarantee_min, (int)$guarantee_max]);
+        if ($query == null) {
+            return $this->data = DB::table('star_artists')->select('*')
+                ->join('star_artists_item_song_genres', 'star_artists.id', '=', 'star_artists_item_song_genres.artist_id')
+                ->whereRaw($query_grouptypeNumber)
+                ->whereRaw($query_grouptypeSex)
+                ->whereRaw($query_grouptypeSongGenre)
+                ->where(function ($q) use ($guarantee_min, $guarantee_max) {
+                    $q->orWhereBetween('guarantee_concert', [(int)$guarantee_min, (int)$guarantee_max]);
+                    $q->orWhereBetween('guarantee_metropolitan', [(int)$guarantee_min, (int)$guarantee_max]);
+                    $q->orWhereBetween('guarantee_central', [(int)$guarantee_min, (int)$guarantee_max]);
+                    $q->orWhereBetween('guarantee_south', [(int)$guarantee_min, (int)$guarantee_max]);
+                })
+                ->get();
+        } else {
+            $this->data = Star_Artist::where(function ($q) use ($query) {
+                $q->orWhere('artist_name', 'LIKE', '%' . $query . '%');
+                $q->orWhere('manager_name', 'LIKE', '%' . $query . '%');
+                $q->orWhere('manager_phone', 'LIKE', '%' . $query . '%');
+                $q->orWhere('company_name', 'LIKE', '%' . $query . '%');
             })
-            ->get();
+                ->whereRaw($query_grouptypeNumber)
+                ->whereRaw($query_grouptypeSex)
+                ->join('star_artists_item_song_genres', 'star_artists.id', '=', 'star_artists_item_song_genres.artist_id')
+                ->whereRaw($query_grouptypeSongGenre)
+                ->where(function ($q) use ($guarantee_min, $guarantee_max) {
+                    $q->orWhereBetween('guarantee_concert', [(int)$guarantee_min, (int)$guarantee_max]);
+                    $q->orWhereBetween('guarantee_metropolitan', [(int)$guarantee_min, (int)$guarantee_max]);
+                    $q->orWhereBetween('guarantee_central', [(int)$guarantee_min, (int)$guarantee_max]);
+                    $q->orWhereBetween('guarantee_south', [(int)$guarantee_min, (int)$guarantee_max]);
+                })
+                ->get();
+        }
     }
-
 
     public
     function setMessage($query)
     {
-        if ($this->data->count() == null) {
+        if ($query != null && $this->data->count() == null) {
             $this->message = '<div class="search_result_title"><span class="total">"' . $query . '"</span>에 대해 <span> 검색된 것이 없습니다."</div>';
         } else if ($query != null) {
             $this->message = '<div class="search_result_title"><span class="total">"' . $query . '"</span>에 대해 ' . $this->data->count() . '건이 <span> 검색 되었습니다."</div>';
