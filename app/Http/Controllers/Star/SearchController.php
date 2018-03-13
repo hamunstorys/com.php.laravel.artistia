@@ -29,14 +29,14 @@ class SearchController extends Controller
             "search_guarantee_min" => (int)preg_replace("/[^\d]/", "", $request->get('search_guarantee_min')),
             "search_guarantee_max" => (int)preg_replace("/[^\d]/", "", $request->get('search_guarantee_max'))
         ]);
-        if ($request->has('query')) {
-            $query = $request->get('query');
-            $group_type_number = $request->get('search_group_type_number');
-            $group_type_sex = $request->get('search_group_type_sex');
-            $group_type_song_genre = $request->get('search_group_type_song_genre');
-            $guarantee_min = $request->get('search_guarantee_min');
-            $guarantee_max = $request->get('search_guarantee_max');
-        }
+
+        $query = $request->get('query');
+        $group_type_number = $request->get('search_group_type_number');
+        $group_type_sex = $request->get('search_group_type_sex');
+        $group_type_song_genre = $request->get('search_group_type_song_genre');
+        $guarantee_min = $request->get('search_guarantee_min');
+        $guarantee_max = $request->get('search_guarantee_max');
+
         if ($guarantee_min == null) {
             $guarantee_min = 0;
         }
@@ -48,11 +48,27 @@ class SearchController extends Controller
             $guarantee_max = $guarantee_min + 1;
         }
 
-        return redirect()->route('star.search.show', [
-            'query' => $query,
-            'search_group_type_number' => $group_type_number,
-            'search_group_type_sex' => $group_type_sex,
-            'search_group_type_song_genre' => $group_type_song_genre,
+        $this->setData(
+            $query,
+            $group_type_number,
+            $group_type_sex,
+            $group_type_song_genre,
+            $guarantee_min,
+            $guarantee_max
+        );
+
+        $this->setMessage($request->get('query'));
+        $group_type_numbers = $this->setGrouptypeNumbers($request->get('search_group_type_number'));
+        $group_type_sexes = $this->setGrouptypeSexes($request->get('search_group_type_sex'));
+        $group_type_song_genres = $this->setGrouptypeSongGenres($request->get('search_group_type_song_genre'));
+
+        return view('star.search.show', [
+            'data' => $this->getData(),
+            'message' => $this->getMessage(),
+            'query' => $request->get('query'),
+            'search_group_type_numbers' => $group_type_numbers,
+            'search_group_type_sexes' => $group_type_sexes,
+            'search_group_type_song_genres' => $group_type_song_genres,
             'search_guarantee_min' => $guarantee_min,
             'search_guarantee_max' => $guarantee_max,
         ]);
@@ -91,7 +107,7 @@ class SearchController extends Controller
 
     public function showAll()
     {
-        return redirect()->route('star.search.show', [
+        return redirect()->route('star.search', [
             'query' => null,
             'search_group_type_number' => 0,
             'search_group_type_sex' => 0,
