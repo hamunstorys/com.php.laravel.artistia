@@ -29,14 +29,14 @@ class SearchController extends Controller
             "search_guarantee_min" => (int)preg_replace("/[^\d]/", "", $request->get('search_guarantee_min')),
             "search_guarantee_max" => (int)preg_replace("/[^\d]/", "", $request->get('search_guarantee_max'))
         ]);
-
-        $query = $request->get('query');
-        $group_type_number = $request->get('search_group_type_number');
-        $group_type_sex = $request->get('search_group_type_sex');
-        $group_type_song_genre = $request->get('search_group_type_song_genre');
-        $guarantee_min = $request->get('search_guarantee_min');
-        $guarantee_max = $request->get('search_guarantee_max');
-
+        if ($request->has('query')) {
+            $query = $request->get('query');
+            $group_type_number = $request->get('search_group_type_number');
+            $group_type_sex = $request->get('search_group_type_sex');
+            $group_type_song_genre = $request->get('search_group_type_song_genre');
+            $guarantee_min = $request->get('search_guarantee_min');
+            $guarantee_max = $request->get('search_guarantee_max');
+        }
         if ($guarantee_min == null) {
             $guarantee_min = 0;
         }
@@ -60,7 +60,7 @@ class SearchController extends Controller
 
     public function show(Request $request)
     {
-       $this->setData(
+        $this->setData(
             $request->get('query'),
             $request->get('search_group_type_number'),
             $request->get('search_group_type_sex'),
@@ -119,7 +119,7 @@ class SearchController extends Controller
             $query_grouptypeSongGenre = 'song_genre_id =' . $group_type_song_genre;
         }
         if ($query == null) {
-            return $this->data = DB::table('star_artists')->select('*')
+            $this->data = DB::table('star_artists')->select('*')
                 ->join('star_artists_item_song_genres', 'star_artists.id', '=', 'star_artists_item_song_genres.artist_id')
                 ->whereRaw($query_grouptypeNumber)
                 ->whereRaw($query_grouptypeSex)
