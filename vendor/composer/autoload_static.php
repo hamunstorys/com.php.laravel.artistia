@@ -342,7 +342,6 @@ class ComposerStaticInit321e23d7362785c30303ed0534623514
         'App\\Http\\Middleware\\EncryptCookies' => __DIR__ . '/../..' . '/app/Http/Middleware/EncryptCookies.php',
         'App\\Http\\Middleware\\ForceSSL' => __DIR__ . '/../..' . '/app/Http/Middleware/ForceSSL.php',
         'App\\Http\\Middleware\\RedirectIfAuthenticated' => __DIR__ . '/../..' . '/app/Http/Middleware/RedirectIfAuthenticated.php',
-        'App\\Http\\Middleware\\Star\\FlushQuery' => __DIR__ . '/../..' . '/app/Http/Middleware/Star/FlushQuery.php',
         'App\\Http\\Middleware\\Star\\SetArtistCategories' => __DIR__ . '/../..' . '/app/Http/Middleware/Star/SetArtistCategories.php',
         'App\\Http\\Middleware\\TrimStrings' => __DIR__ . '/../..' . '/app/Http/Middleware/TrimStrings.php',
         'App\\Http\\Middleware\\TrustProxies' => __DIR__ . '/../..' . '/app/Http/Middleware/TrustProxies.php',

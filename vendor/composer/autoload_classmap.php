@@ -18,7 +18,6 @@ return array(
     'App\\Http\\Middleware\\EncryptCookies' => $baseDir . '/app/Http/Middleware/EncryptCookies.php',
     'App\\Http\\Middleware\\ForceSSL' => $baseDir . '/app/Http/Middleware/ForceSSL.php',
     'App\\Http\\Middleware\\RedirectIfAuthenticated' => $baseDir . '/app/Http/Middleware/RedirectIfAuthenticated.php',
-    'App\\Http\\Middleware\\Star\\FlushQuery' => $baseDir . '/app/Http/Middleware/Star/FlushQuery.php',
     'App\\Http\\Middleware\\Star\\SetArtistCategories' => $baseDir . '/app/Http/Middleware/Star/SetArtistCategories.php',
     'App\\Http\\Middleware\\TrimStrings' => $baseDir . '/app/Http/Middleware/TrimStrings.php',
     'App\\Http\\Middleware\\TrustProxies' => $baseDir . '/app/Http/Middleware/TrustProxies.php',
