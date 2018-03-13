@@ -29,13 +29,14 @@ class SearchController extends Controller
             "search_guarantee_min" => (int)preg_replace("/[^\d]/", "", $request->get('search_guarantee_min')),
             "search_guarantee_max" => (int)preg_replace("/[^\d]/", "", $request->get('search_guarantee_max'))
         ]);
-
-        $query = $request->get('query');
-        $group_type_number = $request->get('search_group_type_number');
-        $group_type_sex = $request->get('search_group_type_sex');
-        $group_type_song_genre = $request->get('search_group_type_song_genre');
-        $guarantee_min = $request->get('search_guarantee_min');
-        $guarantee_max = $request->get('search_guarantee_max');
+        if ($request->has('query')) {
+            $query = $request->get('query');
+            $group_type_number = $request->get('search_group_type_number');
+            $group_type_sex = $request->get('search_group_type_sex');
+            $group_type_song_genre = $request->get('search_group_type_song_genre');
+            $guarantee_min = $request->get('search_guarantee_min');
+            $guarantee_max = $request->get('search_guarantee_max');
+        }
 
         if ($guarantee_min == null) {
             $guarantee_min = 0;
@@ -48,27 +49,11 @@ class SearchController extends Controller
             $guarantee_max = $guarantee_min + 1;
         }
 
-        $this->setData(
-            $query,
-            $group_type_number,
-            $group_type_sex,
-            $group_type_song_genre,
-            $guarantee_min,
-            $guarantee_max
-        );
-
-        $this->setMessage($request->get('query'));
-        $group_type_numbers = $this->setGrouptypeNumbers($request->get('search_group_type_number'));
-        $group_type_sexes = $this->setGrouptypeSexes($request->get('search_group_type_sex'));
-        $group_type_song_genres = $this->setGrouptypeSongGenres($request->get('search_group_type_song_genre'));
-
-        return view('star.search.show', [
-            'data' => $this->getData(),
-            'message' => $this->getMessage(),
-            'query' => $request->get('query'),
-            'search_group_type_numbers' => $group_type_numbers,
-            'search_group_type_sexes' => $group_type_sexes,
-            'search_group_type_song_genres' => $group_type_song_genres,
+        return redirect()->route('star.search.show', [
+            'query' => $query,
+            'search_group_type_number' => $group_type_number,
+            'search_group_type_sex' => $group_type_sex,
+            'search_group_type_song_genre' => $group_type_song_genre,
             'search_guarantee_min' => $guarantee_min,
             'search_guarantee_max' => $guarantee_max,
         ]);
@@ -107,7 +92,7 @@ class SearchController extends Controller
 
     public function showAll()
     {
-        return redirect()->route('star.search', [
+        return redirect()->route('star.search.show', [
             'query' => null,
             'search_group_type_number' => 0,
             'search_group_type_sex' => 0,
@@ -135,7 +120,7 @@ class SearchController extends Controller
             $query_grouptypeSongGenre = 'song_genre_id =' . $group_type_song_genre;
         }
         if ($query == null) {
-            $this->data = DB::table('star_artists')->select('*')
+            return $this->data = DB::table('star_artists')->select('*')
                 ->join('star_artists_item_song_genres', 'star_artists.id', '=', 'star_artists_item_song_genres.artist_id')
                 ->whereRaw($query_grouptypeNumber)
                 ->whereRaw($query_grouptypeSex)
@@ -171,7 +156,9 @@ class SearchController extends Controller
     public
     function setMessage($query)
     {
-        if ($query != null && $this->data->count() == null) {
+        if ($query == null && $this->data->count() != null) {
+            $this->message = '<div class="search_result_title"><span class="total">전체' . Star_Artist::count() . '</span>에 대해 <span> 검색되었습니니다."</div>';
+        } else if ($query != null && $this->data->count() == null) {
             $this->message = '<div class="search_result_title"><span class="total">"' . $query . '"</span>에 대해 <span> 검색된 것이 없습니다."</div>';
         } else if ($query != null) {
             $this->message = '<div class="search_result_title"><span class="total">"' . $query . '"</span>에 대해 ' . $this->data->count() . '건이 <span> 검색 되었습니다."</div>';
