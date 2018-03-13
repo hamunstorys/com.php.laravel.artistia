@@ -120,39 +120,26 @@ class SearchController extends Controller
         } else {
             $query_grouptypeSongGenre = 'song_genre_id =' . $group_type_song_genre;
         }
-        if ($query == null) {
-            $this->data = Star_Artist::select('*')
-                ->whereRaw($query_grouptypeNumber)
-                ->whereRaw($query_grouptypeSex)
-                ->join('star_artists_item_song_genres', 'star_artists.id', '=', 'star_artists_item_song_genres.artist_id')
-                ->whereRaw($query_grouptypeSongGenre)
-                ->where(function ($q) use ($guarantee_min, $guarantee_max) {
-                    $q->orWhereBetween('guarantee_concert', [(int)$guarantee_min, (int)$guarantee_max]);
-                    $q->orWhereBetween('guarantee_metropolitan', [(int)$guarantee_min, (int)$guarantee_max]);
-                    $q->orWhereBetween('guarantee_central', [(int)$guarantee_min, (int)$guarantee_max]);
-                    $q->orWhereBetween('guarantee_south', [(int)$guarantee_min, (int)$guarantee_max]);
-                })
-                ->get();
-        } else {
-            $this->data = Star_Artist::where(function ($q) use ($query) {
-                $q->orWhere('artist_name', 'LIKE', '%' . $query . '%');
-                $q->orWhere('manager_name', 'LIKE', '%' . $query . '%');
-                $q->orWhere('manager_phone', 'LIKE', '%' . $query . '%');
-                $q->orWhere('company_name', 'LIKE', '%' . $query . '%');
+
+        $this->data = Star_Artist::where(function ($q) use ($query) {
+            $q->orWhere('artist_name', 'LIKE', '%' . $query . '%');
+            $q->orWhere('manager_name', 'LIKE', '%' . $query . '%');
+            $q->orWhere('manager_phone', 'LIKE', '%' . $query . '%');
+            $q->orWhere('company_name', 'LIKE', '%' . $query . '%');
+        })
+            ->whereRaw($query_grouptypeNumber)
+            ->whereRaw($query_grouptypeSex)
+            ->join('star_artists_item_song_genres', 'star_artists.id', '=', 'star_artists_item_song_genres.artist_id')
+            ->whereRaw($query_grouptypeSongGenre)
+            ->where(function ($q) use ($guarantee_min, $guarantee_max) {
+                $q->orWhereBetween('guarantee_concert', [(int)$guarantee_min, (int)$guarantee_max]);
+                $q->orWhereBetween('guarantee_metropolitan', [(int)$guarantee_min, (int)$guarantee_max]);
+                $q->orWhereBetween('guarantee_central', [(int)$guarantee_min, (int)$guarantee_max]);
+                $q->orWhereBetween('guarantee_south', [(int)$guarantee_min, (int)$guarantee_max]);
             })
-                ->whereRaw($query_grouptypeNumber)
-                ->whereRaw($query_grouptypeSex)
-                ->join('star_artists_item_song_genres', 'star_artists.id', '=', 'star_artists_item_song_genres.artist_id')
-                ->whereRaw($query_grouptypeSongGenre)
-                ->where(function ($q) use ($guarantee_min, $guarantee_max) {
-                    $q->orWhereBetween('guarantee_concert', [(int)$guarantee_min, (int)$guarantee_max]);
-                    $q->orWhereBetween('guarantee_metropolitan', [(int)$guarantee_min, (int)$guarantee_max]);
-                    $q->orWhereBetween('guarantee_central', [(int)$guarantee_min, (int)$guarantee_max]);
-                    $q->orWhereBetween('guarantee_south', [(int)$guarantee_min, (int)$guarantee_max]);
-                })
-                ->get();
-        }
+            ->get();
     }
+
 
     public
     function setMessage($query)
